@@ -5,9 +5,18 @@
       return {
         // Propriedades do login
         // tipo de post??
+        postoNumber: '08',
+
         combustaoImg: '/images/combustao_naoselected.png',
         eletricoImg: '/images/eletrico_naoselected.png',
-        geralImg: '/images/universal_selected.png'
+        geralImg: '/images/universal_selected.png',
+
+        // mudar a cor do texto
+        combustaoColor: '#999999',
+        eletricoColor: '#999999',
+        geralColor: '#FFFFFF'
+
+        //pode ser um array de especialidades com name img color e usar v-for na template
       }
     },
     methods: {
@@ -41,22 +50,22 @@
         </div>
 
         <div class="posto">
-            <div class="posto-name"> POSTO 08 </div>
+            <div class="posto-name"> POSTO {{ postoNumber }} </div>
             <div class="red-line"></div>
             <div class="especialidade" style="color: white; margin-bottom: 20px;"> 
                 ESPECIALIDADES:
             </div>
             <div class="especialidade"> 
                 <img :src="combustaoImg" alt="Combustão">
-                COMBUSTÃO
+                <div :style="{color: combustaoColor}">COMBUSTÃO</div>
             </div>
             <div class="especialidade"> 
                 <img :src="eletricoImg" alt="Elétrico">
-                ELÉTRICO 
+                <div :style="{color: eletricoColor}">ELÉTRICO </div>
             </div>
             <div class="especialidade"> 
                 <img :src="geralImg" alt="geral">
-                GERAL 
+                <div :style="{color: geralColor}">GERAL</div> 
             </div>
         </div>
     </div>
