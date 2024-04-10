@@ -1,9 +1,8 @@
 <template>
+    <Navbar />
     <h1>Servicos Atribuidos page</h1>
 </template>
 
-<script>
-export default {
-    inheritAttrs: false,
-}
+<script setup>
+    import Navbar from './Navbar.vue'
 </script>
