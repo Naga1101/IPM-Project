@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 
 import loginPage from  './components/Login.vue';
-import servicoPage from './components/Servico.vue';
+import servicoPage from './components/ServicoEspecifico.vue';
 import servicosAtribuidosPage from './components/ServicosAtribuidos.vue';
 import NotFoundPage from './components/NotFound.vue';
 

@@ -1,7 +1,6 @@
 <template>
     <nav class="navbar">
         <div class="botao">
-
             <button class="botao_voltar" type="button" >
                 <img class="left_arrow" src="/images/left_arrow.png">
                 <span>VOLTAR ATRÁS</span>
