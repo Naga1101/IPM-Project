@@ -1,0 +1,307 @@
+{
+  "service-definitions": [
+    {
+      "id": "sp",
+      "descr": "Substituir pneus",
+      "duraÃ§Ã£o": 40
+    },
+    {
+      "id": "cr",
+      "descr": "Calibrar rodas",
+      "duraÃ§Ã£o": 20
+    },
+    {
+      "id": "ad",
+      "descr": "Alinhar direÃ§Ã£o",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sct",
+      "descr": "Subsituir calÃ§os travÃµes",
+      "duraÃ§Ã£o": 60
+    },
+    {
+      "id": "mot",
+      "descr": "Mudar Ã³leo travÃµes",
+      "duraÃ§Ã£o": 20
+    },
+    {
+      "id": "li",
+      "descr": "Limpeza interior",
+      "duraÃ§Ã£o": 120
+    },
+    {
+      "id": "le",
+      "descr": "Limpeza exterior",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sfah",
+      "descr": "Substituir filtro ar habitÃ¡culo",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "mom",
+      "descr": "Mudar Ã³leo motor",
+      "duraÃ§Ã£o": 10
+    },
+    {
+      "id": "sfo",
+      "descr": "Substituir filtro Ã³leo",
+      "duraÃ§Ã£o": 20
+    },
+    {
+      "id": "sfc",
+      "descr": "Substituir filtro combustÃ­vel",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sfam",
+      "descr": "Substituir filtro ar motor",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "scc",
+      "descr": "Substituir conversor catalÃ­tico",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sba",
+      "descr": "Substituir bateria de arranque",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "svi",
+      "descr": "Substituir velas de incandescÃªncia",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sfp",
+      "descr": "Substituir filtro de partÃ­culas",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "rfp",
+      "descr": "Regenerar filtro de partÃ­culas",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sva",
+      "descr": "Substituir vÃ¡lvula do acelerador",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "svi",
+      "descr": "Substituir velas de igniÃ§Ã£o",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "adb",
+      "descr": "Avaliar desempenho da bateria",
+      "duraÃ§Ã£o": 30
+    },
+    {
+      "id": "sb",
+      "descr": "Substituir bateria",
+      "duraÃ§Ã£o": 20
+    }
+  ],
+  "vehicle-types": [
+    {
+      "id": "gasolina",
+      "serviÃ§os": [
+        "sp",
+        "cr",
+        "ad",
+        "sct",
+        "mot",
+        "li",
+        "le",
+        "sfah",
+        "mom",
+        "sfo",
+        "sfc",
+        "sfam",
+        "scc",
+        "sba",
+        "sva",
+        "svi"
+      ]
+    },
+    {
+      "id": "gasoleo",
+      "serviÃ§os": [
+        "sp",
+        "cr",
+        "ad",
+        "sct",
+        "mot",
+        "li",
+        "le",
+        "sfah",
+        "mom",
+        "sfo",
+        "sfc",
+        "sfam",
+        "scc",
+        "sba",
+        "svi",
+        "sfp",
+        "rfp"
+      ]
+    },
+    {
+      "id": "eletrico",
+      "serviÃ§os": [
+        "sp",
+        "cr",
+        "ad",
+        "sct",
+        "mot",
+        "li",
+        "le",
+        "sfah",
+        "adb",
+        "sb"
+      ]
+    },
+    {
+      "id": "hibrido",
+      "serviÃ§os": [
+        "sp",
+        "cr",
+        "ad",
+        "sct",
+        "mot",
+        "li",
+        "le",
+        "sfah",
+        "mom",
+        "sfo",
+        "sfc",
+        "sfam",
+        "scc",
+        "sba",
+        "sva",
+        "svi",
+        "adb",
+        "sb"
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "id": "123",
+      "nome": "JoÃ£o Silva",
+      "email": "js@imail.com",
+      "telefone": "912345678"
+    },
+    {
+      "id": "124",
+      "nome": "Maria Santos",
+      "email": "jms@imail.com",
+      "telefone": "912345679"
+    },
+    {
+      "id": "125",
+      "nome": "JosÃ© Pereira",
+      "email": "jp@imail.com",
+      "telefone": "912345680"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "08-25-AA",
+      "clientId": "123",
+      "vehicle-typeId": "gasolina",
+      "cilindrada": 1000,
+      "kms": 200000
+    },
+    {
+      "id": "AH-31-BB",
+      "clientId": "124",
+      "vehicle-typeId": "gasoleo",
+      "cilindrada": 2000,
+      "kms": 120000
+    },
+    {
+      "id": "AH-32-44",
+      "clientId": "123",
+      "vehicle-typeId": "eletrico",
+      "potencia": 200,
+      "kms": 20000
+    },
+    {
+      "id": "AH-21-25",
+      "clientId": "125",
+      "vehicle-typeId": "hibrido",
+      "cilindrada": 1000,
+      "potencia": 200,
+      "kms": 80000
+    }
+  ],
+  "services": [
+    {
+      "id": "s31",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "sp",
+      "estado": "nafila",
+      "agendamento": "filaDeEspera",
+      "descriÃ§Ã£o": "Colocar XPTO 225R15"
+    },
+    {
+      "id": "s32",
+      "vehicleId": "AH-31-BB",
+      "service-definitionId": "li",
+      "estado": "programado",
+      "agendamento": "programado",
+      "data": {
+        "dia": 26,
+        "mes": 3,
+        "ano": 2024,
+        "hora": 14,
+        "minutos": 15
+      },
+      "descriÃ§Ã£o": "AtenÃ§Ã£o ao banco do condutor."
+    },
+    {
+      "id": "s33",
+      "vehicleId": "AH-32-44",
+      "service-definitionId": "le",
+      "estado": "nafila",
+      "agendamento": "filaDeEspera",
+      "descriÃ§Ã£o": "Ver jantes."
+    },
+    {
+      "id": "s34",
+      "vehicleId": "AH-21-25",
+      "service-definitionId": "sfc",
+      "estado": "parado",
+      "agendamento": "filaDeEspera",
+      "descriÃ§Ã£o": "Falta o filtro."
+    },
+    {
+      "id": "s12",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "sp",
+      "estado": "realizado",
+      "agendamento": "filaDeEspera",
+      "descriÃ§Ã£o": "Colocar XPTO 225R15"
+    },
+    {
+      "id": "s24",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "li",
+      "estado": "realizado",
+      "agendamento": "programado",
+      "data": {
+        "dia": 2,
+        "mes": 2,
+        "ano": 2024,
+        "hora": 14,
+        "minutos": 15
+      },
+      "descriÃ§Ã£o": "shampoo XPTO"
+    }
+  ]
+}
