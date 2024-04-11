@@ -47,8 +47,9 @@
     .banner {
         display: flex;
         height: var(--banner-height);
-        min-width: var(--banner-width);
-        width: 40vw;
+        min-width: var(--banner-width-min);
+        /* width: var(--banner-width-normal); */
+        width: 100%;
         background-color: var(--color-light-grey);
         flex-direction: row;
 
@@ -66,7 +67,7 @@
         align-items: top;
         justify-content: space-between;
         flex-direction: row;
-        font-family: 'Lato', sans-serif;
+        font-family: var(--font-family);
         padding: 17px 20px;
         width: 100%;
     }
@@ -75,17 +76,21 @@
         display: flex;
         flex-direction: column;
         justify-content:flex-start;
-        flex: 2.5;
+        flex: 3;
+        padding: 0px 15px 0px 0px;
    }
 
    .nome {
-        font-size: 50;
+        flex:2;
+        font-size: 22px;
         font-weight: 500;
         margin-bottom: auto;
+        padding-bottom: 5px;
    }
 
    .estado {
-        font-size: 15;
+        flex:1;
+        font-size: 22px;
         font-weight: 400;
         color: var(--text-darker-grey);
         margin-top: auto;
@@ -93,9 +98,8 @@
 
    .middle {
         display: flex;
-        flex-direction: column;
-        align-items: top;
-        padding: 0px 30px 0px 20px;
+        flex-direction: row;
+        align-items: flex-start;
         flex: 1;
    }
 
@@ -106,13 +110,15 @@
    }
 
     .duracao {
-        font-size: 50;
+        display: flex;
+        font-size: 22px;
         font-weight: 500;
     }
-    
+
    .photo {
-        height: 70px;
-        width: 70px;
+        padding: 0px 0px 0px 30px;
+        height: 65px;
+        width: 65px;
    }
 
 </style>

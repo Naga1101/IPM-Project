@@ -24,9 +24,6 @@
     </nav>
   </template>
   
-    <script setup>
-    </script>
-
 <style scoped>
 
     .navbar {
@@ -44,8 +41,9 @@
         display: flex;
         left: 50%;
         font-weight: 400;
-        font-size: 25px;
-        translate: 40%; /* meio aldrabado, TODO ver melhor*/
+        font-size: 2.4vw;
+        translate: 45%; /* meio aldrabado, TODO ver melhor*/
+        margin: 0 20px;
     }
 
     .right_data {
@@ -61,6 +59,7 @@
     img {
         height: 55px;
         width: auto;
+        margin-left: 20px;
     }
 
     .mecanico_info {
@@ -71,11 +70,12 @@
     }
 
     .nome {
-        font-size: 23px;
+        font-size: 2.3vw;
         font-weight: 200px;
     }
     .id {
-        font-size: 16px;
+        padding-top: 3px;
+        font-size: 1.6vw;
         color:#444444;
     }
 
@@ -89,23 +89,26 @@
 
     .left_arrow {
         object-fit: contain;
-        height: 30px;
+        height: max(20px,3.5vh);
         margin-right: 10px;
+        margin-left: 0.2vw;
     }
+
     .botao_voltar {
         background-color: #DC564E;
         color: white;
         padding: 8px 12px;
         cursor: pointer;
-        font-size: 25px;
+        font-size: 2.4vw;
         padding: 12px 20px;
-        width: 250px;
-        height: 55px;
+        width: 20vw;
+        height: 50px;
         border-radius: 15px;
         border: none;
         cursor: pointer;
         font-weight: semibold;
         align-items: center;
+        justify-content: center;
         display: flex;
     }
 
@@ -114,10 +117,10 @@
         color: white;
         padding: 8px 12px;
         cursor: pointer;
-        font-size: 25px;
+        font-size: 2.4vw;
         padding: 12px 20px;
-        width: 150px;
-        height: 55px;
+        width: 10vw;
+        height: 50px;
         border-radius: 15px;
         border: none;
         margin-left: 50px;

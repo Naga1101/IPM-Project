@@ -106,7 +106,7 @@
 
   .posto {
     width: 600px;
-    height: 100vh;
+    height: 100%;
     background-color: #5C5C5C;
     color: white;
 

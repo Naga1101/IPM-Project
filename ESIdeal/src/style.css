@@ -6,9 +6,13 @@
   --text-darker-grey: #565454;
   --text-black: #000000;
 
-  /* service banner related */
-  --banner-height: 100px;
-  --banner-width: 620px;
+  --banner-height: 90px;
+  --banner-width-min: 500px;
+  --banner-width-normal: 40vw;
+  /* --table-height: calc(var(--banner-height) * 6); */
+  --table-height: 65vh;
+
+  --font-family: 'Lato', sans-serif;
 ;
 }
 
@@ -27,6 +31,7 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  overflow: hidden;
 }
 /*
 h1 {
