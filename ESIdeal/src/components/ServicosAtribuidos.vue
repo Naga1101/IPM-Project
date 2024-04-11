@@ -90,10 +90,10 @@
     .tables {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
     .table_entry {
-       padding: 0px 30px;
+       padding: 0px 30px 0px 20px;
        width: 100%;
     }
 </style>

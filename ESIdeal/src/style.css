@@ -7,7 +7,7 @@
   --text-black: #000000;
 
   --banner-height: 90px;
-  --banner-width-min: 500px;
+  --banner-width-min: 450px;
   --banner-width-normal: 40vw;
   /* --table-height: calc(var(--banner-height) * 6); */
   --table-height: 65vh;
