@@ -39,7 +39,6 @@ export default {
     flex-direction: column;
     width: 100%;
     max-height: 100%;
-    height: 100%;
   }
 
   .table-header {

@@ -1,7 +1,10 @@
 <template>
     <Navbar/>
     <div class="page">
-        <h1>Serviços Atribuídos</h1>
+        <div class="headers">
+            <h1>Serviços agendados</h1>
+            <Clock class="clock"/>
+        </div>
         <div class="tables">
             <TabelaServicos class="table_entry1" :services="serviceData"/>
             <div class="separator"></div>
@@ -12,13 +15,12 @@
   </template>
   
   <script>
-    import Navbar from './Navbar.vue';
     import TabelaServicos from './TabelaServicos.vue';
-    
+    import Clock from './Clock.vue';
     export default {
         components: {
-            Navbar,
-            TabelaServicos
+            TabelaServicos,
+            Clock
         },
         props: ['services', 'serviceDefinitions'],
         data() {
@@ -88,12 +90,31 @@
 <style scoped>
 
     .page {
-        padding: 25px
+        padding: 10px 50px 0px 50px;
     }
 
+    .headers {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20px;
+        padding-bottom: 5px;
+
+    }
+    h1 {
+        font-size: 40px;
+        font-weight: 500;
+        font-family: var(--font-family);
+    }
+
+    .clock {
+        position: relative;
+        top: -5px;
+    }
+    
     .tables {
         display: flex;
-        /* justify-content: space-between; */
         flex-direction: row;
     }
 

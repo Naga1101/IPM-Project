@@ -30,6 +30,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
+  font-family: var(--font-family);
 }
 /*
 h1 {

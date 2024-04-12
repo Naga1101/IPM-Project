@@ -20,6 +20,7 @@
         box-sizing: border-box;
         font-family: var(--font-family);
         font-size: 20px;
+        margin-top: 20px;
     }
 
 </style>
