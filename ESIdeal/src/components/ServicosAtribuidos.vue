@@ -6,9 +6,9 @@
             <Clock class="clock"/>
         </div>
         <div class="tables">
-            <TabelaServicos class="table_entry1" :services="serviceData"/>
-            <div class="separator"></div>
-            <TabelaServicos class="table_entry2" :services="serviceData"/>
+            <TabelaServicos class="table_entry1" :services="serviceData" :comPrazo="true"/>
+            <!-- <div class="separator"></div> -->
+            <TabelaServicos class="table_entry2" :services="serviceData" :comPrazo="false"/>
         </div>
     </div>
     <Footer/>
@@ -28,58 +28,76 @@
                 serviceData: [
                     //Exemplos de servicos
                     {
-                        id: 1,
-                        descricao: "Service 1",
-                        estado: "Por Realizar",
-                        duracao: 60
+                        id: 1231,
+                        tipo: "gasolina",
+                        descricao: "MUDANÇA DE ÓLEO DOS PNEUS ENTRE OUTRAS DESCRICÕES GRANDES",
+                        estado: "nafila",
+                        duracao: 60,
+                        limite: new Date( new Date().getTime() + 60 * 60000)
                     },
                     {
                         id: 2,
                         descricao: "Service 2",
-                        estado: "Realizado",
-                        duracao: 45
+                        tipo: "eletrico",
+                        estado: "nafila",
+                        duracao: 120,
+                        limite: null
                     },
                     {
                         id: 3,
                         descricao: "Service 3",
-                        estado: "Por Realizar",
-                        duracao: 30
+                        tipo: "universal",
+                        estado: "nafila",
+                        duracao: 30,
+                        limite: new Date( new Date().getTime() + 30 * 60000)
                     },
                     {
                         id: 4,
                         descricao: "Service 4",
-                        estado: "Realizado",
-                        duracao: 75
+                        tipo: "gasoleo",
+                        estado: "parado",
+                        duracao: 75,
+                        limite: new Date( new Date().getTime() + 75 * 60000)
                     },
                     {
                         id: 5,
                         descricao: "Service 5",
-                        estado: "Por Realizar",
-                        duracao: 90
+                        tipo: "eletrico",
+                        estado: "parado",
+                        duracao: 90,
+                        limite: new Date( new Date().getTime() + 90 * 60000)
                     },
                     {
                         id: 6,
                         descricao: "Service 6",
-                        estado: "Realizado",
-                        duracao: 120
+                        tipo: "eletrico",
+                        estado: "parado",
+                        duracao: 120,
+                        limite: new Date( new Date().getTime() + 120 * 60000)
                     },
                     {
                         id: 7,
                         descricao: "Service 7",
-                        estado: "Realizado",
-                        duracao: 120
+                        tipo: "gasolina",
+                        estado: "nafila",
+                        duracao: 30,
+                        limite: null
                     },
                     {
                         id: 8,
                         descricao: "Service 8",
-                        estado: "Realizado",
-                        duracao: 120
+                        tipo: "gasoleo",
+                        estado: "parado",
+                        duracao: 45,
+                        limite: new Date( new Date().getTime() + 45 * 60000)
                     },
                     {
                         id: 9,
                         descricao: "Service 9",
-                        estado: "Realizado",
-                        duracao: 120
+                        tipo: "gasolina",
+                        estado: "nafila",
+                        duracao: 120,
+                        limite: new Date(new Date().getTime() + 120 * 60000)
                     }
                 ]
             };
@@ -116,6 +134,7 @@
     .tables {
         display: flex;
         flex-direction: row;
+        height: 70vh;
     }
 
     .table_entry1 {
@@ -135,7 +154,7 @@
         transform: translateX(-50%);
     }
 
-    @media (max-width: 1055px) { /* tamanho de duas tabelas */
+    @media (max-width: 1080px) { /* tamanho de duas tabelas */
         .tables {
             flex-direction: column;
             flex-wrap: row-wrap;

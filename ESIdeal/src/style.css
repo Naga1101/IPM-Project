@@ -2,7 +2,7 @@
   --color-light-grey: #D9D9D9;
   --color-darker-grey: #727272;
   --color-red: #DC564E;
-  --text-light-grey: #727272;
+  --text-light-grey: #8D8C8C;
   --text-darker-grey: #565454;
   --text-black: #000000;
 
@@ -10,6 +10,7 @@
   --banner-width-min: 450px;
   --banner-width-normal: 40vw;
 
+  --color-table-black: #444444;
   --font-family: 'Lato', sans-serif;
 ;
 }
