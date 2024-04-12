@@ -35,9 +35,11 @@ export default {
 <style scoped>
 
   .table-main {
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
   }
 
   .table-header {
@@ -47,6 +49,8 @@ export default {
     background-color: var(--color-red);
     color: white;
     min-width: calc(var(--banner-width-min) - 30px);
+    padding-right: 15px;
+    width: calc(100% - 41px); /* porque é só está direito quando é especificamente 41.5???*/
     height: 20px;
     font-family: var(--font-family);
     padding: 5px 15px;
@@ -60,28 +64,29 @@ export default {
     padding-left: 10px;
     translate: 0px 1px;
   }
+  
   .table-content {
+    overflow-y: scroll;
     width: 100%;
-    height: var(--table-height);
-
+    height: 65vh;
+    padding-right: 15px;
   }
 
-  .service{
+  .service:not(:last-child) { /* todos os elementos menos o último da lista ficam com espaço em baixo */
     margin-bottom: 10px;
-    width: 100%;
   }
 
   /* customizar a scrollbar */
-  .table-main::-webkit-scrollbar {
+  .table-content::-webkit-scrollbar {
     width: 12px;
   }
 
-  .table-main::-webkit-scrollbar-thumb {
+  .table-content::-webkit-scrollbar-thumb {
     background-color: #949494;
     border-radius: 10px;
   }
 
-  .table-main::-webkit-scrollbar-track {
+  .table-content::-webkit-scrollbar-track {
     background-color: #E2E2E2;
   }
 </style>

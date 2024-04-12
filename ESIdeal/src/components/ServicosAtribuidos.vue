@@ -3,10 +3,12 @@
     <div class="page">
         <h1>Serviços Atribuídos</h1>
         <div class="tables">
-            <TabelaServicos class="table_entry" :services="serviceData"/>
-            <TabelaServicos class="table_entry" :services="serviceData"/>
+            <TabelaServicos class="table_entry1" :services="serviceData"/>
+            <div class="separator"></div>
+            <TabelaServicos class="table_entry2" :services="serviceData"/>
         </div>
     </div>
+    <Footer/>
   </template>
   
   <script>
@@ -84,16 +86,49 @@
  </script>
 
 <style scoped>
+
     .page {
-        padding: 20px
+        padding: 25px
     }
+
     .tables {
         display: flex;
+        /* justify-content: space-between; */
         flex-direction: row;
-        justify-content: space-between;
     }
-    .table_entry {
-       padding: 0px 30px 0px 20px;
-       width: 100%;
+
+    .table_entry1 {
+        padding-right: 30px;
     }
+
+    .table_entry2 {
+        padding-left: 20px;
+        padding-right: 10px;
+    }
+
+    .separator {
+        position: static;
+        left: 50%;
+        width: 1px;
+        background-color: var(--text-light-grey);
+        transform: translateX(-50%);
+    }
+
+    @media (max-width: 1055px) { /* tamanho de duas tabelas */
+        .tables {
+            flex-direction: column;
+            flex-wrap: row-wrap;
+        }
+
+        .table_entry1, .table_entry2 {
+            padding-left:0px;
+            height: calc(var(--banner-height) * 3.4);
+            padding-bottom: 20px;
+        }
+
+        .separator {
+            display: none;
+        }
+    }
+
 </style>
