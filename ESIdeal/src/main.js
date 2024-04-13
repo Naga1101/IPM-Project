@@ -10,6 +10,7 @@ import servicosAtribuidosPage from './components/ServicosAtribuidos.vue';
 import NotFoundPage from './components/NotFound.vue';
 import Navbar from './components/Navbar.vue';
 import ExitPopUp from './components/exit-popup.vue';
+import StartPopUp from './components/start-popup.vue';
 import Footer from './components/Footer.vue'
 
 const router = createRouter({
@@ -17,7 +18,8 @@ const router = createRouter({
     routes: [
       { path: '/', redirect: '/login'}, // redireciona de base para login
       { path: '/login', component: loginPage },
-      { path: '/pop', component: ExitPopUp },
+      { path: '/pop1', component: ExitPopUp },
+      { path: '/pop2', component: StartPopUp },
       { path: '/servico/:servicoID', component: servicoPage, props: true }, // considerar também fazer isto com nested routing?
       { path: '/atribuidos', component: servicosAtribuidosPage},
       { path: '/:notFound(.*)', component: NotFoundPage} // rota para páginas não encontradas
