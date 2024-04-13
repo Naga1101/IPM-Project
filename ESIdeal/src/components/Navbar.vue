@@ -40,9 +40,8 @@
 		left: 50%;
 		transform: translateX(-50%); */
 		/* por agora vou tirar senao fica ainda pior com nomes grandes */
-
+		font-size: 2vw;
         font-weight: 400;
-        font-size: 2.4vw;
         margin: 0 20px;
     }
 
@@ -67,16 +66,16 @@
 		margin-left: 20px;
         display: inline-flex;
         flex-direction: column;
-        padding-right: 2.5em; /* VOU ME PASSAR NAO CONSIGO METER ISTO EM PERCENTAGEM PORQUE?????????? */
+        padding-right: 5em; /* VOU ME PASSAR NAO CONSIGO METER ISTO EM PERCENTAGEM PORQUE?????????? */
     }
 
     .nome {
-        font-size: 2.3vw;
+        font-size: 1.5vw;
         font-weight: 200px;
     }
     .id {
         padding-top: 3px;
-        font-size: 1.6vw;
+        font-size: 1vw;
         color:#444444;
     }
 
@@ -94,7 +93,7 @@
         color: white;
         padding: 8px 12px;
         cursor: pointer;
-        font-size: 2.4vw;
+        font-size: 1.5vw;
         padding: 12px 20px;
         /* width: 20vw;
         height: 50px; */
