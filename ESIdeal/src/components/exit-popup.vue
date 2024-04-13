@@ -6,6 +6,8 @@
         // Propriedades do login
 
         aviso: '/images/aviso.png',
+        recusar: '/images/recusar.png',
+        confirmar: '/images/confirmar.png',
       }
     },
     methods: {
@@ -18,16 +20,23 @@
   <div class="exit-popup">
     <div class="faixa-vermelha"></div>
     <div class="mensagem">
-        <div class="img">
+        <div class="imgAviso">
           <img :src="aviso" alt="triangle">
         </div>
         <div class="msg">
-          <p>Têm a certeza que pretende sair?</p>
+          <p>Tem a certeza que pretende sair?</p>
           <p>Todas as ações em progresso seram suspendidas</p>
         </div>
       </div>
     <div class="linha"></div>
-    <div class="butoes"></div>
+    <div class="butoes">
+      <div class="imgRec">
+          <img :src="recusar" alt="rec-but">
+        </div>
+        <div class="imgConf">
+          <img :src="confirmar" alt="conf-but">
+        </div>
+    </div>
   </div>
 </template>
 
@@ -60,12 +69,13 @@
   padding-right: 0%;
 }
 
-.img {
+.imgAviso {
   width: 20%; 
 }
 
-.img img {
-  max-width: 150%;
+.imgAviso img {
+  max-width: 100%;
+  padding-left: 10%;
 }
 
 .mensagem .msg {
@@ -87,9 +97,8 @@
   text-align: center;
   font-family: 'Lato', sans-serif;
   margin-bottom: 40px;
+  margin-right: 9%;
 }
-
-
 
 .linha {
   height: 2px;
@@ -97,7 +106,31 @@
 }
 
 .butoes {
-  flex: 1; /* Fill remaining space */
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.imgRec {
+  width: 20%; 
+}
+
+.imgRec img {
+  max-width: 68px;
+  max-height: 63px;
+  padding-left: 5%;
+}
+
+.imgConf {
+  width: 20%; 
+}
+
+.imgConf img {
+  max-width: 68px;
+  max-height: 63px;
+  padding-left: 35%;
 }
 </style>
 
