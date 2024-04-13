@@ -1,25 +1,21 @@
 <template>
     <nav class="navbar">
-        <div class="botao">
-            <button class="botao_voltar" type="button" >
-                <img class="left_arrow" src="/images/left_arrow.png">
-                <span>VOLTAR ATRÁS</span>
-            </button>
-        </div>
+		<button class="botao" type="button" >
+			<img class="left_arrow" src="/images/left_arrow.png">
+			<span>VOLTAR ATRÁS</span>
+		</button>
         <div class="posto_number">
-            <p>E.S.Ideal - Posto 08</p>
+            <span>E.S.Ideal - Posto 08</span>
         </div>
         <div class="right_data">
-            <div class="mecanico">
-                <img src="/images/profile_car_photo.png">
-                <div class="mecanico_info">
-                    <span class="nome">João Antunes</span>
-                    <span class="id">ID: 29473</span>
-                </div>
-            </div>
-            <div class="botao">
-                <button class="botao_sair" type="button" >SAIR</button>
-            </div>
+			<div class="mecanico">
+				<img src="/images/profile_car_photo.png">
+				<div class="mecanico_info">
+					<span class="nome">João Antunes</span>
+					<span class="id">ID: 29473</span>
+				</div>
+			</div>
+			<button class="botao" type="button" >SAIR</button>
         </div>
     </nav>
   </template>
@@ -33,40 +29,45 @@
         padding: 0 30px;
         background-color: #D9D9D9;
         color: black;
-        height: 70px;
+        height: fit-content;
         font-family: 'Lato', sans-serif; /* all text is lato semibold*/
     }
 
     .posto_number {
-        display: flex;
-        left: 50%;
+		/* nao sei fazer isto sem ser ignorar o resto do flex */
+		/* as coisas tem tamanhos diferentes logo nunca vai ficar perfeitamente centrado, so fazendo isto */
+		/* position: absolute;
+		left: 50%;
+		transform: translateX(-50%); */
+		/* por agora vou tirar senao fica ainda pior com nomes grandes */
+
         font-weight: 400;
         font-size: 2.4vw;
-        translate: 45%; /* meio aldrabado, TODO ver melhor*/
         margin: 0 20px;
     }
 
     .right_data {
-        display: flex;
+        display: inline-flex;
         align-items: center;
     }
 
-    .mecanico {
-        display: flex;
-        align-items: center;
-    }
-
+	/* TODO meter esta imagem maior */
     img {
-        height: 55px;
-        width: auto;
-        margin-left: 20px;
+		min-height: 100%;
+ 		object-fit: cover;
     }
+	
 
+	.mecanico {
+		display: flex;
+		align-items: center;
+	}
+	
     .mecanico_info {
-        margin-left: 20px;
-        display: flex;
+		margin-left: 20px;
+        display: inline-flex;
         flex-direction: column;
-        padding: 10px 0px;
+        padding-right: 2.5em; /* VOU ME PASSAR NAO CONSIGO METER ISTO EM PERCENTAGEM PORQUE?????????? */
     }
 
     .nome {
@@ -81,12 +82,6 @@
 
     /* BOTOES */
 
-    .botao{
-        align-items: center;
-        display: flex;
-        flex-direction: row;
-    }
-
     .left_arrow {
         object-fit: contain;
         height: max(20px,3.5vh);
@@ -94,39 +89,23 @@
         margin-left: 0.2vw;
     }
 
-    .botao_voltar {
+    .botao {
         background-color: #DC564E;
         color: white;
         padding: 8px 12px;
         cursor: pointer;
         font-size: 2.4vw;
         padding: 12px 20px;
-        width: 20vw;
-        height: 50px;
-        border-radius: 15px;
+        /* width: 20vw;
+        height: 50px; */
+		width: auto;
+		height: auto;
+        border-radius: 2vmin;
         border: none;
         cursor: pointer;
         font-weight: semibold;
         align-items: center;
         justify-content: center;
         display: flex;
-    }
-
-    .botao_sair {
-        background-color: #DC564E;
-        color: white;
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 2.4vw;
-        padding: 12px 20px;
-        width: 10vw;
-        height: 50px;
-        border-radius: 15px;
-        border: none;
-        margin-left: 50px;
-        cursor: pointer;
-        font-weight: semibold;
-        text-align: center;
-        line-height: 25px;
     }
 </style>
