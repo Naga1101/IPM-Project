@@ -24,7 +24,22 @@
                 tipoMotor: "Híbrido",
 
                 nomecliente: "Felizberto Tristemundo",
-                contacto: "+351 938 123 524"
+                contacto: "+351 938 123 524",
+
+                historicoServicos: [
+                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
+                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
+                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
+                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
+                ]
 
             }
         },
@@ -86,6 +101,33 @@
                 <span class="client-info"> Contanto: {{ contacto }}</span>
             </div>
         </div>
+        
+        <!-- Tabela de serviços anteriores -->
+        <div class="table">
+            <div class="table-container">
+                <div class="table-header">
+                    <span>HISTÓRICO DE SERVIÇOS DO CARRO</span>
+                </div>
+                <div class="table-services">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Estado</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(service, index) in historicoServicos" :key="index">
+                                <td>{{ service.servico }}</td>
+                                <td>{{ service.estado }}</td>
+                                <td>{{ service.data }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -117,7 +159,6 @@
     }
 
     .rectangle {
-        display: flex;
         background-color: var(--color-darker-grey);    
         width: 45px;
         height: 110px;
@@ -153,7 +194,6 @@
     }
 
     .duracao {
-        display: flex;
         font-size: 18px;
         font-weight: 500;
         padding-top: 15px;
@@ -163,64 +203,135 @@
         display: flex;
         flex-direction: row;
         padding: 40px 0px 0px 80px;
+        align-items: stretch;
     }
 
-    .car-details {
+    .car-details, .client-info {
         display: flex;
         flex-direction: column;
     }
 
-    .veiculo {
-        font-size: 25px;
-        padding-bottom: 20px;
+    .veiculo, .cliente-title {
+        font-size: 45px;
+        padding-bottom: 30px;
     }
 
     .car-info, .client-info  {
-        padding-bottom: 15px;
-        font-size: 20px;
+        padding-bottom: 25px;
+        font-size: 30px;
     }
 
     .motor {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 40px 0px 0px 70px
+        padding: 40px 0px 0px 150px
     }
 
     .tipo-motor {
-        font-size: 20px;
+        font-size: 30px;
         padding-bottom: 10px;
     }
 
     .motor-imgs {
         display: flex;
-        padding-left: 50px;
+        padding-left: 110px;
         gap: 25px
     }
 
     .motor-imgs img{
-        width: 60px;
+        width: 80px;
         height: auto;
     }
 
     .separator {
-        margin-left: 30px;
-        margin-right: 30px;
+        margin-left: 50px;
+        margin-right: 50px;
         width: 2px;
-        height: 32vh;
-        align-items: stretch;
         background-color: rgb(194, 181, 181);
     }
 
-    .cliente {
-        display: flex;
-        flex-direction: column;
+    .table-container {
+        width: 95%;
+        margin: 0 auto;
+        padding-bottom: 50px;
     }
 
-    .cliente-title {
+    .table-header {
+        color: white;
+        background-color: var(--color-red);
+        height: 40px;
+        font-family: var(--font-family);
+        margin-top: 40px;
+        padding: 10px 0px 0px 10px;
         font-size: 25px;
-        padding-bottom: 20px;
+        margin-right: 12px;
     }
+
+    .table-services {
+        width: 100%; 
+        height: 500px;
+        overflow-y: scroll;
+        padding-right: 15px;
+    }
+
+    .table-services table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-services th {
+        border: 1px solid #ccc;
+        background-color: white;
+        color: black;
+        padding: 10px;
+        text-align: left;
+        font-size: 25px;
+
+    }
+    
+    .table-services td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ccc;
+        font-size: 25px;
+    }
+
+    .table-services th:nth-child(1) {
+        width: 50%;  /* Coluna Estado */
+    }
+
+    .table-services th:nth-child(2) {
+        width: 20%;  /* Coluna data */
+    }
+
+    .table-services th:nth-child(3) {
+        width: 30%;  /* Coluna Data */
+    }
+
+    .table-services tr:nth-child(even) {
+        background-color: white;
+    }
+
+    .table-services tr:nth-child(odd) {
+        background-color: #D9D9D9;
+    }
+
+    /* scroll bar = atribuidos */
+    .table-services::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .table-services::-webkit-scrollbar-thumb {
+        background-color: #949494;
+        border-radius: 10px;
+    }
+
+    .table-services::-webkit-scrollbar-track {
+        background-color: #E2E2E2;
+    }
+
+
 </style>
 
 
