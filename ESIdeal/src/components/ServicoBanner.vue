@@ -6,11 +6,12 @@
         <div class="info">
             <div class="left">
                 <span class="nome">{{ descricao }} (#{{ id }})</span>
-                <span class="prazo" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
+                <span class="prazo" v-if="limite !== null" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
+                <span class="prazo" v-else>SEM PRAZO LIMITE</span>
             </div>
             <div class="middle">
                 <span class="duracao">Duração: {{ duracao }} min</span>
-                <span class="estado">Estado: Suspenso</span>
+                <span class="estado" v-if="estado === 'parado'" >Estado: Suspenso</span>
             </div>
             <div class="right">
                 <object v-if="tipo === 'gasolina' || tipo === 'gasoleo'" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_combustao.svg" alt="combustao"></object>
@@ -130,6 +131,7 @@
         font-weight: 500;
         margin-bottom: auto;
         padding-bottom: 5px;
+        line-height: 30px;
    }
 
    .prazo {
