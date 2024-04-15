@@ -7,15 +7,17 @@
           <object class="filtrar-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
         </button>
         <div class="dropdown-content" :class="{ 'show-dropdown': dropdownVisible }">
-          <button class="dropdown-elem">Ordem crescente</button>
-          <button class="dropdown-elem">Ordem decrescente</button>
-          <button class="dropdown-elem">Proximidade de data limite</button>
-          <button class="dropdown-elem">Serviços suspensos</button>
+          <button v-for="(option,index) in dropdownOptions" :class="{ 
+              'dropdown-elem': true,
+              'dropdown-elem-red': index === filtroSelecionado && comPrazo,
+              'dropdown-elem-black': index === filtroSelecionado && !comPrazo
+            }"
+            @click="changeFilter(index,option.function)"> {{ option.title }}</button>
         </div>
       </div>
     </div>
     <div class="table-content">
-      <div v-for="(service,index) in services" :key="index" class="service">
+      <div v-for="(service,index) in servicesToPresent" :key="index" class="service">
         <ServicoBanner :id="service.id" :tipo="service.tipo" :descricao="service.descricao" :estado="service.estado" :duracao="service.duracao" :limite="service.limite"/>
       </div>
     </div>
@@ -42,15 +44,52 @@ export default {
   props: ['services', 'comPrazo'],
   data() {
     return {
+      dropdownOptions: [ // títulos e funções a chamar para cada botão
+        // { "title": "Ordem crescente", "function": "sortByCrescente"},
+        // { "title": "Ordem decrescente", "function": "sortByCrescente"},
+        // { "title": "Proximidade da data limite", "function": "sortByCrescente"},
+        { "title": "Sem filtro", "function": "filterNone"},
+        { "title": "Serviços suspensos", "function": "filterSuspended"},
+        { "title": "Serviços combustão", "function": "filterCombustion"},
+        { "title": "Serviços elétricos", "function": "filterEletric"},
+        { "title": "Serviços universais", "function": "filterUniversal"}
+      ],
       dropdownVisible: false, // para gerir se dropdown é ou não visível
-      filtroSelecionado: "0" // posição do elemento dentro da div do dropdown-cotent
+      filtroSelecionado: 0, // posição do elemento dentro da div do dropdown-cotent
+      servicesToPresent: []
     }
   },
   methods: {
     toggleDropdown() {
       // find dropdown content element
       this.dropdownVisible = !this.dropdownVisible;
+    },
+
+    changeFilter(index, func) {
+      this.filtroSelecionado = index;
+      this[func]() // correr a função correspondente
+    },
+
+    filterNone() {
+      this.servicesToPresent = this.services
+    },
+    filterSuspended() {
+      this.servicesToPresent = this.services.filter(service => service.estado === 'parado');
+    },
+    filterCombustion() {
+      this.servicesToPresent = this.services.filter(service => service.tipo === 'gasolina' || service.tipo === 'gasoleo');
+    },
+
+    filterEletric() {
+      this.servicesToPresent = this.services.filter(service => service.tipo === 'eletrico');
+    },
+    filterUniversal() {
+      this.servicesToPresent = this.services.filter(service => service.tipo === 'universal');
     }
+  },
+
+  created() {
+    this.servicesToPresent = this.services
   }
 }
 
@@ -76,7 +115,7 @@ export default {
     font-family: var(--font-family);
     padding: 0px 5px 0px 15px;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 0.9em;
     font-weight: 400;
   }
   
@@ -90,7 +129,7 @@ export default {
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1em;
     font-weight: 400;
     padding: 2px 5px;
   }
@@ -110,21 +149,23 @@ export default {
     display: none; /* por default não aparece */
     position: absolute;
     background-color: var(--color-light-grey);
-    min-width: 200px;
+    width: 25vw;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     right: 0;
     translate: 5px 5px;
-}
+  }
 
   .dropdown-elem {
     color: var(--text-black);
     align-items: center;
     text-align: left;
-    padding: 0px 10px;
+    padding: 4px 10px;
     background-color: var(--color-very-light-grey);
     font-size: 18px;
-    height: 30px;
+    font-weight: 300;
+    min-height: 30px;
+    height: fit-content;
     width: 100%;
     display: block;
   }
@@ -177,6 +218,14 @@ export default {
 
   .show-dropdown {
     display:block;
+  }
+
+  .dropdown-elem-black {
+    background-color: var(--color-table-black);
+  }
+
+  .dropdown-elem-red {
+    background-color: var(--color-red);
   }
 
 </style>

@@ -9,8 +9,6 @@
     .footer {
         display: flex;
         position: absolute;
-        bottom: 0;
-        left: 0;
         width: 100%;
         background-color: var(--color-light-grey);
         height: 30px;
@@ -19,8 +17,8 @@
         padding: 10px 30px;
         box-sizing: border-box;
         font-family: var(--font-family);
-        font-size: 20px;
-        margin-top: 20px;
+        font-size: 1em;
+        margin-top: 30px;
     }
 
 </style>

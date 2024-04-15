@@ -9,7 +9,7 @@
         </div>
         <div class="right_data">
 			<div class="mecanico">
-				<img src="/images/profile_car_photo.png">
+				<img class="mecanico_foto" src="/images/profile_car_photo.png">
 				<div class="mecanico_info">
 					<span class="nome">João Antunes</span>
 					<span class="id">ID: 29473</span>
@@ -26,11 +26,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 30px;
+        padding: 7px 30px;
         background-color: #D9D9D9;
         color: black;
         height: fit-content;
         font-family: 'Lato', sans-serif; /* all text is lato semibold*/
+
     }
 
     .posto_number {
@@ -51,7 +52,7 @@
     }
 
 	/* TODO meter esta imagem maior */
-    img {
+    .botao img {
 		min-height: 100%;
  		object-fit: cover;
     }
@@ -62,6 +63,11 @@
 		align-items: center;
 	}
 	
+    .mecanico_foto {
+        object-fit: cover;
+        width: auto;
+        height: 3 em;
+    }
     .mecanico_info {
 		margin-left: 20px;
         display: inline-flex;

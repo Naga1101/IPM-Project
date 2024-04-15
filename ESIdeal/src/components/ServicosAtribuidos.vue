@@ -6,9 +6,9 @@
             <Clock class="clock"/>
         </div>
         <div class="tables">
-            <TabelaServicos class="table_entry1" :services="serviceData" :comPrazo="true"/>
+            <TabelaServicos class="table_entry1" :services="categorias.comPrazo" :comPrazo="true"/>
             <!-- <div class="separator"></div> -->
-            <TabelaServicos class="table_entry2" :services="serviceData" :comPrazo="false"/>
+            <TabelaServicos class="table_entry2" :services="categorias.semPrazo" :comPrazo="false"/>
         </div>
     </div>
     <Footer/>
@@ -101,8 +101,28 @@
                     }
                 ]
             };
+        },
+        computed: {
+            categorias: function() { // dividr serviços em "com prazo limite" e "sem prazo limite"
+                const categorias = {
+                    comPrazo: [],
+                    semPrazo: []
+                }
+
+                this.serviceData.forEach(service => {
+                    if (service.limite !== null) {
+                        categorias.comPrazo.push(service)
+                    } 
+                    else {
+                        categorias.semPrazo.push(service)
+                    }
+                })
+
+                return categorias;
+            }
         }
     };
+
  </script>
 
 <style scoped>
@@ -121,7 +141,7 @@
 
     }
     h1 {
-        font-size: 40px;
+        font-size: 2.2em;
         font-weight: 500;
         font-family: var(--font-family);
     }

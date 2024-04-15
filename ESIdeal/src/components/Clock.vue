@@ -39,7 +39,7 @@
     .text{
         display: flex;
         flex-direction: column;
-        font-size: 25px;
+        font-size: 1.2em;
         font-weight: 400;
         color: var(--text-darker-grey);
         line-height: 130%;
@@ -52,7 +52,7 @@
 
     }
     .clock-image {
-        min-height: 30px;
-        height: 38px;
+        height: 3.2em;
+        object-fit: contain;
     }
 </style>

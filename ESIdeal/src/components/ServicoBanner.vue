@@ -91,6 +91,7 @@
         width: 100%;
         background-color: var(--color-light-grey);
         flex-direction: row;
+        overflow: hidden;
 
     }
 
@@ -127,17 +128,17 @@
 
    .nome {
         flex:2;
-        font-size: 22px;
+        font-size: 1em;
         font-weight: 500;
         margin-bottom: auto;
         padding-bottom: 5px;
-        line-height: 30px;
+        line-height: 1.3em;
    }
 
    .prazo {
         display: flex;
         flex:1;
-        font-size: 22px;
+        font-size: 1em;
         font-weight: 400;
         color: var(--text-darker-grey);
         margin-top: auto;
@@ -148,7 +149,7 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-        font-size: 22px;
+        font-size: 1em;
         font-weight: 500;
    }
 
@@ -169,8 +170,8 @@
 
    .photo {
         padding: 0px 0px 0px 20px;
-        height: 65px;
-        width: 65px;
+        height: 85%;
+        width: auto;
    }
 
    /*classes para mudar dinamicamente cor de componentes*/

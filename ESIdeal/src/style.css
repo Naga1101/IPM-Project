@@ -7,7 +7,7 @@
   --text-darker-grey: #565454;
   --text-black: #000000;
 
-  --banner-height: 90px;
+  --banner-height: 120px;
   --banner-width-min: 450px;
   --banner-width-normal: 40vw;
 
@@ -33,6 +33,7 @@ body {
   min-height: 100vh;
   /*overflow: hidden;*/
   font-family: var(--font-family);
+  flex-direction: column;
 }
 /*
 h1 {
