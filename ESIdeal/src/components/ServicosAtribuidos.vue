@@ -96,7 +96,7 @@
                         descricao: "Service 9",
                         tipo: "gasolina",
                         estado: "nafila",
-                        duracao: 120,
+                        duracao: 1,
                         limite: new Date(new Date().getTime() + 120 * 60000)
                     }
                 ]

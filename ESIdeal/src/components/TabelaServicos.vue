@@ -2,18 +2,40 @@
   <div class="table-main">
     <div class="table-header" :class="{'red-table-header': comPrazo }">
       <span class="header-text">{{ comPrazo ? 'COM PRAZO LIMITE' : 'SEM PRAZO LIMITE'}}</span>
-      <div class="filtrar-dropdown">
-        <button class="dropdown-button" @click="toggleDropdown">FILTRAR
-          <object class="filtrar-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
-        </button>
-        <div class="dropdown-content" :class="{ 'show-dropdown': dropdownVisible }">
-          <button v-for="(option,index) in dropdownOptions" :class="{ 
+      <!-- considerar meter os botoes de ordenar e filtrar num componente separado?? -->
+      <div class="dropdowns">
+        <!-- filtrar dropdown -->
+        <div class="filtrar-dropdown">
+          <button class="dropdown-button" @click="toggleFiltrarDropdown">FILTRAR
+            <object class="dropdown-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
+          </button>
+          <div class="dropdown-content" :class="{ 'show-dropdown': dropdownFiltroVisible }">
+            <button v-for="(option,index) in dropdownFiltrarOptions" :class="{ 
               'dropdown-elem': true,
               'dropdown-elem-red': index === filtroSelecionado && comPrazo,
               'dropdown-elem-black': index === filtroSelecionado && !comPrazo
             }"
-            @click="changeFilter(index,option.function)"> {{ option.title }}</button>
+            @click="applyFiltrarFunc(index,option.function)"> {{ option.title }}</button>
+          </div>
         </div>
+        <!-- ordenar dropdown -->
+        <div class="ordenar-dropdown">
+          <button class="dropdown-button" @click="toggleOrdenarDropdown">ORDENAR
+            <object class="dropdown-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
+          </button>
+          <div class="dropdown-content" :class="{ 'show-dropdown': dropdownOrdenarVisible }">
+            <template v-for="(option,index) in dropdownOrdenarOptions">
+              <button v-if="!('optional' in option) || comPrazo" :class="{ 
+                'dropdown-elem': true,
+                'dropdown-elem-red': index === ordenarSelecionado && comPrazo,
+                'dropdown-elem-black': index === ordenarSelecionado && !comPrazo
+              }"
+              @click="applyOrdenarFunc(index,option.function)"> {{ option.title }}
+            </button>
+          </template>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="table-content">
@@ -44,7 +66,14 @@ export default {
   props: ['services', 'comPrazo'],
   data() {
     return {
-      dropdownOptions: [ // títulos e funções a chamar para cada botão
+      dropdownOrdenarOptions: [ // títulos e funções a chamar para cada botão
+        { "title": "Ordem de chegada", "function": "sortNone"},
+        { "title": "Ordem crescente de duração", "function": "sortByCrescDuration"},
+        { "title": "Ordem decrescente de duração", "function": "sortByDecresDuration"},
+        { "title": "Proximidade da data limite", "function": "sortByProxLimit", "optional": true} // não é para aparecer na tabela de "sem limite"
+        // { "title": "Ordem decrescente de chegada??", "function": "sortByCrescente"},
+      ],
+      dropdownFiltrarOptions: [ // títulos e funções a chamar para cada botão
         // { "title": "Ordem crescente", "function": "sortByCrescente"},
         // { "title": "Ordem decrescente", "function": "sortByCrescente"},
         // { "title": "Proximidade da data limite", "function": "sortByCrescente"},
@@ -54,22 +83,55 @@ export default {
         { "title": "Serviços elétricos", "function": "filterEletric"},
         { "title": "Serviços universais", "function": "filterUniversal"}
       ],
-      dropdownVisible: false, // para gerir se dropdown é ou não visível
+      dropdownOrdenarVisible: false, // para gerir se dropdown é ou não visível
+      dropdownFiltroVisible: false, // para gerir se dropdown é ou não visível
       filtroSelecionado: 0, // posição do elemento dentro da div do dropdown-cotent
+      ordenarSelecionado: 0,
       servicesToPresent: []
     }
   },
   methods: {
-    toggleDropdown() {
+    toggleOrdenarDropdown() {
       // find dropdown content element
-      this.dropdownVisible = !this.dropdownVisible;
+      this.dropdownOrdenarVisible = !this.dropdownOrdenarVisible;
+      this.dropdownFiltroVisible = false
+    },
+    toggleFiltrarDropdown() {
+      // find dropdown content element
+      this.dropdownOrdenarVisible = false
+      this.dropdownFiltroVisible = !this.dropdownFiltroVisible;
     },
 
-    changeFilter(index, func) {
-      this.filtroSelecionado = index;
+    applyOrdenarFunc(index, func) {
+      this.ordenarSelecionado = index;
       this[func]() // correr a função correspondente
     },
+    applyFiltrarFunc(index,func) {
+      this.filtroSelecionado = index;
+      this[func]() // correr a função de filter correspondente  
+      const currOrdFunc = this.dropdownOrdenarOptions[this.ordenarSelecionado].function
+      this[currOrdFunc]() // correr a função de ordenar correpsondente, sobre dados filtrados
+    },
 
+    sortNone() {
+      this.servicesToPresent.sort((a,b) => a.id - b.id)
+    },
+    //funções de ORDENAR
+    sortByCrescDuration() {
+      this.servicesToPresent.sort((a,b) => a.duracao - b.duracao)
+    },
+
+    sortByDecresDuration() {
+      this.servicesToPresent.sort((a,b) => b.duracao - a.duracao)
+    },
+    sortByProxLimit() {
+      this.servicesToPresent.sort((a, b) => {
+        console.log("a.limite:", a.limite);
+        console.log("b.limite:", b.limite);
+        return a.limite - b.limite;
+      });
+    },
+    // funções de FILTER
     filterNone() {
       this.servicesToPresent = this.services
     },
@@ -79,13 +141,13 @@ export default {
     filterCombustion() {
       this.servicesToPresent = this.services.filter(service => service.tipo === 'gasolina' || service.tipo === 'gasoleo');
     },
-
     filterEletric() {
       this.servicesToPresent = this.services.filter(service => service.tipo === 'eletrico');
     },
     filterUniversal() {
       this.servicesToPresent = this.services.filter(service => service.tipo === 'universal');
     }
+
   },
 
   created() {
@@ -119,9 +181,10 @@ export default {
     font-weight: 400;
   }
   
-  .filtrar-dropdown {
+  .ordenar-dropdown, .filtrar-dropdown {
     float: right;
     position: relative;
+    margin-left: 15px;
   }
 
   .dropdown-button {
@@ -134,7 +197,7 @@ export default {
     padding: 2px 5px;
   }
 
-  .filtrar-arrow{
+  .dropdown-arrow{
     width: 18px;
     padding-left: 10px;
     translate: 0px 1px;

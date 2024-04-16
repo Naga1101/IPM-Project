@@ -72,12 +72,18 @@
                 const minutosFim = dataFim.getMinutes().toString().padStart(2, '0');
                 this.horaFim = `${horaFim}:${minutosFim}h`;
 
-                    const currentTime = new Date();
-                    const diffMinutes = Math.floor((dataFim - currentTime) / 60000);
-                    this.poucoTempo = diffMinutes < 60;
-                    console.log(dataFim.getMinutes())
+                const currentTime = new Date();
+                const diffMinutes = Math.floor((dataFim - currentTime) / 60000);
+                this.poucoTempo = diffMinutes < 60;
             }
-        } 
+        },
+        watch: {
+            limite() { // para dar update visual de limite quando se faz sort
+                if (this.limite !== null) {
+                    this.calculateTime(this.limite); // Call calculateTime whenever limite changes
+                }
+            }
+        }
     }
 </script>
 
