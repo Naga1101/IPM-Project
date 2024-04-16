@@ -98,8 +98,8 @@
                 <span class="tipo-motor"> Tipo de Motor: {{ tipoMotor }}</span>
                 <!-- depois meter as condições-->
                 <div class="motor-imgs">
-                    <img src="/images/combustao_naoselected.png" alt="carbackground">
-                    <img src="/images/eletrico_naoselected.png" alt="carbackground">
+                    <img src="/images/combustao_naoselected.png" alt="combustao">
+                    <img src="/images/eletrico_naoselected.png" alt="eletrico">
                 </div>
             </div>
 
@@ -110,6 +110,16 @@
                 <div class="cliente-title"> Cliente </div>
                 <span class="client-info"> Nome: {{ nomecliente }}</span>
                 <span class="client-info"> Contanto: {{ contacto }}</span>
+            </div>
+
+            <div class="separator"></div>
+
+            <!-- Butoes -->
+            <div class="btns">
+                <button class="service-btn">
+                    INICIAR
+                    <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
+                </button>
             </div>
         </div>
         
@@ -144,6 +154,12 @@
             <img src="/images/left_arrow.png" alt="arrow">
         </button>
 		<Modal v-show="mostrarMenuConcluir" @close="closeModal"/>
+        <!-- 
+        <button class="floating-button">
+            INICIAR
+            <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
+        </button>
+        -->
     </div>
 </template>
 
@@ -241,7 +257,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 40px 0px 0px 150px
+        padding: 40px 0px 0px 80px
     }
 
     .tipo-motor {
@@ -303,7 +319,6 @@
         padding: 10px;
         text-align: left;
         font-size: 25px;
-
     }
     
     .table-services td {
