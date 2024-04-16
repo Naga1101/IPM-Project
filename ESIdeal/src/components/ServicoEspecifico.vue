@@ -87,8 +87,8 @@
                 <span class="tipo-motor"> Tipo de Motor: {{ tipoMotor }}</span>
                 <!-- depois meter as condições-->
                 <div class="motor-imgs">
-                    <img src="/images/combustao_naoselected.png" alt="carbackground">
-                    <img src="/images/eletrico_naoselected.png" alt="carbackground">
+                    <img src="/images/combustao_naoselected.png" alt="combustao">
+                    <img src="/images/eletrico_naoselected.png" alt="eletrico">
                 </div>
             </div>
 
@@ -99,6 +99,16 @@
                 <div class="cliente-title"> Cliente </div>
                 <span class="client-info"> Nome: {{ nomecliente }}</span>
                 <span class="client-info"> Contanto: {{ contacto }}</span>
+            </div>
+
+            <div class="separator"></div>
+
+            <!-- Butoes -->
+            <div class="btns">
+                <button class="service-btn">
+                    INICIAR
+                    <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
+                </button>
             </div>
         </div>
         
@@ -128,6 +138,12 @@
                 </div>
             </div>
         </div>
+        <!-- 
+        <button class="floating-button">
+            INICIAR
+            <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
+        </button>
+        -->
     </div>
     <Footer/>
 </template>
@@ -226,7 +242,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 40px 0px 0px 150px
+        padding: 40px 0px 0px 80px
     }
 
     .tipo-motor {
@@ -288,7 +304,6 @@
         padding: 10px;
         text-align: left;
         font-size: 25px;
-
     }
     
     .table-services td {
@@ -330,6 +345,70 @@
 
     .table-services::-webkit-scrollbar-track {
         background-color: #E2E2E2;
+    }
+
+    .floating-button {
+        position: fixed;
+        right: 65px;
+        bottom: 40px;
+        z-index: 10;
+    }
+
+    .floating-button {
+        background-color: #DC564E;
+        color: white;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1.2vw;
+        padding: 12px 20px;
+		width: 300px;
+		height: auto;
+        border-radius: 1vmin;
+        border: none;
+        cursor: pointer;
+        /*font-weight: bold;*/
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .floating-button img {
+        margin-left: 10px;
+        width: 24px;
+        height: auto;
+    }
+
+    .right-arrow {
+        width: 18px;
+        margin-left: 10px;
+        transform: rotate(180deg); 
+        pointer-events: none; 
+    }
+
+
+    .btns {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: center;
+    }
+
+    .service-btn {
+        background-color: #DC564E;
+        color: white;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1.2vw;
+        padding: 12px 20px;
+		width: 300px;
+		height: auto;
+        border-radius: 1vmin;
+        border: none;
+        cursor: pointer;
+        /*font-weight: bold;*/
+        align-items: center;
+        justify-content: center;
+        display: flex;
     }
 
 
