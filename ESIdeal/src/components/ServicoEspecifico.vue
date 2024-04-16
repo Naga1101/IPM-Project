@@ -149,7 +149,7 @@
                 </div>
             </div>
         </div>
-		<button @click="showModal" class="floating-button">
+		<button v-show="! mostrarMenuConcluir" @click="showModal" class="floating-button">
             CONCLUIR
             <img src="/images/left_arrow.png" alt="arrow">
         </button>

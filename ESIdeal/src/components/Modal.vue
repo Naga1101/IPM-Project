@@ -3,6 +3,11 @@
 <script>
 	export default {
 		name: 'Modal',
+		data() {
+			return {
+				title: "Default title"
+			}
+		},
 		methods: {
 			close() {
 				this.$emit('close');
@@ -13,38 +18,33 @@
 
 <template>
 	<transition name="modal-fade">
-		<div class="modal-backdrop">
+		<div class="modal-backdrop" @click="close">
 			<div class="modal">
-				<header class="modal-header">
-				<slot name="header">
-					This is the default title!
-				</slot>
-				<button
-					type="button"
-					class="btn-close"
-					@click="close"
-				>
-					x
+				<button type="button" class="botao-fechar" @click="close">
+					<span>x</span>
 				</button>
+				<header class="modal-header">
+					<!-- <slot name="header">  -->
+						<span class="titulo">
+							{{  title  }}
+						</span>
+						<hr class="linha">
+					<!-- </slot> -->
 				</header>
 
 				<section class="modal-body">
-				<slot name="body">
-					This is the default body!
-				</slot>
+					<slot name="body">
+						This is the default body!
+					</slot>
 				</section>
 
 				<footer class="modal-footer">
-				<slot name="footer">
-					This is the default footer!
-				</slot>
-				<button
-					type="button"
-					class="btn-green"
-					@click="close"
-				>
-					Close Modal
-				</button>
+					<slot name="footer">
+						This is the default footer!
+					</slot>
+					<button type="button" class="botao-confirmar" @click="close">
+						<span>CONFIRMAR</span>
+					</button>
 				</footer>
 			</div>
 		</div>
@@ -53,6 +53,7 @@
 
 <style scoped>
     /* TODO fazer com que isto apenas ocupe a parent div inteira e nao todo o viewport */
+	/* TODO melhorar o que acontece quando se da resize */
 	.modal-backdrop {
 		position: fixed;
 		top: 0;
@@ -86,9 +87,11 @@
 	}
 
 	.modal-header {
+		height: fit-content;
 		position: relative;
 		border-bottom: 1px solid #eeeeee;
 		color: #4AAE9B;
+		flex-direction: column;
 		justify-content: space-between;
 	}
 
@@ -103,31 +106,66 @@
 		padding: 20px 10px;
 	}
 
-	.btn-close {
-		position: absolute;
-		top: 0;
-		right: 0;
-		border: none;
-		font-size: 20px;
-		padding: 10px;
-		cursor: pointer;
-		font-weight: bold;
-		color: #4AAE9B;
-		background: transparent;
-	}
-
-	.btn-green {
-		color: white;
-		background: #4AAE9B;
-		border: 1px solid #4AAE9B;
-		border-radius: 2px;
-	}
-
 	.modal-fade-enter, .modal-fade-leave-to {
 		opacity: 0;
 	}
 
 	.modal-fade-enter-active, .modal-fade-leave-active {
 		transition: opacity .5s ease;
+	}
+
+	.botao-fechar {
+		background-color: #DC564E;
+		color: white;
+		border: 0;
+		border-radius: 50%;
+		height: 50px;
+		width: 50px;
+	}
+
+	.botao-confirmar {
+		width: fit-content;
+		height: fit-content;
+        background-color: #DC564E;
+        color: white;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1.5vw;
+		position: absolute;
+        right: 33%;
+		bottom: 5%;
+        /* width: 20vw;
+        height: 50px; */
+        border-radius: 2vmin;
+        border: none;
+        cursor: pointer;
+        font-weight: semibold;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+	}
+
+	.botao-confirmar img {
+		min-height: 100%;
+ 		object-fit: cover;
+    }
+
+	.botao-fechar img {
+		min-height: 100%;
+ 		object-fit: cover;
+	}
+
+	.titulo {
+		font-size: 2vw;
+        font-weight: 400;
+		text-align: center;
+		color: white;
+	}
+	
+	.linha {
+		margin-top: 5%;
+		background-color: #DC564E;
+		height: 5px;
+		width: 80%;
 	}
 </style>
