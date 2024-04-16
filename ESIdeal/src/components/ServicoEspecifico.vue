@@ -1,11 +1,13 @@
 <script>
+	import Modal from './Modal.vue';
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
 
     export default {
         components: {
             Navbar,
-            Clock
+            Clock,
+			Modal
         },
         data() {
             return {
@@ -39,11 +41,20 @@
                     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
                     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
                     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
-                ]
+                ],
 
+				mostrarMenuConcluir: false
             }
         },
-        
+		methods: {
+			showModal() {
+				this.mostrarMenuConcluir = true;
+			},
+			closeModal() {
+				this.mostrarMenuConcluir = false;
+			}
+		}
+       
     };
  </script>
 
@@ -128,8 +139,12 @@
                 </div>
             </div>
         </div>
+		<button @click="showModal" class="floating-button">
+            CONCLUIR
+            <img src="/images/left_arrow.png" alt="arrow">
+        </button>
+		<Modal v-show="mostrarMenuConcluir" @close="closeModal"/>
     </div>
-    <Footer/>
 </template>
 
 <style scoped>
@@ -333,6 +348,36 @@
     }
 
 
+	.floating-button {
+        position: fixed;
+        right: 65px;
+        bottom: 40px;
+        z-index: 10;
+    }
+
+    .floating-button {
+        background-color: #DC564E;
+        color: white;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1.2vw;
+        padding: 12px 20px;
+        width: 300px;
+        height: auto;
+        border-radius: 1vmin;
+        border: none;
+        cursor: pointer;
+        /*font-weight: bold;*/
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
+    .floating-button img {
+        margin-left: 10px;
+        width: 24px;
+        height: auto;
+    }
 </style>
 
 
