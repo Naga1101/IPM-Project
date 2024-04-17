@@ -59,7 +59,7 @@
  </script>
 
 <template>
-    <Navbar/>
+    <Navbar linkBackTo="/atribuidos"/>
     <div class="page">
         <div class="header">
             <h1>Detalhes de serviço</h1>
@@ -118,7 +118,7 @@
             <div class="btns">
                 <button class="service-btn">
                     INICIAR
-                    <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
+                    <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
                 </button>
             </div>
         </div>

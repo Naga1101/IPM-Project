@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
-		<button class="botao" type="button" >
-			<img class="left_arrow" src="/images/left_arrow.png">
+		<button class="botao_back" type="button" :class="{'show_botao_back': linkBackTo}" @click="goToPage(linkBackTo)">
+			<object class="left_arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
 			<span>VOLTAR ATRÁS</span>
 		</button>
         <div class="posto_number">
@@ -15,11 +15,28 @@
 					<span class="id">ID: 29473</span>
 				</div>
 			</div>
-			<button class="botao" type="button" >SAIR</button>
+			<button class="botao_sair" type="button" >SAIR</button>
         </div>
     </nav>
   </template>
-  
+
+<script>
+export default {
+    props: {
+        linkBackTo: {
+                type: String,
+                required: false,
+                default: ""
+            }
+    },
+    methods: {
+        goToPage(pageUrl) {
+            this.$router.push(pageUrl);
+        }
+    }
+}
+</script>
+
 <style scoped>
 
     .navbar {
@@ -51,8 +68,16 @@
         align-items: center;
     }
 
+    .botao_back {
+        visibility: hidden;
+    }
+
+    .show_botao_back{
+        visibility: visible;
+    }
+
 	/* TODO meter esta imagem maior */
-    .botao img {
+    .botao_back, .botao_sair img {
 		min-height: 100%;
  		object-fit: cover;
     }
@@ -94,7 +119,7 @@
         margin-left: 0.2vw;
     }
 
-    .botao {
+    .botao_back, .botao_sair {
         background-color: #DC564E;
         color: white;
         padding: 8px 12px;
