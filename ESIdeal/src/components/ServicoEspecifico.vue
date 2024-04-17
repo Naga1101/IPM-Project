@@ -393,6 +393,38 @@
         width: 24px;
         height: auto;
     }
+    
+    .right-arrow {
+        width: 18px;
+        margin-left: 10px;
+        transform: rotate(180deg); 
+        pointer-events: none; 
+    }
+
+    .btns {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: center;
+    }
+    
+    .service-btn {
+        background-color: #DC564E;
+        color: white;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1.2vw;
+        padding: 12px 20px;
+		width: 300px; /* auto? é suposto adaptar ao texo?*/
+		height: auto;
+        border-radius: 1vmin;
+        border: none;
+        cursor: pointer;
+        /*font-weight: bold;*/
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
 </style>
 
 
