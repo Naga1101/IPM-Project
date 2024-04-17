@@ -74,9 +74,7 @@ export default {
         // { "title": "Ordem decrescente de chegada??", "function": "sortByCrescente"},
       ],
       dropdownFiltrarOptions: [ // títulos e funções a chamar para cada botão
-        // { "title": "Ordem crescente", "function": "sortByCrescente"},
-        // { "title": "Ordem decrescente", "function": "sortByCrescente"},
-        // { "title": "Proximidade da data limite", "function": "sortByCrescente"},
+
         { "title": "Sem filtro", "function": "filterNone"},
         { "title": "Serviços suspensos", "function": "filterSuspended"},
         { "title": "Serviços combustão", "function": "filterCombustion"},
@@ -98,19 +96,21 @@ export default {
     },
     toggleFiltrarDropdown() {
       // find dropdown content element
-      this.dropdownOrdenarVisible = false
       this.dropdownFiltroVisible = !this.dropdownFiltroVisible;
+      this.dropdownOrdenarVisible = false
     },
 
     applyOrdenarFunc(index, func) {
       this.ordenarSelecionado = index;
       this[func]() // correr a função correspondente
+      this.dropdownOrdenarVisible = false // fechar o dropdown por conveniencia
     },
     applyFiltrarFunc(index,func) {
       this.filtroSelecionado = index;
       this[func]() // correr a função de filter correspondente  
       const currOrdFunc = this.dropdownOrdenarOptions[this.ordenarSelecionado].function
       this[currOrdFunc]() // correr a função de ordenar correpsondente, sobre dados filtrados
+      this.dropdownFiltroVisible = false // fechar o dropdown por conveniencia
     },
 
     sortNone() {
@@ -125,12 +125,9 @@ export default {
       this.servicesToPresent.sort((a,b) => b.duracao - a.duracao)
     },
     sortByProxLimit() {
-      this.servicesToPresent.sort((a, b) => {
-        console.log("a.limite:", a.limite);
-        console.log("b.limite:", b.limite);
-        return a.limite - b.limite;
-      });
+      this.servicesToPresent.sort((a, b) => a.limite - b.limite);
     },
+
     // funções de FILTER
     filterNone() {
       this.servicesToPresent = this.services
@@ -147,7 +144,6 @@ export default {
     filterUniversal() {
       this.servicesToPresent = this.services.filter(service => service.tipo === 'universal');
     }
-
   },
 
   created() {

@@ -1,5 +1,5 @@
 <template>
-    <div class="banner">
+    <div class="banner" @click="goToPage(this.id)">
         <div class="rectangle" :class="{'red-rectangle': poucoTempo === true}">
             <object v-if="estado === 'parado'" class="pause" type="image/svg+xml" data="/svgs/paused.svg" alt="p"></object>
         </div>
@@ -75,12 +75,16 @@
                 const currentTime = new Date();
                 const diffMinutes = Math.floor((dataFim - currentTime) / 60000);
                 this.poucoTempo = diffMinutes < 60;
+            },
+
+            goToPage(serviceId) {
+                this.$router.push(`/servico/${serviceId}`);
             }
         },
         watch: {
-            limite() { // para dar update visual de limite quando se faz sort
+            limite() { // para dar update visual de limite de tempo de serviço quando se faz sort
                 if (this.limite !== null) {
-                    this.calculateTime(this.limite); // Call calculateTime whenever limite changes
+                    this.calculateTime(this.limite);
                 }
             }
         }
@@ -98,7 +102,16 @@
         background-color: var(--color-light-grey);
         flex-direction: row;
         overflow: hidden;
+        cursor: pointer;
 
+    }
+
+    .banner:hover, .banner:focus {
+        background-color: rgba(255,255,255,0.3);
+    }
+
+    object{
+        pointer-events: none; /* permitir clicar no ícone para ativar a on-click function do banner*/
     }
 
     .rectangle{

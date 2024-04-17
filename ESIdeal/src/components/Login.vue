@@ -4,6 +4,9 @@ export default {
   data() {
     return {
       // Propriedades do login
+      user: "",
+      password: "",
+      showHelp: false,
       // tipo de post??
       postoNumber: '08',
 
@@ -20,6 +23,27 @@ export default {
     }
   },
   methods: {
+    validateLogin() {
+      let valid = false;
+
+      // verfiicar login
+      if(this.user !== "" && this.password !== "") {
+        // TODO: also check user and password exist in DB
+        valid = true;
+      }
+
+      //se login falhar, mostrar ajuda
+      else {
+        this.showHelp = true;
+      }
+
+      // se login válido ir para página de serviços atribuídos
+      if(valid) {
+        console.log("Successful login!")
+        this.$router.push('/atribuidos');
+      }
+    }
+
     // metodos
 
     // botao ser transparente enquanto dados inválidos
@@ -39,15 +63,19 @@ export default {
           <div class="login-square">
 
               <div class="login-header"> ENTRAR EM POSTO</div>
+              <div class="helpbox" :class="{'show_helpbox': showHelp}">
+                <object class="error-symbol" type="image/svg+xml" data="/svgs/danger_symbol.svg"></object>
+                ERRO: Credenciais inválidas
+              </div>
               <div class="separator"></div>
 
               <div class="login-form">
                   <div class="login-text">Introduza informações de login: </div>
-                  <input type="text" placeholder="ID Funcionário"/>
-                  <input type="password" placeholder="Palavra-passe" />
+                  <input type="text" id="user" placeholder="ID Funcionário" v-model="user" />
+                  <input type="password" id="password" placeholder="Palavra-passe" v-model="password"/>
               </div>
               <div class="btn-container">
-                  <button class="login-btn">ENTRAR</button>
+                  <button class="login-btn" @click="validateLogin">ENTRAR</button>
               </div>
           </div>
       </div>
@@ -241,6 +269,14 @@ export default {
   background-color: #DDE2E6;
   border: none;
   padding-left: 15px;
+}
+
+.helpbox{
+  display: none;
+}
+
+.show_helpbox {
+  display:block;
 }
 
 </style>

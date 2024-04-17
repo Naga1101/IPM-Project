@@ -98,6 +98,14 @@
                         estado: "nafila",
                         duracao: 1,
                         limite: new Date(new Date().getTime() + 120 * 60000)
+                    },
+                    {
+                        id: 10,
+                        descricao: "Service 10",
+                        tipo: "gasolina",
+                        estado: "nafila",
+                        duracao: 1,
+                        limite: null
                     }
                 ]
             };
