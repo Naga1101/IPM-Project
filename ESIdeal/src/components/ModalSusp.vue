@@ -5,7 +5,8 @@
 		name: 'ModalSusp',
 		data() {
 			return {
-				title: " SUSPENDER "
+				title: " SUSPENDER ",
+				message: "message teste"
 			}
 		},
 		methods: {

@@ -3,8 +3,12 @@
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
     import ModalSusp from './ModalSusp.vue';
+    import {serviceState} from '../scripts/stores.js';
+
 
     export default {
+
+
         components: {
             Navbar,
             Clock,
@@ -19,12 +23,14 @@
         },
         data() {
             return {
+                servico: null, // servico obtido da db
                 id: 1,
                 descricao: "Service 1",
                 estado: "POR INICIAR",
 
                 //temp
                 matricula: "13-AB-12",
+                duracao: "60",
                 marca: "Toyota",
                 modelo: "Prius",
                 cilindrada: "1.8L",
@@ -60,6 +66,7 @@
 		methods: {
 			showModal() {
 				this.mostrarMenuConcluir = true;
+                console.log(this.servico)
 			},
 			closeModal() {
 				this.mostrarMenuConcluir = false;
@@ -113,12 +120,15 @@
                 });
             }
 		},
-        async created() {
-            // try {
-            // }
+        async mounted() {
+            const dbData = serviceState();
+            this.servico = await dbData.getServiceDetailsFromLocal(this.servicoID);
+                // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
+            console.log(this.servico)
         }
-       
+
     };
+
  </script>
 
 <template>

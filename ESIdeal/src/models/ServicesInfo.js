@@ -20,7 +20,6 @@ export class ServiceBaseInfo {
 // já assume que recebeu dados do ServiceBaseInfo, daí estar ligeiramente estranho -> temporario
 export class ServiceFullInfo {
     constructor(data) {
-        console.log(data)
         this.id = data.id || "";
         this.estado = data.estado || null;
         this.agendamento = data.agendamento || null;

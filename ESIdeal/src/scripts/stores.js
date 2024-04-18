@@ -38,7 +38,6 @@ export const serviceState = defineStore('message', {
         async buildServiceDetails(service) { 
             try {
                 const vehicle = await DBRequests.fetchVehicleById(service.id_veiculo)
-                console.log(vehicle)
                 const client = await DBRequests.fetchClientById(vehicle.clientId)
                 const historyServices = await DBRequests.fetchServicesByVehicle(vehicle.id)
 
@@ -64,27 +63,35 @@ export const serviceState = defineStore('message', {
             }
         },
 
-        async getServiceDetails(service) { // recebe dados raw da DB de serviço
+        // assume que é serviço não concluído carregado da base de dados de início
+        async getServiceDetailsFromLocal(idService) { // recebe dados raw da DB de serviço
             try {
-                service.serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
-                const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]))
-                service.serviceTypes = foundServiceTypes.map(type => type.id);
-                baseInfo = new ServiceBaseInfo(service)
+                // service.serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
+                // const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]))
+                // service.serviceTypes = foundServiceTypes.map(type => type.id);
+                // baseInfo = new ServiceBaseInfo(service)
+                console.log(idService)
+                const service = this.servicesToComplete.find(service => service.id === idService)
+                console.log(service)
+                const vehicle = await DBRequests.fetchVehicleById(service.id_veiculo)
+                const client = await DBRequests.fetchClientById(vehicle.clientId)
+                const historyServices = await DBRequests.fetchServicesByVehicle(vehicle.id)
 
-                const vehicle = await DBRequests.fetchVehicleById(baseInfo.vehicleId)
-                const client = await DBRequests.fetchClientById(baseInfo.vehicle.clientId)
-                const historyServices = await DBRequests.fetchServicesByVehicle(baseInfo.id)
+                service.vehicle = vehicle;
+                service.client = client;
+                service.historyServices = historyServices;
 
-                baseInfo.vehicle = vehicle;
-                baseInfo.client = client;
-                baseInfo.historyServices = historyServices;
-
-                return new ServiceFullInfo(service)
+                return new ServiceInfo.ServiceFullInfo(service)
 
             } catch (error) {
                 console.error("Error loading DB data for specific service:", error)
             }
 
+        },
+
+        // qualquer serviço carregado da base de dados diretamente
+        async getServiceDetailsFromRemote(idService) { // recebe dados raw da DB de serviço
+           // TODO:
         }
     },
 });
