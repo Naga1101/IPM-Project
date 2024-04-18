@@ -167,5 +167,6 @@
 		background-color: #DC564E;
 		height: 5px;
 		width: 80%;
+		border: none;
 	}
 </style>

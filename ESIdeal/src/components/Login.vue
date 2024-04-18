@@ -8,12 +8,17 @@ export default {
       password: "",
       showHelp: false,
       // tipo de post??
-      tipoPosto: 'Geral',
+      tipoPosto: 'Combustão',
       postoNumber: '08',
 
-      combustaoImg: '/images/combustao_selected.png',
-      eletricoImg: '/images/eletrico_selected.png',
+      combustaoImg: '/images/combustao_naoselected.png',
+      eletricoImg: '/images/eletrico_naoselected.png',
       geralImg: '/images/universal_selected.png',
+
+      // mudar a cor do texto
+      combustaoColor: '#999999',
+      eletricoColor: '#999999',
+      geralColor: '#FFFFFF'
 
       //pode ser um array de especialidades com name img color e usar v-for na template
     }
@@ -89,19 +94,16 @@ export default {
                 <span>ESPECIALIDADES:</span>
             </div>
             <div class="especialidade"> 
-                <img :src="combustaoImg" alt="Combustão"
-                :style="{filter: tipoPosto === 'Combustão' ? 'none' : 'grayscale(100%)'}">
-                <div :style="{color: tipoPosto === 'Combustão' ? 'white' : '#999999'}">COMBUSTÃO</div>
+                <img :src="combustaoImg" alt="Combustão">
+                <div :style="{color: combustaoColor}">COMBUSTÃO</div>
             </div>
             <div class="especialidade"> 
-                <img :src="eletricoImg" alt="Elétrico"
-                :style="{filter: tipoPosto === 'Elétrico' ? 'none' : 'grayscale(100%)'}">
-                <div :style="{color: tipoPosto === 'Elétrico' ? 'white' : '#999999'}">ELÉTRICO</div>
+                <img :src="eletricoImg" alt="Elétrico">
+                <div :style="{color: eletricoColor}">ELÉTRICO </div>
             </div>
             <div class="especialidade"> 
-                <img :src="geralImg" alt="geral"
-                :style="{filter: tipoPosto === 'Geral' ? 'none' : 'grayscale(100%)'}">
-                <div :style="{color: tipoPosto === 'Geral' ? 'white' : '#999999'}">GERAL</div>
+                <img :src="geralImg" alt="geral">
+                <div :style="{color: geralColor}">GERAL</div> 
             </div>
           </div>
       </div>

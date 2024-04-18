@@ -17,16 +17,14 @@
   <script>
     import TabelaServicos from './TabelaServicos.vue';
     import Clock from './Clock.vue';
-    import {serviceState} from '../scripts/stores.js';
-
     export default {
         components: {
             TabelaServicos,
             Clock
         },
+        props: ['services', 'serviceDefinitions'],
         data() {
             return {
-                services: [],
                 serviceData: [
                     //Exemplos de servicos
                     {
@@ -130,11 +128,6 @@
 
                 return categorias;
             }
-        },
-        created() {
-            const dbData = serviceState();
-            this.services = dbData.servicesToComplete;
-            console.log(this.services)
         }
     };
 
