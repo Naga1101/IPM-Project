@@ -9,7 +9,7 @@
           <button class="dropdown-button" @click="toggleFiltrarDropdown">FILTRAR
             <object class="dropdown-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
           </button>
-          <div class="dropdown-content" :class="{ 'show-dropdown': dropdownFiltroVisible }">
+          <div class="dropdown-content" v-show="dropdownFiltroVisible">
             <button v-for="(option,index) in dropdownFiltrarOptions" :class="{ 
               'dropdown-elem': true,
               'dropdown-elem-red': index === filtroSelecionado && comPrazo,
@@ -23,7 +23,7 @@
           <button class="dropdown-button" @click="toggleOrdenarDropdown">ORDENAR
             <object class="dropdown-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
           </button>
-          <div class="dropdown-content" :class="{ 'show-dropdown': dropdownOrdenarVisible }">
+          <div class="dropdown-content" v-show="dropdownOrdenarVisible" >
             <template v-for="(option,index) in dropdownOrdenarOptions">
               <button v-if="!('optional' in option) || comPrazo" :class="{ 
                 'dropdown-elem': true,
@@ -205,7 +205,7 @@ export default {
   }
 
   .dropdown-content {
-    display: none; /* por default não aparece */
+    display: block; /* por default não aparece */
     position: absolute;
     background-color: var(--color-light-grey);
     width: 25vw;
@@ -273,10 +273,6 @@ export default {
   /*classes para assign dinâmico*/
   .red-table-header {
     background-color: var(--color-red);
-  }
-
-  .show-dropdown {
-    display:block;
   }
 
   .dropdown-elem-black {

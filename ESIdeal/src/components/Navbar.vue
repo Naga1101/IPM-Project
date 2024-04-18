@@ -15,43 +15,29 @@
 					<span class="id">ID: 29473</span>
 				</div>
 			</div>
-			<button class="botao_sair" type="button" @click="showExitPopup">SAIR</button>
-            <PopExit v-show="mostrarExitPopup" @close="closeExitPopup"/>
+			<button class="botao_sair" type="button" @click="logout">SAIR</button>
         </div>
     </nav>
   </template>
 
 <script>
-import PopExit from './PopExit.vue';
-
 export default {
     props: {
         linkBackTo: {
                 type: String,
                 required: false,
-                default: "",
+                default: ""
             }
-        },
-    components:{
-        PopExit
     },
-
-    data(){
-        return{
-            mostrarExitPopup: false
-        }
-    },
-
     methods: {
         goToPage(pageUrl) {
             this.$router.push(pageUrl);
         },
-        showExitPopup() {
-			this.mostrarExitPopup = true;
-		},
-		closeExitPopup() {
-			this.mostrarExitPopup = false;
-		}
+        logout() {
+            // testar se serviço a decorrer
+                // se estiver, meter prompt de confirmar saída irá suspender serviço atual
+            this.goToPage("/login");
+        }
     }
 }
 </script>

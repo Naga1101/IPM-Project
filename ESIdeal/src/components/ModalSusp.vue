@@ -5,7 +5,7 @@
 		name: 'ModalSusp',
 		data() {
 			return {
-				title: "SUSPENDER"
+				title: " SUSPENDER "
 			}
 		},
 		methods: {
@@ -172,7 +172,6 @@
 		background-color: #DC564E;
 		height: 5px;
 		width: 80%;
-		border: none;
 	}
 
 	.textbox {
