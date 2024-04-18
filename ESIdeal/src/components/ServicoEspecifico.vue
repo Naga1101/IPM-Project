@@ -50,6 +50,9 @@
                     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
                 ],
 
+                sortColumn: null,
+                sortOrder: null,
+
 				mostrarMenuSuspender: false,
 				mostrarMenuConcluir: false
             }
@@ -66,7 +69,49 @@
 			},
 			closeModalSusp() {
 				this.mostrarMenuSuspender = false;
-			}
+			},
+
+            sortTable(coluna) {
+                // ao clicar outra vez trocar entre asc/desc
+                if (this.sortColumn === coluna) {
+                    if (this.sortOrder === 'asc') {
+                        this.sortOrder = 'desc';
+                    } else {
+                        this.sortOrder = 'asc';
+                    }
+                } else {
+                    this.sortColumn = coluna;
+                    this.sortOrder = 'asc';
+                }
+                // sort na lista dos historicos
+                this.historicoServicos.sort((a,b) => {
+                    let val1 = a[coluna];
+                    let val2 = b[coluna];
+                    let result;
+
+                    if(coluna === 'data') {
+                        val1 = new Date(val1).getTime();
+                        val2 = new Date(val2).getTime();
+                    }
+                    
+                    if (val1 < val2){
+                        result = -1;
+                    }
+                    else if (val1 === val2){
+                        result = 0;
+                    }
+                    else {
+                        result = 1;
+                    }
+
+                    if (this.sortOrder === 'asc'){
+                        return result;
+                    }
+                    else{
+                        return -result;
+                    }
+                });
+            }
 		},
         async created() {
             // try {
@@ -158,9 +203,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Serviço</th>
-                                <th>Estado</th>
-                                <th>Data</th>
+                                <th @click="sortTable('servico')">Serviço</th>
+                                <th @click="sortTable('estado')">Estado</th>
+                                <th @click="sortTable('data')">Data</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -351,6 +396,12 @@
         padding: 10px;
         text-align: left;
         font-size: 25px;
+        cursor: pointer;
+        transition: background-color 0.5s;
+    }
+
+    .table-services th:hover {
+        background-color: #f2f2f2;
     }
     
     .table-services td {
