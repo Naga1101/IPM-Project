@@ -17,12 +17,12 @@
     },
     {
       "id": "sct",
-      "descr": "Subsituir calços travÃµes",
+      "descr": "Subsituir calços travões",
       "duração": 60
     },
     {
       "id": "mot",
-      "descr": "Mudar Ã³leo travÃµes",
+      "descr": "Mudar óleo travões",
       "duração": 20
     },
     {
@@ -37,17 +37,17 @@
     },
     {
       "id": "sfah",
-      "descr": "Substituir filtro ar habitÃ¡culo",
+      "descr": "Substituir filtro ar habitáculo",
       "duração": 30
     },
     {
       "id": "mom",
-      "descr": "Mudar Ã³leo motor",
+      "descr": "Mudar óleo motor",
       "duração": 10
     },
     {
       "id": "sfo",
-      "descr": "Substituir filtro Ã³leo",
+      "descr": "Substituir filtro óleo",
       "duração": 20
     },
     {
@@ -72,7 +72,7 @@
     },
     {
       "id": "svi",
-      "descr": "Substituir velas de incandescÃªncia",
+      "descr": "Substituir velas de incandescência",
       "duração": 30
     },
     {
@@ -87,7 +87,7 @@
     },
     {
       "id": "sva",
-      "descr": "Substituir vÃ¡lvula do acelerador",
+      "descr": "Substituir válvula do acelerador",
       "duração": 30
     },
     {

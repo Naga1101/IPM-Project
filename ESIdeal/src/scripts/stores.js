@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 import * as DBRequests from './DBrequests.js';
-
+import { ServiceBaseInfo } from '../models/ServiceBaseInfo.js';
 export const serviceState = defineStore('message', {
     state: () => ({
         onGoingService: false,
@@ -39,9 +39,11 @@ export const serviceState = defineStore('message', {
                 this.serviceTypes = await DBRequests.fetchVehicleTypes();
                 this.servicesToComplete = await DBRequests.fetchServicesToComplete(); // isto devia ser uma call separada se calhar?, depende se achamos que vão aparecer serviços durante o decorrer do programa
             
-                this.servicesToComplete.forEach(service => {
-                    service.serviceDef = this.serviceDefinitions.find(def => def.id === service.id);
-                    service.serviceType = this.serviceTypes.find(type => type.serviços.includes(service["service-definitionId"]))
+                this.servicesToComplete = this.servicesToComplete.map(service => {
+                    service.serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
+                    const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]))
+                    service.serviceTypes = foundServiceTypes.map(type => type.id);
+                    return new ServiceBaseInfo(service)
                 });
             } catch (error) {
                 console.error("Error loading DB data for incomplete services:", error)
