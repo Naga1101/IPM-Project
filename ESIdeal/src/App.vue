@@ -13,5 +13,3 @@ import { serviceState } from './scripts/stores.js';
   }
 
 </script>
-<style scoped>
-</style>

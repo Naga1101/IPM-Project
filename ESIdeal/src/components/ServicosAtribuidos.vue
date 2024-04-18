@@ -131,10 +131,12 @@
                 return categorias;
             }
         },
-        created() {
+        async created() {
             const dbData = serviceState();
             this.services = dbData.servicesToComplete;
-            console.log(this.services)
+
+            const serviceDetailed = await dbData.buildServiceDetails(this.services[0]);
+
         }
     };
 

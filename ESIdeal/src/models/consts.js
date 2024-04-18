@@ -1,8 +1,8 @@
 export const TiposVeiculo = {
-    GASOLINA: 0,
-    GASOLEO: 1,
-    ELETRICO: 2,
-    HIBRIDO: 3
+    GASOLINA: 1,
+    GASOLEO: 2,
+    ELETRICO: 3,
+    HIBRIDO: 4
   };
 
 export const AgendamentoServico = {

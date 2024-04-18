@@ -40,11 +40,11 @@ export const fetchVehicleTypes = async () => {
     .catch(error => console.log(error))
 }
 
-export const fetchClientById = async (serviceId) => {
-    return fetch(baseUrl + `clients/${serviceId}`)
+export const fetchClientById = async (clientId) => {
+    return fetch(baseUrl + `clients/${clientId}`)
     .then (response => {
         if (!response.ok) {
-            throw new Error('Error fetching services');
+            throw new Error('Error fetching client');
         }
         else {
             return response.json()
@@ -66,11 +66,11 @@ export const fetchServicesByVehicle = async (vehicleId) => {
     .catch(error => console.log(error))
 }
 
-export const fetchVehicleById = async (id) => {
-    return fetch(baseUrl + `vehicles/${id}`)
+export const fetchVehicleById = async (vehicleId) => {
+    return fetch(baseUrl + `vehicles/${vehicleId}`)
     .then (response => {
         if (!response.ok) {
-            throw new Error('Error fetching services');
+            throw new Error('Error fetching vehicle');
         }
         else {
             return response.json()
