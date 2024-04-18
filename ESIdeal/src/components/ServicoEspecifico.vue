@@ -105,13 +105,20 @@
             <!-- Motor info -->
             <div class="motor">
                 <span class="tipo-motor"> Tipo de Motor: {{ tipoMotor }}</span>
-                <!-- depois meter as condições-->
                 <div class="motor-imgs">
-                    <img src="/images/combustao_naoselected.png" alt="combustao">
-                    <img src="/images/eletrico_naoselected.png" alt="eletrico">
+                    <!-- Motor combustão -->
+                    <img v-if="tipoMotor === 'Combustão'" src="/images/combustao_naoselected.png" alt="combustao">
+
+                    <!-- Motor Elétrico -->
+                    <img v-else-if="tipoMotor === 'Elétrico'" src="/images/eletrico_naoselected.png" alt="eletrico">
+
+                    <!-- Motor Híbrido -->
+                    <span class="motor-imgs" v-else-if="tipoMotor === 'Híbrido'">
+                        <img src="/images/combustao_naoselected.png" alt="combustao">
+                        <img src="/images/eletrico_naoselected.png" alt="eletrico">
+                    </span>
                 </div>
             </div>
-
             <div class="separator"></div>
 
             <!-- Client Info-->
@@ -249,7 +256,7 @@
     .details {
         display: flex;
         flex-direction: row;
-        padding: 40px 0px 0px 80px;
+        padding: 40px 0px 0px 70px;
         align-items: stretch;
     }
 
@@ -282,8 +289,8 @@
 
     .motor-imgs {
         display: flex;
-        padding-left: 110px;
-        gap: 25px
+        padding-left: 60px;
+        gap: 25px;
     }
 
     .motor-imgs img{

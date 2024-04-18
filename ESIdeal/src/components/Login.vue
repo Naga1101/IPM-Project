@@ -8,6 +8,7 @@ export default {
       password: "",
       showHelp: false,
       // tipo de post??
+      tipoPosto: 'Combustão',
       postoNumber: '08',
 
       combustaoImg: '/images/combustao_naoselected.png',
@@ -20,6 +21,11 @@ export default {
       geralColor: '#FFFFFF'
 
       //pode ser um array de especialidades com name img color e usar v-for na template
+    }
+  },
+  computed: {
+    isFormCompleted() {
+      return (this.user.length > 0 && this.password.length > 0);
     }
   },
   methods: {
@@ -75,7 +81,7 @@ export default {
                   <input type="password" id="password" placeholder="Palavra-passe" v-model="password"/>
               </div>
               <div class="btn-container">
-                  <button class="login-btn" @click="validateLogin">ENTRAR</button>
+                  <button class="login-btn" :class="{ 'disabled': !isFormCompleted }" @click="validateLogin">ENTRAR</button>
               </div>
           </div>
       </div>
@@ -251,6 +257,12 @@ export default {
   cursor: pointer;
 
   font-size: 20px;
+}
+
+.login-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .login-text {
