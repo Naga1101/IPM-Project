@@ -1,24 +1,17 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import Login from './components/Login.vue'
-
-</script>
-
 <template>
   <router-view></router-view>
 </template>
 
+<script>
+import { serviceState } from './scripts/stores.js';
+
+  export default {
+    async created() {
+      const serviceStateData = serviceState()
+      await serviceStateData.loadDBdata(); // carregar dados da base de dados ao iniciar o programa
+    }
+  }
+
+</script>
 <style scoped>
-/* .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-} */
 </style>

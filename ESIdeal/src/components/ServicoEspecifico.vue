@@ -11,12 +11,17 @@
 			Modal,
             ModalSusp
         },
+        props: {
+            servicoID: { // recebido no URL
+                type: String,
+                required: true
+            }
+        },
         data() {
             return {
                 id: 1,
                 descricao: "Service 1",
                 estado: "POR INICIAR",
-                duracao: 60,
 
                 //temp
                 matricula: "13-AB-12",
@@ -62,7 +67,11 @@
 			closeModalSusp() {
 				this.mostrarMenuSuspender = false;
 			}
-		}
+		},
+        async created() {
+            // try {
+            // }
+        }
        
     };
  </script>
