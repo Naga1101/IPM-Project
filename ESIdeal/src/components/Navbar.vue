@@ -15,7 +15,7 @@
 					<span class="id">ID: 29473</span>
 				</div>
 			</div>
-			<button class="botao_sair" type="button" >SAIR</button>
+			<button class="botao_sair" type="button" @click="logout">SAIR</button>
         </div>
     </nav>
   </template>
@@ -32,6 +32,11 @@ export default {
     methods: {
         goToPage(pageUrl) {
             this.$router.push(pageUrl);
+        },
+        logout() {
+            // testar se serviço a decorrer
+                // se estiver, meter prompt de confirmar saída irá suspender serviço atual
+            this.goToPage("/login");
         }
     }
 }

@@ -183,6 +183,7 @@
         </button>
         -->
     </div>
+    <Footer/>
 </template>
 
 <style scoped>
