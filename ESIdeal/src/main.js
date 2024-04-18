@@ -1,9 +1,12 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router';
+import { createPinia } from 'pinia';
+
 import './style.css'
 
 import App from './App.vue';
 
+//components
 import loginPage from  './components/Login.vue';
 import servicoPage from './components/ServicoEspecifico.vue';
 import servicosAtribuidosPage from './components/ServicosAtribuidos.vue';
@@ -22,12 +25,14 @@ const router = createRouter({
     ],
 });
 
+const pinia = createPinia();
 const app = createApp(App)
 
 //definir components globais, já que vão exsitir em quase todas as páginas
 app.component('Navbar', Navbar);
 app.component('Footer', Footer);
 
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')

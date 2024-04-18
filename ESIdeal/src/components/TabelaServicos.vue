@@ -40,7 +40,7 @@
     </div>
     <div class="table-content">
       <div v-for="(service,index) in servicesToPresent" :key="index" class="service">
-        <ServicoBanner :id="service.id" :tipo="service.tipo" :descricao="service.descricao" :estado="service.estado" :duracao="service.duracao" :limite="service.limite"/>
+        <ServicoBanner :servico="service" :Consts="Consts" :ServicesInfo="ServicesInfo"/>
       </div>
     </div>
   </div>
@@ -48,11 +48,14 @@
   
 <script>
 import ServicoBanner from './ServicoBanner.vue';
+import * as Consts from '../models/consts.js';
+import * as ServicesInfo from '../models/ServicesInfo.js';
 
 export default {
   components: {
       ServicoBanner
   },
+
   props: {
     services: {
       type: Array,
@@ -63,9 +66,21 @@ export default {
       required: true
     }
   },
+
+  computed: {
+    Consts() {
+      return Consts;
+    },
+    ServicesInfo() {
+      return ServicesInfo;
+    }
+  },
+
   props: ['services', 'comPrazo'],
+
   data() {
     return {
+
       dropdownOrdenarOptions: [ // títulos e funções a chamar para cada botão
         { "title": "Ordem de chegada", "function": "sortNone"},
         { "title": "Ordem crescente de duração", "function": "sortByCrescDuration"},
@@ -118,14 +133,14 @@ export default {
     },
     //funções de ORDENAR
     sortByCrescDuration() {
-      this.servicesToPresent.sort((a,b) => a.duracao - b.duracao)
+      this.servicesToPresent.sort((a,b) => a.def_servico.duracao - b.def_servico.duracao)
     },
 
     sortByDecresDuration() {
-      this.servicesToPresent.sort((a,b) => b.duracao - a.duracao)
+      this.servicesToPresent.sort((a,b) => b.def_servico.duracao - a.def_servico.duracao)
     },
     sortByProxLimit() {
-      this.servicesToPresent.sort((a, b) => a.limite - b.limite);
+      this.servicesToPresent.sort((a, b) => a.data - b.data);
     },
 
     // funções de FILTER
@@ -133,16 +148,16 @@ export default {
       this.servicesToPresent = this.services
     },
     filterSuspended() {
-      this.servicesToPresent = this.services.filter(service => service.estado === 'parado');
+      this.servicesToPresent = this.services.filter(service => service.estado === Consts.EstadoServico.PARADO);
     },
     filterCombustion() {
-      this.servicesToPresent = this.services.filter(service => service.tipo === 'gasolina' || service.tipo === 'gasoleo');
+      this.servicesToPresent = this.services.filter(service => (service.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || service.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)) && !service.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO));
     },
     filterEletric() {
-      this.servicesToPresent = this.services.filter(service => service.tipo === 'eletrico');
+      this.servicesToPresent = this.services.filter(service => !(service.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || service.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)) && service.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO));
     },
     filterUniversal() {
-      this.servicesToPresent = this.services.filter(service => service.tipo === 'universal');
+      this.servicesToPresent = this.services.filter(service => (service.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || service.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)) && service.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO));
     }
   },
 

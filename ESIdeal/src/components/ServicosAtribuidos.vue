@@ -18,6 +18,7 @@
     import TabelaServicos from './TabelaServicos.vue';
     import Clock from './Clock.vue';
     import {serviceState} from '../scripts/stores.js';
+    import * as Consts from '../models/consts.js';
 
     export default {
         components: {
@@ -119,8 +120,8 @@
                     semPrazo: []
                 }
 
-                this.serviceData.forEach(service => {
-                    if (service.limite !== null) {
+                this.services.forEach(service => {
+                    if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
                         categorias.comPrazo.push(service)
                     } 
                     else {

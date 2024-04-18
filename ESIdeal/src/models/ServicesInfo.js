@@ -49,3 +49,12 @@ export class ServiceFullInfo {
         this.historico = data.historyServices || []
     }
 }
+
+export const ServiceInfoPlugin = {
+    install(Vue) {
+      Vue.prototype.$ServiceInfo = {
+        ServiceBaseInfo,
+        ServiceFullInfo
+      };
+    }
+  };

@@ -14,5 +14,7 @@ export const EstadoServico = {
   PROGRAMADO: 1,
   NAFILA: 2,
   PARADO: 3,
-  REALIZADO: 4,
+  REALIZADO: 4
 };
+
+

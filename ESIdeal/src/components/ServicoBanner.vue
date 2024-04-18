@@ -1,68 +1,59 @@
 <template>
-    <div class="banner" @click="goToPage(this.id)">
+    <div class="banner" @click="goToPage(servico.id)">
         <div class="rectangle" :class="{'red-rectangle': poucoTempo === true}">
-            <object v-if="estado === 'parado'" class="pause" type="image/svg+xml" data="/svgs/paused.svg" alt="p"></object>
+            <object v-if="servico.estado === Consts.EstadoServico.PARADO" class="pause" type="image/svg+xml" data="/svgs/paused.svg" alt="p"></object>
         </div>
         <div class="info">
             <div class="left">
-                <span class="nome">{{ descricao }} (#{{ id }})</span>
-                <span class="prazo" v-if="limite !== null" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
+                <span class="nome">{{ servico.def_servico.descricao }} (#{{ servico.id }})</span>
+                <span class="prazo" v-if="servico.agendamento === Consts.AgendamentoServico.PROGRAMADO" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
                 <span class="prazo" v-else>SEM PRAZO LIMITE</span>
             </div>
             <div class="middle">
-                <span class="duracao">Duração: {{ duracao }} min</span>
-                <span class="estado" v-if="estado === 'parado'" >Estado: Suspenso</span>
+                <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
+                <span class="estado" v-if="servico.estado === Consts.EstadoServico.PARADO" >Estado: Suspenso</span>
             </div>
             <div class="right">
-                <object v-if="tipo === 'gasolina' || tipo === 'gasoleo'" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_combustao.svg" alt="combustao"></object>
-                <object v-else-if="tipo == 'eletrico'" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_eletrico.svg" alt="eletrico"></object>
-                <object v-else-if="tipo == 'universal'" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_universal.svg" alt="universal"></object>
+                <object v-if="(servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)) && servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" 
+                    class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_universal.svg" alt="universal"></object>
+                <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_combustao.svg" alt="combustao"></object>
+                <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_eletrico.svg" alt="eletrico"></object>
+                <!--  assumo na linha de cima que serviços universais correspondem aos serviçõs disponíveis para híbridos -->
             </div>
         </div>
     </div>
   </template>
 
   <script>
+    import * as Consts from '../models/consts.js';
+    import * as ServicesInfo from '../models/ServicesInfo.js';
     export default {
+
         props: { // variáveis do componente
-            id: {
-                type: Number,
+            servico: {
+                type: Object,
                 required: true
             },
-            tipo: {
-                type: String,
-                required: true,
+            Consts: { // Declare consts as a prop
+                type: Object,
+                required: true
             },
-            descricao: {
-                type: String,
-                required: true,
-            },
-
-            estado: {
-                type: String,
-                required: true,
-            },
-            duracao: {
-                type: Number,
-                required: false,
-                default: 0
-            },
-            limite: {
-                type: Date,
-                required: false,
-                default: null
+            ServicesInfo: { // Declare consts as a prop
+                type: Object,
+                required: true
             }
         },
+
         data() {
             return {
                 horaFim: "",
-                poucoTempo: false // se faltar pouco tempo, fica a cores vermelhas esse elemento
+                poucoTempo: false, // se faltar pouco tempo, fica a cores vermelhas esse elemento
             }
         },
 
         mounted() {
-            if (this.limite !== null) {
-                this.calculateTime(this.limite)
+            if (this.servico.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
+                this.calculateTime(this.servico.data)
             }
         },
 
@@ -83,8 +74,8 @@
         },
         watch: {
             limite() { // para dar update visual de limite de tempo de serviço quando se faz sort
-                if (this.limite !== null) {
-                    this.calculateTime(this.limite);
+                if (servico.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
+                    this.calculateTime(servico.data);
                 }
             }
         }
