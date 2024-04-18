@@ -2,12 +2,14 @@
 	import Modal from './Modal.vue';
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
+    import ModalSusp from './ModalSusp.vue';
 
     export default {
         components: {
             Navbar,
             Clock,
-			Modal
+			Modal,
+            ModalSusp
         },
         data() {
             return {
@@ -43,6 +45,7 @@
                     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
                 ],
 
+				mostrarMenuSuspender: false,
 				mostrarMenuConcluir: false
             }
         },
@@ -52,6 +55,12 @@
 			},
 			closeModal() {
 				this.mostrarMenuConcluir = false;
+			},
+            showModalSusp() {
+				this.mostrarMenuSuspender = true;
+			},
+			closeModalSusp() {
+				this.mostrarMenuSuspender = false;
 			}
 		}
        
@@ -149,7 +158,13 @@
                 </div>
             </div>
         </div>
-		<button v-show="! mostrarMenuConcluir" @click="showModal" class="floating-button">
+		<button v-show="!mostrarMenuConcluir && ! mostrarMenuSuspender" @click="showModalSusp" class="suspend-button">
+            SUSPENDER
+            <img src="/images/left_arrow.png" alt="arrow">
+        </button>
+		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp"/>
+
+		<button v-show="!mostrarMenuConcluir && !mostrarMenuSuspender" @click="showModal" class="floating-button">
             CONCLUIR
             <img src="/images/left_arrow.png" alt="arrow">
         </button>
@@ -390,6 +405,38 @@
 
     .floating-button img {
         margin-left: 10px;
+        width: 24px;
+        height: auto;
+    }
+
+    .suspend-button {
+        position: fixed;
+        left: 65px;
+        bottom: 40px;
+        z-index: 10;
+    }
+
+    .suspend-button {
+        background-color: #DC564E;
+        color: white;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 1.2vw;
+        padding: 12px 20px;
+        width: 300px;
+        height: auto;
+        border-radius: 1vmin;
+        border: none;
+        cursor: pointer;
+        /*font-weight: bold;*/
+        align-items: center;
+        justify-content: center;
+        display: flex;
+    }
+
+
+    .suspend-button img {
+        margin-right: 10px;
         width: 24px;
         height: auto;
     }
