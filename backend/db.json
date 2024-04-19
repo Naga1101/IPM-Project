@@ -218,7 +218,8 @@
       "vehicle-typeId": "gasolina",
       "cilindrada": 1000,
       "medidasJantes": "40 cm",
-      "kms": 200000
+      "kms": 200000,
+      "recomendados": []
     },
     {
       "id": "AH-31-BB",
@@ -228,7 +229,8 @@
       "vehicle-typeId": "gasoleo",
       "cilindrada": 2000,
       "medidasJantes": "43 cm",
-      "kms": 120000
+      "kms": 120000,
+      "recomendados": []
     },
     {
       "id": "AH-32-44",
@@ -238,7 +240,8 @@
       "vehicle-typeId": "eletrico",
       "potencia": 200,
       "medidasJantes": "38 cm",
-      "kms": 20000
+      "kms": 20000,
+      "recomendados": []
     },
     {
       "id": "AH-21-25",
@@ -249,7 +252,8 @@
       "cilindrada": 1000,
       "potencia": 200,
       "medidasJantes": "45 cm",
-      "kms": 80000
+      "kms": 80000,
+      "recomendados": []
     }
   ],
   "services": [
@@ -288,17 +292,19 @@
       "id": "s34",
       "vehicleId": "AH-21-25",
       "service-definitionId": "sfc",
-      "estado": "parado",
+      "estado": "realizado",
       "agendamento": "filaDeEspera",
-      "descrição": "Falta o filtro."
+      "descrição": "Falta o filtro.",
+      "notas-concluido": "nota"
     },
     {
       "id": "s12",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "realizado",
+      "estado": "parado",
       "agendamento": "filaDeEspera",
-      "descrição": "Colocar XPTO 225R15"
+      "descrição": "Colocar XPTO 225R15",
+      "razao-suspensao": "porque me apeteceu"
     },
     {
       "id": "s24",
