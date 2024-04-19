@@ -26,29 +26,38 @@
 				<button type="button" class="botao-fechar" @click="close">
 					<span>x</span>
 				</button>
-				<header class="modal-header">
-					<!-- <slot name="header">  -->
-						<span class="titulo">
-							{{  title  }}
-						</span>
-						<hr class="linha">
-					<!-- </slot> -->
-				</header>
-
-				<section class="modal-body">
-					<slot name="body">
-						This is the default body!
-					</slot>
-				</section>
-
-				<footer class="modal-footer">
-					<slot name="footer">
-						This is the default footer!
-					</slot>
-					<button type="button" class="botao-confirmar" @click="close">
-						<span>CONFIRMAR</span>
-					</button>
-				</footer>
+				<div class="modal-content">
+					<header class="modal-header">
+						<!-- <slot name="header">  -->
+							<span class="titulo">
+								{{  title  }}
+							</span>
+							<hr class="linha">
+						<!-- </slot> -->
+					</header>
+	
+					<section class="modal-body">
+						<slot name="body">
+							<span class="subtitulo">
+								Recomendar serviços
+							</span>
+						</slot>
+					</section>
+	
+					<footer class="modal-footer">
+						<slot name="footer">
+							<span class="subtitulo">
+								Outras notas:
+							</span>
+							<textarea class="notas">
+	
+							</textarea>
+						</slot>
+						<button type="button" class="botao-confirmar" @click="close">
+							<span>CONFIRMAR</span>
+						</button>
+					</footer>
+				</div>
 			</div>
 		</div>
 	</transition>
@@ -88,6 +97,12 @@
 		background-color: #5C5C5C;
 	}
 
+	.modal-content {
+		display: flex;
+		flex-direction: column;
+		padding: 30px;
+	}
+
 	.modal-header,
 	.modal-footer {
 		padding: 15px;
@@ -97,14 +112,12 @@
 	.modal-header {
 		height: fit-content;
 		position: relative;
-		border-bottom: 1px solid #eeeeee;
 		color: #4AAE9B;
 		flex-direction: column;
 		justify-content: space-between;
 	}
 
 	.modal-footer {
-		border-top: 1px solid #eeeeee;
 		flex-direction: column;
 		justify-content: flex-end;
 	}
@@ -169,11 +182,24 @@
 		text-align: center;
 		color: white;
 	}
+
+	.subtitulo {
+		font-size: 1.5vw;
+        font-weight: 400;
+		text-align: left;
+		color: white;	
+	}
 	
 	.linha {
 		margin-top: 5%;
 		background-color: #DC564E;
 		height: 5px;
-		width: 80%;
+		width: 100%;
+	}
+
+	.notas {
+		resize: none;
+		overflow-y: scroll;
+		/* falta meter uma barra de scroll bonita */
 	}
 </style>
