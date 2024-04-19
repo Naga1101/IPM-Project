@@ -5,13 +5,21 @@
 		name: 'Modal',
 		data() {
 			return {
-				title: "Default title"
+				title: "Default title",
+				notas: "",
+				servicos: ["ola", "adeus"]
 			}
 		},
 		methods: {
 			close() {
 				this.$emit('close');
 			},
+			deleteServico(index) {
+				this.servicos.splice(index, 1)
+			},
+			addServico() {
+				this.servicos.push("eu")
+			}
 		},
 	};
 </script>
@@ -41,6 +49,18 @@
 							<span class="subtitulo">
 								Recomendar serviços
 							</span>
+							<br>
+							<button @click="addServico" type="button" class="botao-escolher-servico">
+								<span>
+									Escolher serviço
+								</span>
+							</button>
+							<ul class="lista-servicos">
+								<li class="lista-servicos-item" v-for="(serv, index) in servicos">
+									<span>{{ serv }}</span>
+									<button class="botao-apagar-servico" @click="deleteServico(index)">X</button>
+								</li>
+							</ul>
 						</slot>
 					</section>
 	
@@ -100,12 +120,12 @@
 	.modal-content {
 		display: flex;
 		flex-direction: column;
-		padding: 30px;
+		padding: 0 30px 0 30px;
+		gap: 25px;
 	}
 
 	.modal-header,
 	.modal-footer {
-		padding: 15px;
 		display: flex;
 	}
 
@@ -120,11 +140,12 @@
 	.modal-footer {
 		flex-direction: column;
 		justify-content: flex-end;
+		align-items: center;
+
 	}
 
 	.modal-body {
 		position: relative;
-		padding: 20px 10px;
 	}
 
 	.modal-fade-enter, .modal-fade-leave-to {
@@ -142,6 +163,7 @@
 		border-radius: 50%;
 		height: 50px;
 		width: 50px;
+		cursor: pointer;
 	}
 
 	.botao-confirmar {
@@ -152,18 +174,18 @@
         padding: 8px 12px;
         cursor: pointer;
         font-size: 1.5vw;
-		position: absolute;
+		/* position: absolute; */
         right: 33%;
 		bottom: 5%;
         /* width: 20vw;
         height: 50px; */
         border-radius: 2vmin;
         border: none;
-        cursor: pointer;
         font-weight: semibold;
         align-items: center;
         justify-content: center;
         display: flex;
+		margin-top: 15px;
 	}
 
 	.botao-confirmar img {
@@ -174,6 +196,18 @@
 	.botao-fechar img {
 		min-height: 100%;
  		object-fit: cover;
+	}
+
+	.botao-escolher-servico {
+		border-radius: 15px;
+		border: 0;
+		width: 100%;
+		background-color: lightgray;
+		font-size: 1.15vw;
+		text-align: left;
+		font-weight: 400;
+		padding: 2% 0 2% 5%;
+		cursor: pointer;
 	}
 
 	.titulo {
@@ -195,11 +229,43 @@
 		background-color: #DC564E;
 		height: 5px;
 		width: 100%;
+		border: 0;
 	}
 
 	.notas {
 		resize: none;
 		overflow-y: scroll;
+		border: 0;
+		border-radius: 15px;
+		height: 200px;
+		width: 100%;
 		/* falta meter uma barra de scroll bonita */
+	}
+
+	.lista-servicos {
+		resize: none;
+		overflow-y: scroll;
+		height: 325px;
+		padding: 0;
+		/* falta meter uma barra de scroll bonita */
+	}
+
+	.lista-servicos-item {
+		display: flex;
+		background-color: white;
+		border-radius: 15px;
+		margin: 10px 0;
+		height: fit-content;
+		border-radius: 15px;
+		border: 0;
+		width: 100%;
+		font-size: 1.15vw;
+		text-align: left;
+		font-weight: 400;
+		padding: 2% 0 2% 5%;
+	}
+
+	.botao-apagar-servico {
+		border: 0;
 	}
 </style>
