@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="25.005274"
+   height="25.005274"
+   viewBox="0 0 50.010548 50.010548"
+   fill="none"
+   version="1.1"
+   id="svg68"
+   sodipodi:docname="botao_fechar_preto.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs72" />
+  <sodipodi:namedview
+     id="namedview70"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="false"
+     inkscape:zoom="27.568181"
+     inkscape:cx="0.8887057"
+     inkscape:cy="13.258038"
+     inkscape:window-width="2560"
+     inkscape:window-height="1416"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg68" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M 19.73257,25.0055 0,5.2724755 5.2722481,0 25.005047,19.733025 44.737389,0 50.010547,5.2724755 30.277522,25.0055 50.010547,44.738072 44.737389,50.010547 25.005047,30.277748 5.2722481,50.010547 0,44.738072 Z"
+     fill="#000000"
+     id="path66"
+     inkscape:label="path66"
+     style="display:inline;stroke-width:2.27321"
+     inkscape:export-filename="botao_fechar_preto.svg"
+     inkscape:export-xdpi="218.18182"
+     inkscape:export-ydpi="218.18182" />
+</svg>

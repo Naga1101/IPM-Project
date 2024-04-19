@@ -1,7 +1,13 @@
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component -->
 
-<script>
+<script setup>
 	import {serviceState} from '../scripts/stores.js';
+
+	const fechar = '/images/botao_fechar.svg';
+	const fechar_preto = '/images/botao_fechar_preto.svg';
+</script>
+
+<script>
 
 	export default {
 		name: 'Modal',
@@ -10,26 +16,34 @@
 				title: "Default title",
 				notas: "",
 				servicos_disp: [],
-				servicos: []
+				servicos: [],
+				mostrarServicosDisponiveis: false
 			}
 		},
 		methods: {
 			close() {
 				this.$emit('close');
+				this.closeServicosDisponiveis()
 			},
 			deleteServico(index) {
 				this.servicos.splice(index, 1)
 			},
+			toggleServicosDisponiveis() {
+				this.mostrarServicosDisponiveis = !this.mostrarServicosDisponiveis;
+			},
 			addServico(servico) {
 				this.servicos.push(servico)
+				this.toggleServicosDisponiveis()
 			},
-			showServicosDisponiveis() {
-
+			closeServicosDisponiveis() {
+				if (this.mostrarServicosDisponiveis) {
+					this.mostrarServicosDisponiveis = false
+				}
 			}
 		},
 		async created() {
 			const dbData = serviceState();
-			this.servicos = dbData.serviceDefinitions;
+			this.servicos_disp = dbData.serviceDefinitions;
 			// var types = dbData.serviceTypes;
 			// falta logica para filtrar os que nao dao para fazer neste posto
 		}
@@ -44,7 +58,7 @@
 			</div>
 			<div class="modal">
 				<button type="button" class="botao-fechar" @click="close">
-					<span>x</span>
+					<img :src="fechar" alt="X">
 				</button>
 				<div class="modal-content">
 					<header class="modal-header">
@@ -62,15 +76,24 @@
 								Recomendar serviços
 							</span>
 							<br>
-							<button @click="showServicosDisponiveis" type="button" class="botao-escolher-servico">
+							<button @click="toggleServicosDisponiveis" type="button" class="botao-escolher-servico">
 								<span>
 									Escolher serviço
 								</span>
 							</button>
+							<ul class="menu-servicos-disponiveis" v-show="mostrarServicosDisponiveis">
+								<li class="menu-servicos-disponiveis-item" v-for="serv in servicos_disp" @click="addServico(serv)">
+									<span>
+										{{ serv.descr }}
+									</span>
+								</li>
+							</ul>
 							<ul class="lista-servicos">
 								<li class="lista-servicos-item" v-for="(serv, index) in servicos">
 									<span>{{ serv.descr }}</span>
-									<button class="botao-apagar-servico" @click="deleteServico(index)">X</button>
+									<button class="botao-apagar-servico" @click="deleteServico(index)">
+										<img :src="fechar_preto" alt="X">
+									</button>
 								</li>
 							</ul>
 						</slot>
@@ -81,8 +104,7 @@
 							<span class="subtitulo">
 								Outras notas:
 							</span>
-							<textarea class="notas">
-	
+							<textarea class="notas" placeholder="Apontar eventuais notas aqui">
 							</textarea>
 						</slot>
 						<button type="button" class="botao-confirmar" @click="close">
@@ -104,9 +126,9 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		/* background-color: rgba(0, 0, 0, 0.3); */
 		background: rgba(255, 255, 255, 0);
-		background: linear-gradient(76deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.4) 60%); 
+		/* background: linear-gradient(76deg, rgba(255,255,255,0.4) 0%, rgba(220,86,78,0.4) 60%); */
+		background: linear-gradient(76deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.4) 60%);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -180,6 +202,11 @@
 		cursor: pointer;
 	}
 
+	.botao-fechar img {
+		height: 100%;
+		width: 100%;
+	}
+
 	.botao-confirmar {
 		width: fit-content;
 		height: fit-content;
@@ -247,13 +274,15 @@
 	}
 
 	.notas {
+		box-sizing: border-box;
+		padding: 0.25em;
 		resize: none;
 		overflow-y: scroll;
 		border: 0;
 		border-radius: 15px;
 		height: 200px;
 		width: 100%;
-		/* falta meter uma barra de scroll bonita */
+		/* TODO falta meter uma barra de scroll bonita */
 	}
 
 	.lista-servicos {
@@ -266,7 +295,8 @@
 		height: 80%;
 		width: 100%;
 		padding: 0;
-		/* falta meter uma barra de scroll bonita */
+		/* list-style-type: none; especificamente nesta ul, se eu meter isto da cabo de tudo, e nao preciso disto para nao mostrar os pontos etc. nao percebo absolutamente nada disto, nao faz sentido nenhum, caguei fica assim*/
+		/* TODO falta meter uma barra de scroll bonita */
 	}
 
 	.lista-servicos-item {
@@ -287,8 +317,36 @@
 
 	.botao-apagar-servico {
 		border: 0;
-		position: relative;
+		background-color: transparent;
+		margin-right: 4%;
+		height: 100%;
+	}
+
+	.botao-apagar-servico img {
+		cursor: pointer;
+		border-radius: 50%;
+		height: 100%;
+	}
+
+	.menu-servicos-disponiveis {
+		position: absolute;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		z-index: 100;
+	}
+
+	.menu-servicos-disponiveis-item {
+		border-color: black;
+		border-style: solid;
+		border-width: 0;
+		border-bottom-width: 1px;
+		width: 100%;
+		background-color: lightgray;
+		font-size: 1.15vw;
+		text-align: left;
+		font-weight: 400;
+		cursor: pointer;
+		padding: 0 0 0 5%;
 	}
 </style>
-
-falta implementar o menu dropdown inteiro, fazer um vfor com indice em que se mostram as entradas no servicos_disp
