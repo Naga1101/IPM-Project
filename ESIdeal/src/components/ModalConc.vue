@@ -4,7 +4,9 @@
 	import {serviceState} from '../scripts/stores.js';
 
 	const fechar = '/images/botao_fechar.svg';
-	const fechar_preto = '/images/botao_fechar_preto.svg';
+	// const fechar_preto = '/images/botao_fechar_preto.svg';
+	const confirmar = '/images/botao_confirmar.svg';
+	const seta_baixo = "/images/down_arrow.svg"
 </script>
 
 <script>
@@ -80,6 +82,7 @@
 								<span>
 									Escolher serviço
 								</span>
+								<img :src="seta_baixo">
 							</button>
 							<ul class="menu-servicos-disponiveis" v-show="mostrarServicosDisponiveis">
 								<li class="menu-servicos-disponiveis-item" v-for="serv in servicos_disp" @click="addServico(serv)">
@@ -92,7 +95,9 @@
 								<li class="lista-servicos-item" v-for="(serv, index) in servicos">
 									<span>{{ serv.descr }}</span>
 									<button class="botao-apagar-servico" @click="deleteServico(index)">
-										<img :src="fechar_preto" alt="X">
+										<!-- IGUAL AO QUE ESTA ABAIXO, MAS ASSIM POSSO MUDAR A COR COM CSS -->
+										<!-- <img :src="fechar_preto" alt="X"> -->
+										<svg width="25.005274" height="25.005274" viewBox="0 0 50.010548 50.010548" fill="none" version="1.1" id="svg68" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs72" /> <path fill-rule="evenodd"     clip-rule="evenodd"     d="M 19.73257,25.0055 0,5.2724755 5.2722481,0 25.005047,19.733025 44.737389,0 50.010547,5.2724755 30.277522,25.0055 50.010547,44.738072 44.737389,50.010547 25.005047,30.277748 5.2722481,50.010547 0,44.738072 Z"     fill="#000000"     id="path66"     style="display:inline;stroke-width:2.27321" /></svg>
 									</button>
 								</li>
 							</ul>
@@ -109,6 +114,7 @@
 						</slot>
 						<button type="button" class="botao-confirmar" @click="close">
 							<span>CONFIRMAR</span>
+							<img :src="confirmar">
 						</button>
 					</footer>
 				</div>
@@ -212,7 +218,7 @@
 		height: fit-content;
         background-color: #DC564E;
         color: white;
-        padding: 8px 12px;
+        padding: 8px 20px;
         cursor: pointer;
         font-size: 1.5vw;
 		/* position: absolute; */
@@ -223,15 +229,17 @@
         border-radius: 2vmin;
         border: none;
         font-weight: semibold;
+        display: flex;
         align-items: center;
         justify-content: center;
-        display: flex;
-		margin-top: 15px;
+		margin: 15px 0 15px 0;
+
 	}
 
 	.botao-confirmar img {
+		margin-left: 0.35em;
 		min-height: 100%;
- 		object-fit: cover;
+ 		object-fit: fill;
     }
 
 	.botao-fechar img {
@@ -240,6 +248,8 @@
 	}
 
 	.botao-escolher-servico {
+		display: inline-flex;
+		justify-content: space-between;
 		border-radius: 15px;
 		border: 0;
 		width: 100%;
@@ -249,6 +259,16 @@
 		font-weight: 400;
 		padding: 2% 0 2% 5%;
 		cursor: pointer;
+	}
+
+	.botao-escolher-servico:hover {
+		background-color: darkgray;
+	}
+
+	.botao-escolher-servico img {
+		margin-right: 5%;
+		/* por causa de ilusao de otica */
+		margin-top: 0.5%;
 	}
 
 	.titulo {
@@ -322,21 +342,32 @@
 		height: 100%;
 	}
 
-	.botao-apagar-servico img {
+	.botao-apagar-servico svg {
 		cursor: pointer;
 		border-radius: 50%;
 		height: 100%;
 	}
 
+	.botao-apagar-servico:hover path {
+		fill: #DC564E;
+	}
+
 	.menu-servicos-disponiveis {
 		position: absolute;
+		right: 25%;
+		display: flex;
+		flex-direction: column;
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
 		z-index: 100;
+		overflow-y: scroll;
+		max-height: 350px;
+		box-shadow: 2px 2px 20px 1px;
 	}
 
 	.menu-servicos-disponiveis-item {
+		position: relative;
 		border-color: black;
 		border-style: solid;
 		border-width: 0;
@@ -347,6 +378,15 @@
 		text-align: left;
 		font-weight: 400;
 		cursor: pointer;
-		padding: 0 0 0 5%;
+		padding: 2% 0 2% 0;
+	}
+
+	.menu-servicos-disponiveis-item span {
+		margin-left: 5%;
+	}
+
+						/*        se tiver bla<espaco>:hover so o span e que passa a mudar de cor, wtf */
+	.menu-servicos-disponiveis-item:hover {
+		background-color: darkgray;
 	}
 </style>
