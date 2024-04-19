@@ -17,4 +17,14 @@ export const EstadoServico = {
   REALIZADO: 4
 };
 
+const TipoMotor = {
+  1: "Gasolina",
+  2: "Gasóleo",
+  3: "Elétrico",
+  4: "Híbrido"
+}
+
+export function getTipoVeiculoString(value) {
+    return TipoMotor[value]
+};
 

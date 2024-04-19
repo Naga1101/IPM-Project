@@ -4,7 +4,7 @@
     import Clock from './Clock.vue';
     import ModalSusp from './ModalSusp.vue';
     import {serviceState} from '../scripts/stores.js';
-
+    import * as Consts from "../models/consts.js";
 
     export default {
 
@@ -27,20 +27,7 @@
                 id: 1,
                 descricao: "Service 1",
                 estado: "POR INICIAR",
-
-                //temp
-                matricula: "13-AB-12",
-                duracao: "60",
-                marca: "Toyota",
-                modelo: "Prius",
-                cilindrada: "1.8L",
-                potencia: "3.3W",
-                medidasJantes: "17",
-                tipoMotor: "Híbrido",
-
-                nomecliente: "Felizberto Tristemundo",
-                contacto: "+351 938 123 524",
-
+                
                 historicoServicos: [
                     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
                     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
@@ -117,15 +104,143 @@
                         return -result;
                     }
                 });
+            },
+            isGasolina(servico){
+                return servico.veiculo.tipo === Consts.TiposVeiculo.GASOLINA;
+            },
+            isGasoleo(servico){
+                return servico.veiculo.tipo === Consts.TiposVeiculo.GASOLEO;
+            },
+            isHibrido(servico){
+                return servico.veiculo.tipo === Consts.TiposVeiculo.HIBRIDO;
+            },
+            isEletrico(servico){
+                return servico.veiculo.tipo === Consts.TiposVeiculo.ELETRICO;
             }
 		},
         async mounted() {
             const dbData = serviceState();
             this.servico = await dbData.getServiceDetailsFromLocal(this.servicoID);
                 // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
-            console.log(this.servico)
+            console.log(this.servico.veiculo.id + " mounted")
+        },
+        computed:{
+            async historicoServicos(){
+                try{    
+                    const dbData = serviceState();
+                    const historicoServicos = [];
+                    for(const servico of dbData){
+                        servico = await dbData.getServiceBaseInfo();
+                        historicoServicos.push(servico);
+                    }
+                    return historicoServicos;
+                } catch(e){
+                    console.log(e);
+                    return [];
+                }
+            },
+            matricula(){
+                try{    
+                    const matricula = this.servico.veiculo.id;
+                    console.log(matricula + " não mounted");
+                    return matricula;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            marca(){
+                try{    
+                    const marca = this.servico.veiculo.marca;
+                    console.log(marca + " não mounted");
+                    return marca;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            modelo(){
+                try{    
+                    const modelo = this.servico.veiculo.modelo;
+                    console.log(modelo + " não mounted");
+                    return modelo;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            cilindrada(){
+                try{    
+                    const cilindrada = this.servico.veiculo.cilindrada;
+                    console.log(cilindrada + " não mounted");
+                    return cilindrada;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            motor(){
+                try{    
+                    const motor = this.servico.veiculo.motor;
+                    console.log(motor + " não mounted");
+                    return motor;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            potencia(){
+                try{    
+                    const potencia = this.servico.veiculo.potencia;
+                    console.log(potencia + " não mounted");
+                    return potencia;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            medidasJantes(){
+                try{    
+                    const medidasJantes = this.servico.veiculo.medidasJantes;
+                    console.log(medidasJantes + " não mounted");
+                    return medidasJantes;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            tipoMotor(){
+                try{    
+                    const tipoMotor = Consts.getTipoVeiculoString(this.servico.veiculo.tipo);
+                    console.log(tipoMotor + " não mounted");
+                    return tipoMotor;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            nomecliente(){
+                try{    
+                    const nomecliente = this.servico.cliente.nome;
+                    console.log(nomecliente + " não mounted");
+                    return nomecliente;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            contacto(){
+                try{    
+                    const contacto = this.servico.cliente.telefone;
+                    console.log(contacto + " não mounted");
+                    return contacto;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            /*Pedro Meguje corrije o isturico dos servs*/
         }
-
     };
 
  </script>
@@ -152,7 +267,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="details">
             <!-- Car info -->
             <div class="car-details">
@@ -160,8 +275,8 @@
                 <span class="car-info"> Matricula: {{ matricula }} </span>
                 <span class="car-info"> Marca: {{ marca }} </span>
                 <span class="car-info"> Modelo: {{ modelo }} </span>
-                <span class="car-info"> Cilindrada: {{ cilindrada }} </span>
-                <span class="car-info"> Potência do carregador: {{ potencia }}</span>
+                <span class="car-info" v-if="tipoMotor === 'Gasolina' || tipoMotor === 'Gasóleo'"> Cilindrada: {{ cilindrada }} </span>
+                <span class="car-info" v-if="tipoMotor === 'Elétrico' || tipoMotor === 'Híbrido'"> Potência do carregador: {{ potencia }}</span>
                 <span class="car-info"> Medidas Jantes: {{ medidasJantes }}</span>
             </div>
 
@@ -170,8 +285,8 @@
                 <span class="tipo-motor"> Tipo de Motor: {{ tipoMotor }}</span>
                 <div class="motor-imgs">
                     <!-- Motor combustão -->
-                    <img v-if="tipoMotor === 'Combustão'" src="/images/combustao_naoselected.png" alt="combustao">
-
+                    <img v-if="tipoMotor === 'Gasolina' || tipoMotor === 'Gasóleo'" src="/images/combustao_naoselected.png" alt="combustao">
+                    <!-- é suposto ter gasolina e gasóleo ou combustão só? -->
                     <!-- Motor Elétrico -->
                     <img v-else-if="tipoMotor === 'Elétrico'" src="/images/eletrico_naoselected.png" alt="eletrico">
 

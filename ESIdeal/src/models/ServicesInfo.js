@@ -33,6 +33,9 @@ export class ServiceFullInfo {
         this.tipos_servico = Array.from(data.tipos_servico) || []
         this.veiculo = {
             id: data.id_veiculo || "",
+            marca: data.vehicle?.marca || "",
+            modelo: data.vehicle?.modelo || "",
+            medidasJantes: data.vehicle?.medidasJantes || "",
             // tirei daqui o id_cliente, está acessível no cliente.id
             tipo: TiposVeiculo[data.vehicle["vehicle-typeId"].toUpperCase()] || null,
             potencia: data.vehicle?.potencia || "",

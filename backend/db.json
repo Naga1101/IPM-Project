@@ -213,30 +213,42 @@
     {
       "id": "08-25-AA",
       "clientId": "123",
+      "marca": "Citroen",
+      "modelo": "C4(alakba)",
       "vehicle-typeId": "gasolina",
       "cilindrada": 1000,
+      "medidasJantes": "40 cm",
       "kms": 200000
     },
     {
       "id": "AH-31-BB",
       "clientId": "124",
+      "marca": "Toyata",
+      "modelo": "Prio",
       "vehicle-typeId": "gasoleo",
       "cilindrada": 2000,
+      "medidasJantes": "43 cm",
       "kms": 120000
     },
     {
       "id": "AH-32-44",
       "clientId": "123",
+      "marca": "Tezla",
+      "modelo": "Musk",
       "vehicle-typeId": "eletrico",
       "potencia": 200,
+      "medidasJantes": "38 cm",
       "kms": 20000
     },
     {
       "id": "AH-21-25",
       "clientId": "125",
+      "marca": "Hyaundai",
+      "modelo": "Kawai",
       "vehicle-typeId": "hibrido",
       "cilindrada": 1000,
       "potencia": 200,
+      "medidasJantes": "45 cm",
       "kms": 80000
     }
   ],
