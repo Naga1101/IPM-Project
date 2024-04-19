@@ -5,7 +5,7 @@
         </div>
         <div class="info">
             <div class="left">
-                <span class="nome">{{ servico.def_servico.descricao }} (#{{ servico.id }})</span>
+                <span class="nome">{{ servico.def_servico.descricao.toUpperCase() }} (#{{ servico.id }})</span>
                 <span class="prazo" v-if="servico.agendamento === Consts.AgendamentoServico.PROGRAMADO" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
                 <span class="prazo" v-else>SEM PRAZO LIMITE</span>
             </div>
@@ -18,7 +18,6 @@
                     class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_universal.svg" alt="universal"></object>
                 <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_combustao.svg" alt="combustao"></object>
                 <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_eletrico.svg" alt="eletrico"></object>
-                <!--  assumo na linha de cima que serviços universais correspondem aos serviçõs disponíveis para híbridos -->
             </div>
         </div>
     </div>
@@ -27,6 +26,7 @@
   <script>
     import * as Consts from '../models/consts.js';
     import * as ServicesInfo from '../models/ServicesInfo.js';
+    import * as DBRequests from '../scripts/DBrequests.js';
     export default {
 
         props: { // variáveis do componente

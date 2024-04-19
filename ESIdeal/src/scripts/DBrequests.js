@@ -78,3 +78,71 @@ export const fetchVehicleById = async (vehicleId) => {
     })
     .catch(error => console.log(error))
 }
+
+export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId) => {
+    //obter lista de serviços recomendados de veículo
+    fetch(`http://localhost:3000/vehicles/${vehicleId}?_fields=recomendados`)
+    //atualizar coluna de serviços
+    .then( resposta => resposta.json())
+    .then(dados => {
+        console.log(dados)
+        const antigosRecomendados = dados.recomendados || []
+        console.log(antigosRecomendados)
+
+        const recomendadosSemRepetidos = [...(new Set(antigosRecomendados.concat(recommendedServices)))]
+        return fetch(`http://localhost:3000/vehicles/${vehicleId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "recomendados": recomendadosSemRepetidos,
+            }),
+        });
+    })
+    .then (result => {
+        const res =
+        fetch (`http://localhost:3000/services/${currentServiceId}`, {
+            method : 'PATCH',
+            headers : {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( {
+                "estado": "realizado",
+                "notas-concluido": note,
+            })
+        })
+        return result.ok && res.ok
+    })
+    .then( response => {
+        if (response) {
+            return true
+        } else {
+            return false
+        }
+    })
+    .catch (error => console.error('Error posting finished service:', error))
+}
+
+export const postSuspendedService = async (reason, currentServiceId) => {
+
+    //atualizar coluna de serviços
+    fetch (`http://localhost:3000/services/${currentServiceId}`, {
+        method : 'PATCH',
+        headers : {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "estado": "parado",
+            "razao-suspensao": reason,
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return true
+        } else {
+            return false
+        }
+    })
+    .catch (error => console.error('Error posting suspended service:', error));
+}
