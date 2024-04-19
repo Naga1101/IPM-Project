@@ -1,13 +1,16 @@
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component -->
 
 <script>
+	import {serviceState} from '../scripts/stores.js';
+
 	export default {
 		name: 'Modal',
 		data() {
 			return {
 				title: "Default title",
 				notas: "",
-				servicos: ["ola", "adeus"]
+				servicos_disp: [],
+				servicos: []
 			}
 		},
 		methods: {
@@ -17,10 +20,19 @@
 			deleteServico(index) {
 				this.servicos.splice(index, 1)
 			},
-			addServico() {
-				this.servicos.push("eu")
+			addServico(servico) {
+				this.servicos.push(servico)
+			},
+			showServicosDisponiveis() {
+
 			}
 		},
+		async created() {
+			const dbData = serviceState();
+			this.servicos = dbData.serviceDefinitions;
+			// var types = dbData.serviceTypes;
+			// falta logica para filtrar os que nao dao para fazer neste posto
+		}
 	};
 </script>
 
@@ -50,14 +62,14 @@
 								Recomendar serviços
 							</span>
 							<br>
-							<button @click="addServico" type="button" class="botao-escolher-servico">
+							<button @click="showServicosDisponiveis" type="button" class="botao-escolher-servico">
 								<span>
 									Escolher serviço
 								</span>
 							</button>
 							<ul class="lista-servicos">
 								<li class="lista-servicos-item" v-for="(serv, index) in servicos">
-									<span>{{ serv }}</span>
+									<span>{{ serv.descr }}</span>
 									<button class="botao-apagar-servico" @click="deleteServico(index)">X</button>
 								</li>
 							</ul>
@@ -118,17 +130,19 @@
 	}
 
 	.modal-content {
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		padding: 0 30px 0 30px;
 		gap: 25px;
+		justify-content: space-between;
 	}
 
 	.modal-header,
 	.modal-footer {
 		display: flex;
 	}
-
+	
 	.modal-header {
 		height: fit-content;
 		position: relative;
@@ -136,16 +150,16 @@
 		flex-direction: column;
 		justify-content: space-between;
 	}
-
+	
 	.modal-footer {
 		flex-direction: column;
-		justify-content: flex-end;
+		/* justify-content: flex-end; */
 		align-items: center;
-
 	}
 
 	.modal-body {
 		position: relative;
+		flex-grow: 1;
 	}
 
 	.modal-fade-enter, .modal-fade-leave-to {
@@ -245,7 +259,12 @@
 	.lista-servicos {
 		resize: none;
 		overflow-y: scroll;
-		height: 325px;
+		/* height: 325px; */
+		/* height: fit-content; */
+		/* max-height: 325px; */
+		position: absolute;
+		height: 80%;
+		width: 100%;
 		padding: 0;
 		/* falta meter uma barra de scroll bonita */
 	}
@@ -254,18 +273,22 @@
 		display: flex;
 		background-color: white;
 		border-radius: 15px;
-		margin: 10px 0;
+		margin-bottom: 15px;
 		height: fit-content;
 		border-radius: 15px;
 		border: 0;
-		width: 100%;
 		font-size: 1.15vw;
 		text-align: left;
 		font-weight: 400;
 		padding: 2% 0 2% 5%;
+		justify-content: space-between;
+		color: gray;
 	}
 
 	.botao-apagar-servico {
 		border: 0;
+		position: relative;
 	}
 </style>
+
+falta implementar o menu dropdown inteiro, fazer um vfor com indice em que se mostram as entradas no servicos_disp
