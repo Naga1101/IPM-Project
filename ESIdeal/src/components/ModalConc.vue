@@ -18,7 +18,10 @@
 
 <template>
 	<transition name="modal-fade">
-		<div class="modal-backdrop" @click="close">
+		<div class="modal-backdrop">
+			<div class="outside-modal" @click="close">
+
+			</div>
 			<div class="modal">
 				<button type="button" class="botao-fechar" @click="close">
 					<span>x</span>
@@ -66,6 +69,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.outside-modal {
+		width: 100%;
+		height: 100%;
 	}
 
 	.modal {

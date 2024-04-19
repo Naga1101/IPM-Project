@@ -1,5 +1,5 @@
 <script>
-	import Modal from './Modal.vue';
+	import ModalConc from './ModalConc.vue';
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
     import ModalSusp from './ModalSusp.vue';
@@ -12,7 +12,7 @@
         components: {
             Navbar,
             Clock,
-			Modal,
+			ModalConc,
             ModalSusp
         },
         props: {
@@ -64,11 +64,10 @@
             }
         },
 		methods: {
-			showModal() {
+			showModalConc() {
 				this.mostrarMenuConcluir = true;
-                console.log(this.servico)
 			},
-			closeModal() {
+			closeModalConc() {
 				this.mostrarMenuConcluir = false;
 			},
             showModalSusp() {
@@ -235,11 +234,11 @@
         </button>
 		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp"/>
 
-		<button v-show="!mostrarMenuConcluir && !mostrarMenuSuspender" @click="showModal" class="floating-button">
+		<button v-show="!mostrarMenuConcluir && !mostrarMenuSuspender" @click="showModalConc" class="floating-button">
             CONCLUIR
             <img src="/images/left_arrow.png" alt="arrow">
         </button>
-		<Modal v-show="mostrarMenuConcluir" @close="closeModal"/>
+		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc"/>
         <!-- 
         <button class="floating-button">
             INICIAR
