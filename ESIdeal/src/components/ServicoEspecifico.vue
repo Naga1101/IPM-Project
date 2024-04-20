@@ -45,7 +45,10 @@
                 sortOrder: null,
 
 				mostrarMenuSuspender: false,
-				mostrarMenuConcluir: false
+				mostrarMenuConcluir: false,
+
+                bannerShadow: false,
+                pageShadow: false
             }
         },
 		methods: {
@@ -114,6 +117,32 @@
             },
             isEletrico(servico){
                 return servico.veiculo.tipo === Consts.TiposVeiculo.ELETRICO;
+            },
+
+            startService(){
+                this.toggleShadow();
+                // da update na db mas nao pega no estado que estava na db
+                this.servico.estado = "A DECORRER";
+
+                fetch ('http://localhost:3000/services/' + this.servico.id, {
+                    method: 'PATCH' ,
+                    headers: { 'Content-Type' :  'application/json'},
+                    // so atualizar o estado
+                    body: JSON.stringify( {estado: this.servico.estado })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('Error');
+                    }
+                    return response.json();
+                })
+                .then(data => console.log('Estado updated:', data))
+                .catch(error => console.error('Erro updating estado', error));
+            },
+
+            toggleShadow() {
+                this.bannerShadow = !this.bannerShadow;
+                this.pageShadow = !this.pageShadow;
             }
 		},
 
@@ -128,6 +157,7 @@
                     return 1;
                 }
             },
+
             marca(){
                 try{    
                     const marca = this.servico.veiculo.marca;
@@ -218,7 +248,6 @@
                     return 1;
                 }
             },
-
         },
         async created() {
             const dbData = serviceState();
@@ -232,7 +261,7 @@
 <template>
     <Navbar linkBackTo="/atribuidos"/>
     <!-- test if data loaded -->
-    <div v-if="servico" class="page"> 
+    <div v-if="servico" class="page" :class="{ 'page-shadow': pageShadow }"> 
         <div class="header">
             <h1>Detalhes de serviço</h1>
             <Clock class="clock"/>
@@ -241,7 +270,7 @@
         <!-- Banner -->
         <div class="banner">
             <div class="rectangle"></div>
-            <div class="info">
+            <div class="info" :class="{ 'shadow' : bannerShadow }">
                 <div class="left">
                     <span class="descricao">{{servico.def_servico.descricao}}</span>
                     <span class="id">(#{{ servico.id }})</span>
@@ -295,7 +324,7 @@
 
             <!-- Butoes -->
             <div class="btns">
-                <button class="service-btn">
+                <button class="service-btn" @click="startService">
                     INICIAR
                     <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
                 </button>
@@ -345,9 +374,9 @@
             <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
         </button>
         -->
+        <Footer/>
     </div>
     <LoadingPage v-else/>
-    <Footer/>
 </template>
 
 <style scoped>
@@ -649,6 +678,16 @@
         align-items: center;
         justify-content: center;
         display: flex;
+    }
+
+    .shadow {
+        background: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .page-shadow {
+        position: relative;
+        min-height: calc(100vh - 30px); /* para começar em cima do footer  | */ 
+        background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
     }
 </style>
 
