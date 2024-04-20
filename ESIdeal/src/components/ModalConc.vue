@@ -15,7 +15,7 @@
 		name: 'Modal',
 		data() {
 			return {
-				title: "Default title",
+				title: "CONCLUIR",
 				notas: "",
 				servicos_disp: [],
 				servicos: [],

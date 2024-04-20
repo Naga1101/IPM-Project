@@ -1,6 +1,6 @@
 <template>
     <Navbar/>
-    <div class="page">
+    <div v-if="services" class="page">
         <div class="headers">
             <h1>Serviços agendados</h1>
             <Clock class="clock"/>
@@ -11,6 +11,7 @@
             <TabelaServicos class="table_entry2" :services="categorias.semPrazo" :comPrazo="false"/>
         </div>
     </div>
+    <LoadingPage v-else/>
     <Footer/>
   </template>
   
@@ -28,93 +29,10 @@
         data() {
             return {
                 services: [],
-                serviceData: [
-                    //Exemplos de servicos
-                    {
-                        id: 1231,
-                        tipo: "gasolina",
-                        descricao: "MUDANÇA DE ÓLEO DOS PNEUS ENTRE OUTRAS DESCRICÕES GRANDES",
-                        estado: "nafila",
-                        duracao: 60,
-                        limite: new Date( new Date().getTime() + 60 * 60000)
-                    },
-                    {
-                        id: 2,
-                        descricao: "Service 2",
-                        tipo: "eletrico",
-                        estado: "nafila",
-                        duracao: 120,
-                        limite: null
-                    },
-                    {
-                        id: 3,
-                        descricao: "Service 3",
-                        tipo: "universal",
-                        estado: "nafila",
-                        duracao: 30,
-                        limite: new Date( new Date().getTime() + 30 * 60000)
-                    },
-                    {
-                        id: 4,
-                        descricao: "Service 4",
-                        tipo: "gasoleo",
-                        estado: "parado",
-                        duracao: 75,
-                        limite: new Date( new Date().getTime() + 75 * 60000)
-                    },
-                    {
-                        id: 5,
-                        descricao: "Service 5",
-                        tipo: "eletrico",
-                        estado: "parado",
-                        duracao: 90,
-                        limite: new Date( new Date().getTime() + 90 * 60000)
-                    },
-                    {
-                        id: 6,
-                        descricao: "Service 6",
-                        tipo: "eletrico",
-                        estado: "parado",
-                        duracao: 120,
-                        limite: new Date( new Date().getTime() + 120 * 60000)
-                    },
-                    {
-                        id: 7,
-                        descricao: "Service 7",
-                        tipo: "gasolina",
-                        estado: "nafila",
-                        duracao: 30,
-                        limite: null
-                    },
-                    {
-                        id: 8,
-                        descricao: "Service 8",
-                        tipo: "gasoleo",
-                        estado: "parado",
-                        duracao: 45,
-                        limite: new Date( new Date().getTime() + 45 * 60000)
-                    },
-                    {
-                        id: 9,
-                        descricao: "Service 9",
-                        tipo: "gasolina",
-                        estado: "nafila",
-                        duracao: 1,
-                        limite: new Date(new Date().getTime() + 120 * 60000)
-                    },
-                    {
-                        id: 10,
-                        descricao: "Service 10",
-                        tipo: "gasolina",
-                        estado: "nafila",
-                        duracao: 1,
-                        limite: null
-                    }
-                ]
             };
         },
         computed: {
-            categorias: function() { // dividr serviços em "com prazo limite" e "sem prazo limite"
+            categorias() { // dividr serviços em "com prazo limite" e "sem prazo limite"
                 const categorias = {
                     comPrazo: [],
                     semPrazo: []

@@ -94,6 +94,17 @@ export const fetchVehicleById = async (vehicleId) => {
     .catch(error => console.log(error))
 }
 
+export const fetchUserLogin = async (userValue) => {
+    return fetch(baseUrl + `logins?user=${userValue}`)
+    .then (response => {
+        if (!response.ok) {
+            throw new Error('Error fetching vehicle');
+        }
+        return response.json()
+    })
+    .catch(error => console.log(error))
+}
+
 export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId) => {
     //obter lista de serviços recomendados de veículo
     fetch(baseUrl + `vehicles/${vehicleId}`)

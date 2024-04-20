@@ -12,7 +12,8 @@ import servicoPage from './components/ServicoEspecifico.vue';
 import servicosAtribuidosPage from './components/ServicosAtribuidos.vue';
 import NotFoundPage from './components/NotFound.vue';
 import Navbar from './components/Navbar.vue';
-import Footer from './components/Footer.vue'
+import Footer from './components/Footer.vue';
+import LoadingPage from './components/LoadingPage.vue';
 
 const router = createRouter({
     history: createWebHistory(), // usar a history API do browser
@@ -31,6 +32,7 @@ const app = createApp(App)
 //definir components globais, já que vão exsitir em quase todas as páginas
 app.component('Navbar', Navbar);
 app.component('Footer', Footer);
+app.component('LoadingPage', LoadingPage);
 
 app.use(pinia)
 app.use(router)

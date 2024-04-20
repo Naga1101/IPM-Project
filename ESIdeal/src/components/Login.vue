@@ -1,5 +1,6 @@
 <script>
-  
+import * as DBRequests from '../scripts/DBrequests.js';
+
 export default {
   data() {
     return {
@@ -24,24 +25,30 @@ export default {
     }
   },
   methods: {
-    validateLogin() {
-      let valid = false;
+    async validateLogin() {
+      try {
 
-      // verfiicar login
-      if(this.user !== "" && this.password !== "") {
-        // TODO: also check user and password exist in DB
-        valid = true;
-      }
+        let valid = false;
+        
+        // verificar login
+        const userLoginData = await DBRequests.fetchUserLogin(this.user)
+        const result = userLoginData.length === 1 && userLoginData[0].password === this.password
+        
+        if (result) {
+          valid = true;
+        }
+        //se login falhar, mostrar ajuda
+        if (!valid) {
+          this.showHelp = true;
+        }
+        
+        // se login válido ir para página de serviços atribuídos
+        else {
+          this.$router.push('/atribuidos');
+        }
 
-      //se login falhar, mostrar ajuda
-      else {
-        this.showHelp = true;
-      }
-
-      // se login válido ir para página de serviços atribuídos
-      if(valid) {
-        console.log("Successful login!")
-        this.$router.push('/atribuidos');
+      } catch (error) {
+          console.error("Error loading user login data:", error)
       }
     }
 
@@ -64,7 +71,7 @@ export default {
           <div class="login-square">
 
               <div class="login-header"> ENTRAR EM POSTO</div>
-              <div class="helpbox" :class="{'show_helpbox': showHelp}">
+              <div class="helpbox" v-show="showHelp">
                 <object class="error-symbol" type="image/svg+xml" data="/svgs/danger_symbol.svg"></object>
                 ERRO: Credenciais inválidas
               </div>
@@ -279,14 +286,6 @@ export default {
   background-color: #DDE2E6;
   border: none;
   padding-left: 15px;
-}
-
-.helpbox{
-  display: none;
-}
-
-.show_helpbox {
-  display:block;
 }
 
 </style>

@@ -45,7 +45,16 @@ export const serviceState = defineStore('message', {
         },
 
     // ### FUNCS A CAHAMAR
+        // só carega dados estáticos da base de dados
+        async loadStaticDBdata() {
+            try {
+                this.serviceDefinitions = await DBRequests.fetchServiceDefinitions();
+                this.serviceTypes = await DBRequests.fetchVehicleTypes();
 
+            } catch (error) {
+                console.error("Error loading static DB data:", error)
+            }
+        },   
         // carregar dados estáticos da base de dados e serviços incompletos
         async loadDBdata() {
             try {
@@ -76,7 +85,8 @@ export const serviceState = defineStore('message', {
                     const vehicle = await DBRequests.fetchVehicleById(service.id_veiculo)
                     const client = await DBRequests.fetchClientById(vehicle.clientId)
                     let historyServices = await DBRequests.fetchServicesByVehicle(vehicle.id)
-                    console.log(historyServices)
+                    historyServices = historyServices.map(this.fillServiceData);
+
                     service = new ServiceInfo.ServiceFullInfo(service.id,service.estado, service.agendamento, service.descricao_especifica, service.data,
                         service.def_servico?.id, service.def_servico?.descricao, service.def_servico?.duracao, service.tipos_servico, service.id_veiculo,
                         vehicle?.marca, vehicle?.modelo, vehicle?.medidasJantes, vehicle?.["vehicle-typeId"], vehicle?.potencia, vehicle?.kms, vehicle?.cilindrada,

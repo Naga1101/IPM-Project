@@ -3,7 +3,6 @@
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
     import ModalSusp from './ModalSusp.vue';
-    import LoadingPage from './LoadingPage.vue';
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from "../models/consts.js";
 
@@ -12,8 +11,7 @@
             Navbar,
             Clock,
 			ModalConc,
-            ModalSusp,
-            LoadingPage
+            ModalSusp
         },
         props: {
             servicoID: { // recebido no URL
@@ -77,7 +75,7 @@
                     this.sortOrder = 'asc';
                 }
                 // sort na lista dos historicos
-                this.historicoServicos.sort((a,b) => {
+                this.servico.historico.sort((a,b) => {
                     let val1 = a[coluna];
                     let val2 = b[coluna];
                     let result;
@@ -120,20 +118,6 @@
 		},
 
         computed:{
-            async historicoServicos() {
-                try{    
-                    const dbData = serviceState();
-                    const historicoServicos = [];
-                    for(const servico of dbData){
-                        servico = await dbData.getServiceBaseInfo();
-                        historicoServicos.push(servico);
-                    }
-                    return historicoServicos;
-                } catch(e){
-                    console.log(e);
-                    return [];
-                }
-            },
             matricula(){
                 try{    
                     const matricula = this.servico.veiculo.id;
@@ -234,9 +218,9 @@
                     return 1;
                 }
             },
-            /*Pedro Meguje corrije o isturico dos servs*/
+
         },
-        async mounted() {
+        async created() {
             const dbData = serviceState();
             this.servico = await dbData.getServiceDetails(this.servicoID);
                     // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
@@ -362,7 +346,7 @@
         </button>
         -->
     </div>
-    <LoadingPage v-else />
+    <LoadingPage v-else/>
     <Footer/>
 </template>
 

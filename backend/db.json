@@ -319,5 +319,10 @@
       },
       "descrição": "shampoo XPTO"
     }
+  ],
+  "logins": [
+    { "user": "user",
+      "password": "123"
+    }
   ]
 }
