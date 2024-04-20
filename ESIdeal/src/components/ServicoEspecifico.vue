@@ -332,13 +332,13 @@
             SUSPENDER
             <img src="/images/left_arrow.png" alt="arrow">
         </button>
-		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp"/>
+		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" :currentService="this.servico"/>
 
 		<button v-show="!mostrarMenuConcluir && !mostrarMenuSuspender" @click="showModalConc" class="floating-button">
             CONCLUIR
             <img src="/images/left_arrow.png" alt="arrow">
         </button>
-		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc"/>
+		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc" :currentService="this.servico"/>
         <!-- 
         <button class="floating-button">
             INICIAR

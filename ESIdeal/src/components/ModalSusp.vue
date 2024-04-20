@@ -5,11 +5,17 @@
 		name: 'ModalSusp',
 		data() {
 			return {
-				title: " SUSPENDER ",
-				message: "message teste"
+				title: "SUSPENDER",
+				message: ""
 			}
 		},
+		props: ['currentService'],
 		methods: {
+			async suspendService() {
+				console.log(this.message,this.currentService.id)
+				const result = await DBRequests.postSuspendedService(this.message,this.currentService.id)
+				this.close()
+			},
 			close() {
 				this.$emit('close');
 			},
@@ -46,7 +52,7 @@
 
 				<footer class="modal-footer">
 					
-					<button type="button" class="botao-confirmar" @click="close">
+					<button type="button" class="botao-confirmar" @click="suspendService">
 						<span>CONFIRMAR</span>
 						<img src="/images/right.png" alt="right">
 					</button>

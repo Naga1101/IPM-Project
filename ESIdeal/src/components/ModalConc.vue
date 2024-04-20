@@ -2,6 +2,7 @@
 
 <script setup>
 	import {serviceState} from '../scripts/stores.js';
+	import * as DBRequests from '../scripts/DBrequests.js';
 
 	const fechar = '/images/botao_fechar.svg';
 	// const fechar_preto = '/images/botao_fechar_preto.svg';
@@ -16,13 +17,23 @@
 		data() {
 			return {
 				title: "CONCLUIR",
-				notas: "",
 				servicos_disp: [],
-				servicos: [],
-				mostrarServicosDisponiveis: false
+				mostrarServicosDisponiveis: false,
+
+				//valores a enviar para DB
+				notas: "",
+				servicos: []
 			}
 		},
+		props: ['currentService'],
+
 		methods: {
+			async finishService() {
+				const recommendedServicesId = this.servicos.map(service => service.id)
+				const result = await DBRequests.postFinishedService(recommendedServicesId,this.notas,this.currentService.veiculo.id,this.currentService.id)
+				this.close()
+			},
+
 			close() {
 				this.$emit('close');
 				this.closeServicosDisponiveis()
@@ -109,10 +120,10 @@
 							<span class="subtitulo">
 								Outras notas:
 							</span>
-							<textarea class="notas" placeholder="Apontar eventuais notas aqui">
+							<textarea class="notas" placeholder="Apontar eventuais notas aqui" v-model="notas">
 							</textarea>
 						</slot>
-						<button type="button" class="botao-confirmar" @click="close">
+						<button type="button" class="botao-confirmar" @click="finishService">
 							<span>CONFIRMAR</span>
 							<img :src="confirmar">
 						</button>
