@@ -122,7 +122,7 @@
             startService(){
                 this.toggleShadow();
                 // da update na db mas nao pega no estado que estava na db
-                this.servico.estado = "A DECORRER";
+                this.servico.estado = "a decorrer";
 
                 fetch ('http://localhost:3000/services/' + this.servico.id, {
                     method: 'PATCH' ,
@@ -518,7 +518,7 @@
 
     .table-services {
         width: 100%; 
-        height: 500px;
+        max-height: 500px;
         overflow-y: scroll;
         padding-right: 15px;
     }
@@ -685,9 +685,8 @@
     }
 
     .page-shadow {
-        position: relative;
         min-height: calc(100vh - 30px); /* para começar em cima do footer  | */ 
-        background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
+        background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 70%);
     }
 </style>
 
