@@ -1,11 +1,25 @@
 const baseUrl = 'http://localhost:3000/';
 
 // Funções de fetch básicas
-export const fetchServicesToComplete = async () => {
-    return fetch(baseUrl + "services?estado_ne=realizado") // devolve todos os serviços com estado não igual (ne) a "realizado"
+export const fetchServicesWithState = async (states) => {
+    const estadoQuery = states.map(state => `estado=${state}`).join('&');
+    return fetch(baseUrl + `services?${estadoQuery}`) // devolve todos os serviços com estado não igual (ne) a "realizado"
     .then (response => {
         if (!response.ok) {
             throw new Error('Error fetching services');
+        }
+        else {
+            return response.json()
+        }
+    })
+    .catch(error => console.log(error))
+}
+
+export const fetchServiceById = async (serviceId) => {
+    return fetch(baseUrl + `services/${serviceId}`) // devolve todos os serviços com estado não igual (ne) a "realizado"
+    .then (response => {
+        if (!response.ok) {
+            throw new Error('Error fetching service');
         }
         else {
             return response.json()
@@ -54,12 +68,13 @@ export const fetchClientById = async (clientId) => {
 }
 
 export const fetchServicesByVehicle = async (vehicleId) => {
-    return fetch(baseUrl + `services?=vehicleId=${vehicleId}`) // devolve todos os serviços com estado não igual (ne) a "realizado"
+    return fetch(baseUrl + `services?vehicleId=${vehicleId}`) // devolve todos os serviços com estado não igual (ne) a "realizado"
     .then (response => {
         if (!response.ok) {
             throw new Error('Error fetching services');
         }
         else {
+            
             return response.json()
         }
     })
@@ -81,16 +96,13 @@ export const fetchVehicleById = async (vehicleId) => {
 
 export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId) => {
     //obter lista de serviços recomendados de veículo
-    fetch(`http://localhost:3000/vehicles/${vehicleId}?_fields=recomendados`)
+    fetch(baseUrl + `vehicles/${vehicleId}`)
     //atualizar coluna de serviços
     .then( resposta => resposta.json())
     .then(dados => {
-        console.log(dados)
         const antigosRecomendados = dados.recomendados || []
-        console.log(antigosRecomendados)
-
         const recomendadosSemRepetidos = [...(new Set(antigosRecomendados.concat(recommendedServices)))]
-        return fetch(`http://localhost:3000/vehicles/${vehicleId}`, {
+        return fetch(baseUrl + `vehicles/${vehicleId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -102,7 +114,7 @@ export const postFinishedService = async (recommendedServices, note, vehicleId, 
     })
     .then (result => {
         const res =
-        fetch (`http://localhost:3000/services/${currentServiceId}`, {
+        fetch (baseUrl + `services/${currentServiceId}`, {
             method : 'PATCH',
             headers : {
             'Content-Type': 'application/json'
@@ -127,7 +139,7 @@ export const postFinishedService = async (recommendedServices, note, vehicleId, 
 export const postSuspendedService = async (reason, currentServiceId) => {
 
     //atualizar coluna de serviços
-    fetch (`http://localhost:3000/services/${currentServiceId}`, {
+    fetch (baseUrl + `services/${currentServiceId}`, {
         method : 'PATCH',
         headers : {
         'Content-Type': 'application/json'

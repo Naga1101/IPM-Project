@@ -292,19 +292,17 @@
       "id": "s34",
       "vehicleId": "AH-21-25",
       "service-definitionId": "sfc",
-      "estado": "realizado",
+      "estado": "parado",
       "agendamento": "filaDeEspera",
-      "descrição": "Falta o filtro.",
-      "notas-concluido": "nota"
+      "descrição": "Falta o filtro."
     },
     {
       "id": "s12",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "parado",
+      "estado": "realizado",
       "agendamento": "filaDeEspera",
-      "descrição": "Colocar XPTO 225R15",
-      "razao-suspensao": "porque me apeteceu"
+      "descrição": "Colocar XPTO 225R15"
     },
     {
       "id": "s24",

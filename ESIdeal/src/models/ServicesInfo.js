@@ -1,62 +1,55 @@
 import {TiposVeiculo, AgendamentoServico, EstadoServico} from "./consts.js";
 
 export class ServiceBaseInfo {
-    constructor(data) {
-        this.id = data.id || "";
-        this.estado = EstadoServico[data.estado.toUpperCase()] || null;
-        this.agendamento = AgendamentoServico[data.agendamento.toUpperCase()] || null;
-        this.descricao_especifica = data["descrição"] || "";  // tem caratéres especiais, usar parentesis curvos
-        this.id_veiculo = data.vehicleId || "";
-        this.data = new Date(data.data?.ano, data.data?.mes - 1, data.data?.dia, data.data?.hora, data.data?.minutos) || null; // Assuming you want to set the current date as default
+    constructor(service_id, estado, agendamento, descricao, id_veiculo, data, serv_id, 
+            serv_descricao, serv_duracao, tipos_servico) {
+        this.id = service_id || "";
+        this.estado = EstadoServico[estado.toUpperCase()] || null;
+        this.agendamento = AgendamentoServico[agendamento.toUpperCase()] || null;
+        this.descricao_especifica = descricao || "";  // tem caratéres especiais, usar parentesis curvos
+        this.id_veiculo = id_veiculo || "";
+        this.data = data || null; // Assuming you want to set the current date as default
         this.def_servico = {
-            id: data["service-definitionId"] || "",
-            descricao: data.serviceDefinition?.descr || "",
-            duracao: data.serviceDefinition?.duração || ""
+            id: serv_id || "",
+            descricao: serv_descricao || "",
+            duracao: serv_duracao || ""
         };
-        this.tipos_servico = data.serviceTypes.map(type => TiposVeiculo[type.toUpperCase()]) || [];
+        this.tipos_servico = Array.from(tipos_servico).map(type => TiposVeiculo[type.toUpperCase()]) || [];
     }
 }
 
 // já assume que recebeu dados do ServiceBaseInfo, daí estar ligeiramente estranho -> temporario
 export class ServiceFullInfo {
-    constructor(data) {
-        this.id = data.id || "";
-        this.estado = data.estado || null;
-        this.agendamento = data.agendamento || null;
-        this.descricao_especifica = this.descricao_especifica || "";  // tem caratéres especiais, usar parentesis curvos
-        this.data = data.data || null;
+    constructor(service_id, estado, agendamento, descricao, data, serv_id, serv_descricao, 
+            serv_duracao, tipos_servico, veiculo_id, veiculo_marca, veiculo_modelo, veiculo_jantes, 
+            veiculo_tipo, veiculo_potencia, veiculo_kms, veiculo_cilindrada, cliente_id, cliente_nome, cliente_email, cliente_telefone, servicos_historico) {
+        this.id = service_id || "";
+        this.estado = estado || null;
+        this.agendamento = agendamento || null;
+        this.descricao_especifica = descricao || ""; 
+        this.data = data || null;
         this.def_servico = {
-            id: data.def_servico.id,
-            descricao: data.def_servico.descricao,
-            duracao: data.def_servico.duracao
+            id: serv_id || "",
+            descricao: serv_descricao || "",
+            duracao: serv_duracao || ""
         };
-        this.tipos_servico = Array.from(data.tipos_servico) || []
+        this.tipos_servico = Array.from(tipos_servico) || [] // assume que já vem no formato correto
         this.veiculo = {
-            id: data.id_veiculo || "",
-            marca: data.vehicle?.marca || "",
-            modelo: data.vehicle?.modelo || "",
-            medidasJantes: data.vehicle?.medidasJantes || "",
-            // tirei daqui o id_cliente, está acessível no cliente.id
-            tipo: TiposVeiculo[data.vehicle["vehicle-typeId"].toUpperCase()] || null,
-            potencia: data.vehicle?.potencia || "",
-            kms: data.vehicle?.kms || "",
-            cilindrada: data.vehicle?.cilindrada || ""
+            id: veiculo_id || "",
+            marca: veiculo_marca || "",
+            modelo: veiculo_modelo || "",
+            medidasJantes: veiculo_jantes || "",
+            tipo: TiposVeiculo[veiculo_tipo.toUpperCase()] || null,
+            potencia: veiculo_potencia || "",
+            kms: veiculo_kms || "",
+            cilindrada: veiculo_cilindrada || ""
         }
         this.cliente = {
-            id: data.client?.id || "",
-            nome: data.client?.nome || "",
-            email: data.client?.email || "",
-            telefone: data.client?.telefone || ""
+            id: cliente_id || "",
+            nome: cliente_nome || "",
+            email: cliente_email || "",
+            telefone: cliente_telefone || ""
         }
-        this.historico = data.historyServices || []
+        this.historico = servicos_historico || [] // assumo que já vem no formato correto
     }
 }
-
-export const ServiceInfoPlugin = {
-    install(Vue) {
-      Vue.prototype.$ServiceInfo = {
-        ServiceBaseInfo,
-        ServiceFullInfo
-      };
-    }
-  };

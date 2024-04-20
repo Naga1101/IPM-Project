@@ -136,8 +136,6 @@
             const dbData = serviceState();
             this.services = dbData.servicesToComplete;
 
-            const serviceDetailed = await dbData.buildServiceDetails(this.services[0]);
-
         }
     };
 

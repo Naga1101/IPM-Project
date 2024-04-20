@@ -3,17 +3,17 @@
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
     import ModalSusp from './ModalSusp.vue';
+    import LoadingPage from './LoadingPage.vue';
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from "../models/consts.js";
 
     export default {
-
-
         components: {
             Navbar,
             Clock,
 			ModalConc,
-            ModalSusp
+            ModalSusp,
+            LoadingPage
         },
         props: {
             servicoID: { // recebido no URL
@@ -23,25 +23,25 @@
         },
         data() {
             return {
-                servico: null, // servico obtido da db
+                servico: null,
                 id: 1,
                 descricao: "Service 1",
                 estado: "POR INICIAR",
                 
-                historicoServicos: [
-                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
-                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
-                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
-                    { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                    { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                    { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
-                ],
+                // historicoServicos: [
+                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
+                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
+                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
+                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
+                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
+                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
+                // ],
 
                 sortColumn: null,
                 sortOrder: null,
@@ -118,14 +118,9 @@
                 return servico.veiculo.tipo === Consts.TiposVeiculo.ELETRICO;
             }
 		},
-        async mounted() {
-            const dbData = serviceState();
-            this.servico = await dbData.getServiceDetailsFromLocal(this.servicoID);
-                // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
-            console.log(this.servico.veiculo.id + " mounted")
-        },
+
         computed:{
-            async historicoServicos(){
+            async historicoServicos() {
                 try{    
                     const dbData = serviceState();
                     const historicoServicos = [];
@@ -240,14 +235,20 @@
                 }
             },
             /*Pedro Meguje corrije o isturico dos servs*/
-        }
+        },
+        async mounted() {
+            const dbData = serviceState();
+            this.servico = await dbData.getServiceDetails(this.servicoID);
+                    // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
+        },
     };
 
  </script>
 
 <template>
     <Navbar linkBackTo="/atribuidos"/>
-    <div class="page">
+    <!-- test if data loaded -->
+    <div v-if="servico" class="page"> 
         <div class="header">
             <h1>Detalhes de serviço</h1>
             <Clock class="clock"/>
@@ -258,12 +259,12 @@
             <div class="rectangle"></div>
             <div class="info">
                 <div class="left">
-                    <span class="descricao">{{ descricao }}</span>
-                    <span class="id">(#{{ id }})</span>
-                    <span class="duracao">Duração: {{ duracao }} min</span>
+                    <span class="descricao">{{servico.def_servico.descricao}}</span>
+                    <span class="id">(#{{ servico.id }})</span>
+                    <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
                 </div>
                 <div class="right">
-                    <span class="estado">ESTADO: {{ estado }}</span>
+                    <span class="estado">ESTADO: {{ servico.estado }}</span>
                 </div>
             </div>
         </div>
@@ -272,9 +273,9 @@
             <!-- Car info -->
             <div class="car-details">
                 <span class="veiculo"> Veículo </span>
-                <span class="car-info"> Matricula: {{ matricula }} </span>
-                <span class="car-info"> Marca: {{ marca }} </span>
-                <span class="car-info"> Modelo: {{ modelo }} </span>
+                <span class="car-info"> Matricula: {{ servico.veiculo.id }} </span>
+                <span class="car-info"> Marca: {{ servico.veiculo.marca }} </span>
+                <span class="car-info"> Modelo: {{ servico.veiculo.modelo }} </span>
                 <span class="car-info" v-if="tipoMotor === 'Gasolina' || tipoMotor === 'Gasóleo'"> Cilindrada: {{ cilindrada }} </span>
                 <span class="car-info" v-if="tipoMotor === 'Elétrico' || tipoMotor === 'Híbrido'"> Potência do carregador: {{ potencia }}</span>
                 <span class="car-info"> Medidas Jantes: {{ medidasJantes }}</span>
@@ -333,7 +334,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(service, index) in historicoServicos" :key="index">
+                            <tr v-for="(service, index) in servico.historico" :key="index">
                                 <td>{{ service.servico }}</td>
                                 <td>{{ service.estado }}</td>
                                 <td>{{ service.data }}</td>
@@ -361,11 +362,12 @@
         </button>
         -->
     </div>
+    <LoadingPage v-else />
     <Footer/>
 </template>
 
 <style scoped>
-    
+
     .header{
         display: flex;
         flex-direction: row;
@@ -665,8 +667,6 @@
         display: flex;
     }
 </style>
-
-
 
 
 <!--

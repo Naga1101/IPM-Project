@@ -2,96 +2,108 @@ import { defineStore } from 'pinia';
 
 import * as DBRequests from './DBrequests.js';
 import * as ServiceInfo from'../models/ServicesInfo.js';
+import { EstadoServico } from '../models/consts.js';
 export const serviceState = defineStore('message', {
     state: () => ({
         onGoingService: false,
         serviceDefinitions: [], // obtidos de partida todos, porque são poucos e nunca mudam
         serviceTypes: [], // obtidos de partida todos, porque são poucos e nunca mudam
-        servicesToComplete: [], // array com dados base de serviços incompletos para a página de serviços atribuídos
+        servicesWithBaseData: [], // array com dados base de serviços incompletos para a página de serviços atribuídos
+        servicesWithFullData: [],
     }),
     getters: { //funções de get
+        servicesToComplete() {
+            return this.servicesWithBaseData.filter(service => service.estado !== EstadoServico.REALIZADO)
+        }
     },
 
     actions: {
+    // ### FUNCS AUXILIARES
+
         async toggleOnGoingService() {
             this.onGoingService = !this.onGoingService;
         },
         
+
+        //recebe entrada da tabela serviços da base de dados
+        //preencher campos relativos a tipo de servico,nome, duração com base em dados pré-carregados no store
+        fillServiceData(service) {
+            // Map service data
+            const serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
+            const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]));
+            const serviceTypes = foundServiceTypes.map(type => type.id);
+
+            const date = new Date(service.data?.ano, service.data?.mes - 1, service.data?.dia, service.data?.hora, service.data?.minutos)
+
+            const baseService = new ServiceInfo.ServiceBaseInfo(service.id,service.estado, service.agendamento, service["descrição"],service.vehicleId, 
+                date, service["service-definitionId"], serviceDefinition?.descr, serviceDefinition?.duração,
+                serviceTypes);
+            
+            this.servicesWithBaseData.push(baseService)
+
+            return baseService
+        },
+
+    // ### FUNCS A CAHAMAR
+
+        // carregar dados estáticos da base de dados e serviços incompletos
         async loadDBdata() {
             try {
                 this.serviceDefinitions = await DBRequests.fetchServiceDefinitions();
                 this.serviceTypes = await DBRequests.fetchVehicleTypes();
-                this.servicesToComplete = await DBRequests.fetchServicesToComplete(); // isto devia ser uma call separada se calhar?, depende se achamos que vão aparecer serviços durante o decorrer do programa
+                this.servicesWithBaseData = await DBRequests.fetchServicesWithState(["programado","nafila","parado"]); // isto devia ser uma call separada se calhar?, depende se achamos que vão aparecer serviços durante o decorrer do programa
             
-                this.servicesToComplete = this.servicesToComplete.map(service => { // como fazer com que isto use getServiceBaseInfo??
-                    service.serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
-                    const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]))
-                    service.serviceTypes = foundServiceTypes.map(type => type.id);
-                    return new ServiceInfo.ServiceBaseInfo(service)
-                })
+                this.servicesWithBaseData = this.servicesWithBaseData.map(this.fillServiceData);
+
             } catch (error) {
-                console.error("Error loading DB data for incomplete services:", error)
+                console.error("Error loading base DB data:", error)
             }
         },
 
-        // dado ServiceBaseInfo acrescenta o que falta, para criar ServiceBaseInfo
-        async buildServiceDetails(service) { 
+        //obter detalhes inteiros de serviço
+        async getServiceDetails(idService){
             try {
-                const vehicle = await DBRequests.fetchVehicleById(service.id_veiculo)
-                const client = await DBRequests.fetchClientById(vehicle.clientId)
-                const historyServices = await DBRequests.fetchServicesByVehicle(vehicle.id)
+                let service = this.servicesWithFullData.find(serv => serv.id === idService)
 
-                service.vehicle = vehicle;
-                service.client = client;
-                service.historyServices = historyServices;
+                if (!service) { // se serviço com informação total não estiver guardado
+                    service = this.servicesWithBaseData.find(serv => serv.id === idService)
 
-                return new ServiceInfo.ServiceFullInfo(service)
+                    if (!service) { // se serviço base não estiver guardado
+                        service = await DBRequests.fetchServiceById(idService);
+                        service = this.fillServiceData(service)
+                    }
+
+                    const vehicle = await DBRequests.fetchVehicleById(service.id_veiculo)
+                    const client = await DBRequests.fetchClientById(vehicle.clientId)
+                    let historyServices = await DBRequests.fetchServicesByVehicle(vehicle.id)
+                    console.log(historyServices)
+                    service = new ServiceInfo.ServiceFullInfo(service.id,service.estado, service.agendamento, service.descricao_especifica, service.data,
+                        service.def_servico?.id, service.def_servico?.descricao, service.def_servico?.duracao, service.tipos_servico, service.id_veiculo,
+                        vehicle?.marca, vehicle?.modelo, vehicle?.medidasJantes, vehicle?.["vehicle-typeId"], vehicle?.potencia, vehicle?.kms, vehicle?.cilindrada,
+                        client?.id, client?.nome, client?.email, client?.telefone, historyServices)
+                        
+                    this.servicesWithFullData.push(service)
+                }
+
+                return service
 
             } catch (error) {
                 console.error("Error loading DB data for specific service:", error)
             }
         },
 
-        async getServiceBaseInfo(service) {
+        async getServiceBaseInfo(idService) {
             try {
-                service.serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
-                const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]))
-                service.serviceTypes = foundServiceTypes.map(type => type.id);
-                return new ServiceBaseInfo(service)
-            } catch (error) {
-                console.error("Error loading DB data for specific service:", error)
-            }
-        },
-
-        // assume que é serviço não concluído carregado da base de dados de início
-        async getServiceDetailsFromLocal(idService) { // recebe dados raw da DB de serviço
-            try {
-                // service.serviceDefinition = this.serviceDefinitions.find(def => def.id === service["service-definitionId"]);
-                // const foundServiceTypes = this.serviceTypes.filter(type => type.serviços.includes(service["service-definitionId"]))
-                // service.serviceTypes = foundServiceTypes.map(type => type.id);
-                // baseInfo = new ServiceBaseInfo(service)
-                console.log(idService)
-                const service = this.servicesToComplete.find(service => service.id === idService)
-                console.log(service)
-                const vehicle = await DBRequests.fetchVehicleById(service.id_veiculo)
-                const client = await DBRequests.fetchClientById(vehicle.clientId)
-                const historyServices = await DBRequests.fetchServicesByVehicle(vehicle.id)
-
-                service.vehicle = vehicle;
-                service.client = client;
-                service.historyServices = historyServices;
-
-                return new ServiceInfo.ServiceFullInfo(service)
+                const service = this.servicesWithBaseData.find(serv => serv.id === idService)
+                if (!service) {
+                    service = await DBRequests.fetchServiceById(idService);
+                    service = fillServiceData(service)
+                }
+                return service
 
             } catch (error) {
                 console.error("Error loading DB data for specific service:", error)
             }
-
-        },
-
-        // qualquer serviço carregado da base de dados diretamente
-        async getServiceDetailsFromRemote(idService) { // recebe dados raw da DB de serviço
-           // TODO:
         }
     },
 });
