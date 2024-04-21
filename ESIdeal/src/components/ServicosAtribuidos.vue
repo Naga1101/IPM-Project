@@ -3,7 +3,10 @@
     <div v-if="services" class="page">
         <OnGoingBanner v-if="onGoingService" class="ongoing-banner" :servico="onGoingService"/>
         <div class="headers">
-            <h1>Serviços agendados</h1>
+            <div class="title">
+                <h1>Serviços agendados</h1>
+                <Help hoverIMG="/images/helpbox.png" />
+            </div>
             <Clock v-if="!onGoingService" class="clock"/>
         </div>
         <div class="tables">
@@ -19,6 +22,7 @@
   <script>
     import TabelaServicos from './TabelaServicos.vue';
     import OnGoingBanner from './OnGoingBanner.vue';
+    import Help from './Help.vue';
     import Clock from './Clock.vue';
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from '../models/consts.js';
@@ -27,7 +31,8 @@
         components: {
             Clock,
             OnGoingBanner,
-            TabelaServicos
+            TabelaServicos,
+            Help
         },
         setup() { // faz todas estas propriedades reativas conforme se muda estado no pinia !
             const store = serviceState(); // Access the Pinia store
@@ -77,6 +82,14 @@
         padding-bottom: 5px;
 
     }
+
+    .title{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 20px;
+    }
+
     h1 {
         font-size: 2.2em;
         font-weight: 500;
