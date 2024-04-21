@@ -1,6 +1,10 @@
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component -->
 
 <script>
+	import {serviceState} from '../scripts/stores.js';
+	import * as DBRequests from '../scripts/DBrequests.js';
+	import * as Consts from "../models/consts.js";
+
 	export default {
 		name: 'ModalSusp',
 		data() {
@@ -12,8 +16,16 @@
 		props: ['currentService'],
 		methods: {
 			async suspendService() {
-				console.log(this.message,this.currentService.id)
+
 				const result = await DBRequests.postSuspendedService(this.message,this.currentService.id)
+				if (result) {
+					this.currentService.estado = Consts.EstadoServico.PARADO
+					//parar serviço a decorrer no registo de estado
+					const dbData = serviceState();
+					dbData.clearOnGoingService();
+					dbData.updateServiceState(this.currentService.id, Consts.EstadoServico.PARADO);
+				}
+
 				this.close()
 			},
 			close() {

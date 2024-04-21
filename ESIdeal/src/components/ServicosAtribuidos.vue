@@ -1,9 +1,10 @@
 <template>
     <Navbar/>
     <div v-if="services" class="page">
+        <OnGoingBanner v-if="onGoingService" class="ongoing-banner" :servico="onGoingService"/>
         <div class="headers">
             <h1>Serviços agendados</h1>
-            <Clock class="clock"/>
+            <Clock v-if="!onGoingService" class="clock"/>
         </div>
         <div class="tables">
             <TabelaServicos class="table_entry1" :services="categorias.comPrazo" :comPrazo="true"/>
@@ -17,43 +18,45 @@
   
   <script>
     import TabelaServicos from './TabelaServicos.vue';
+    import OnGoingBanner from './OnGoingBanner.vue';
     import Clock from './Clock.vue';
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from '../models/consts.js';
 
     export default {
         components: {
-            TabelaServicos,
-            Clock
+            Clock,
+            OnGoingBanner,
+            TabelaServicos
         },
-        data() {
-            return {
-                services: [],
+        setup() { // faz todas estas propriedades reativas conforme se muda estado no pinia !
+            const store = serviceState(); // Access the Pinia store
+
+            const services = store.servicesToComplete; // Access services from the store
+
+            const onGoingService = store.onGoingService; // Access onGoingService from the store
+
+            console.log(onGoingService)
+
+            const categorias = {
+            comPrazo: [],
+            semPrazo: []
             };
-        },
-        computed: {
-            categorias() { // dividr serviços em "com prazo limite" e "sem prazo limite"
-                const categorias = {
-                    comPrazo: [],
-                    semPrazo: []
-                }
 
-                this.services.forEach(service => {
-                    if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
-                        categorias.comPrazo.push(service)
-                    } 
-                    else {
-                        categorias.semPrazo.push(service)
-                    }
-                })
-
-                return categorias;
+            // Compute categorias based on services
+            services.forEach(service => {
+            if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
+                categorias.comPrazo.push(service);
+            } else {
+                categorias.semPrazo.push(service);
             }
-        },
-        async created() {
-            const dbData = serviceState();
-            this.services = dbData.servicesToComplete;
+            });
 
+            return {
+                services,
+                onGoingService,
+                categorias
+            };
         }
     };
 

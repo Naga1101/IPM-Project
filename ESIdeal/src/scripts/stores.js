@@ -3,9 +3,9 @@ import { defineStore } from 'pinia';
 import * as DBRequests from './DBrequests.js';
 import * as ServiceInfo from'../models/ServicesInfo.js';
 import { EstadoServico } from '../models/consts.js';
-export const serviceState = defineStore('message', {
+export const serviceState = defineStore('dbData', {
     state: () => ({
-        onGoingService: false,
+        onGoingService: null, // guarda serviço a decorrer se houver
         serviceDefinitions: [], // obtidos de partida todos, porque são poucos e nunca mudam
         serviceTypes: [], // obtidos de partida todos, porque são poucos e nunca mudam
         servicesWithBaseData: [], // array com dados base de serviços incompletos para a página de serviços atribuídos
@@ -20,10 +20,13 @@ export const serviceState = defineStore('message', {
     actions: {
     // ### FUNCS AUXILIARES
 
-        async toggleOnGoingService() {
-            this.onGoingService = !this.onGoingService;
+       async addOnGoingService(serviceId) {
+            this.onGoingService = await this.getServiceBaseInfo(serviceId)
         },
         
+        clearOnGoingService() {
+            this.onGoingService = null
+        },
 
         //recebe entrada da tabela serviços da base de dados
         //preencher campos relativos a tipo de servico,nome, duração com base em dados pré-carregados no store
@@ -108,12 +111,20 @@ export const serviceState = defineStore('message', {
                 if (!service) {
                     service = await DBRequests.fetchServiceById(idService);
                     service = fillServiceData(service)
+
+                    this.servicesWithBaseData.push(service)
                 }
                 return service
 
             } catch (error) {
                 console.error("Error loading DB data for specific service:", error)
             }
+        },
+
+        updateServiceState(idService, state) {
+            var service = this.servicesWithBaseData.find(serv => serv.id === idService)
+            service.estado = state
+
         }
     },
 });
