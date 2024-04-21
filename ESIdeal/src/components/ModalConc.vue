@@ -61,7 +61,7 @@
 			},
 			closeInsideModal() {
 				if (this.mostrarServicosDisponiveis === true) {
-					this.toggleServicosDisponiveis(null)
+					this.closeServicosDisponiveis()
 				}
 			},
 			deleteServico(index) {
@@ -74,13 +74,14 @@
 				}
 				this.mostrarServicosDisponiveis = !this.mostrarServicosDisponiveis;
 			},
-			addServico(servico) {
+			addServico(event, servico) {
 				servico.selecionado = true
 				this.servicos.push(servico)
-				this.toggleServicosDisponiveis()
+				this.closeServicosDisponiveis()
+				event.stopPropagation()
 			},
 			closeServicosDisponiveis() {
-				if (this.mostrarServicosDisponiveis) {
+				if (this.mostrarServicosDisponiveis === true) {
 					this.mostrarServicosDisponiveis = false
 				}
 			},
@@ -99,11 +100,18 @@
 			},
 			textClick(event) {
 				event.stopPropagation()
+			},
+		},
+		computed: {
+			servDispEmpty() {
+				return this.getServicosDisponiveis().length === 0
 			}
 		},
 		async created() {
 			const dbData = serviceState();
 			this.servicos_disp = dbData.serviceDefinitions;
+			var types = dbData.serviceTypes
+
 			this.servicos_disp.forEach((servico) => {
 				servico.selecionado = false
 			})
@@ -124,10 +132,13 @@
 					<input @click="textClick"  v-model="texto_pesquisa" type="text" class="inputNomeServico" placeholder="Insira o nome do serviço">
 					</input>
 					<ul class="menu-servicos-disponiveis">
-						<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis()" @click="addServico(serv)">
+						<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis()" @click="addServico($event, serv)">
 							<span>
 								{{ serv.descr }}
 							</span>
+						</li>
+						<li v-if="servDispEmpty" class="menu-servicos-disponiveis-item" @click="textClick">
+							<span>Nenhum serviço encontrado</span>
 						</li>
 					</ul>
 				</div>
@@ -176,7 +187,7 @@
 							<span class="subtitulo">
 								Outras notas:
 							</span>
-							<textarea class="notas" placeholder="Apontar eventuais notas aqui" v-model="notas">
+							<textarea class="notas" placeholder="Apontar eventuais notas aqui" v-model="notas" @click="textClick">
 							</textarea>
 						</slot>
 						<button type="button" class="botao-confirmar" @click="finishService">
@@ -435,7 +446,7 @@
 		margin: 0;
 		z-index: 100;
 		overflow-y: scroll;
-		max-height: 350px;
+		max-height: 50%;
 		/* box-shadow: 2px 2px 20px 1px; */
 	}
 
@@ -467,16 +478,19 @@
 	.inputNomeServico {
 		border: 0;
 		/* flex-grow: 1; */
-		margin: 0 3.5% 0 3.5%;
 		font-weight: 400;
-		font-size: 1.5vh;
+		font-size: 2.5vh;
+		text-align: left;
+		padding-left: 5%;
 	}
 
 	.lista-servicos-container {
 		/* position: absolute; */
 		width: 33%;
-		height: 60%;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
+		margin-right: 1%;
 	}
 </style>
