@@ -70,10 +70,11 @@ export default {
           </div>
           <div class="login-square">
 
-              <div class="login-header"> ENTRAR EM POSTO</div>
+              <div class="login-header"> ENTRAR EM POSTO</div>             
+              <div class="linha"></div>
               <div class="helpbox" v-show="showHelp">
                 <object class="error-symbol" type="image/svg+xml" data="/svgs/danger_symbol.svg"></object>
-                ERRO: Credenciais inválidas
+                <p>ERRO: Credenciais inválidas</p>
               </div>
               <div class="separator"></div>
 
@@ -218,11 +219,11 @@ export default {
 
 
 .login-square {
+  position: relative; /* Ensure the parent container is positioned */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
   width: 600px;
   height: 500px;
   background-color: white;
@@ -288,4 +289,31 @@ export default {
   padding-left: 15px;
 }
 
+.linha {
+  height: 2px;
+  background-color: #000000; 
+}
+
+.helpbox {
+  background-color: #FAC3C3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute; /* Make it absolute */
+  top: 19%; /* Adjust as needed */
+  left: 7%; /* Adjust as needed */
+  width: 86%; /* Take full width of parent */
+}
+
+.error-symbol {
+  width: 50px; /* Adjust width as needed */
+  height: 50px; /* Adjust height as needed */
+}
+
+.error-symbol + p {
+  color: #DC564E; /* Text color */
+  font-size: 20px; /* Font size */
+  font-weight: 600; /* Semibold */
+  margin-left: 10px; /* Adjust spacing between SVG and text */
+}
 </style>
