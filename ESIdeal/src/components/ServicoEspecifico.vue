@@ -3,6 +3,7 @@
     import Navbar from './Navbar.vue';
     import Clock from './Clock.vue';
     import ModalSusp from './ModalSusp.vue';
+    import Help from './Help.vue';
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from "../models/consts.js";
     import * as DBRequests from '../scripts/DBrequests.js';
@@ -12,7 +13,8 @@
             Navbar,
             Clock,
 			ModalConc,
-            ModalSusp
+            ModalSusp,
+            Help
         },
         props: {
             servicoID: { // recebido no URL
@@ -234,7 +236,10 @@
     <!-- test if data loaded -->
     <div v-if="servico" class="page" :class="{ 'page-shadow' : servicoADecorrer }"> 
         <div class="header">
-            <h1>Detalhes de serviço</h1>
+            <div class="title">
+                <h1>Detalhes de serviço</h1>
+                <Help hoverIMG="/images/Tooltip.png" />
+            </div>
             <Clock class="clock"/>
         </div>
         
@@ -358,6 +363,13 @@
         justify-content: space-between;
         align-items: center;
         padding: 0px 50px 0px 50px;
+    }
+
+    .title{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 20px;
     }
 
     .info {
