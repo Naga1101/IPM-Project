@@ -20,6 +20,8 @@
 				title: "CONCLUIR",
 				servicos_disp: [],
 				mostrarServicosDisponiveis: false,
+				texto_pesquisa: "",
+				text_click: false,
 
 				//valores a enviar para DB
 				notas: "",
@@ -67,12 +69,19 @@
 			},
 			getServicosDisponiveis() {
 				var res = []
+				var texto_pesquisa_filtered = this.texto_pesquisa.toUpperCase();
+
 				this.servicos_disp.forEach((servico) => {
 					if (servico.selecionado === false) {
-						res.push(servico)
+						if (servico.descr.toUpperCase().indexOf(texto_pesquisa_filtered) > -1) {
+							res.push(servico)
+						}
 					}
 				})
 				return res
+			},
+			textClick(event) {
+				event.stopPropagation()
 			}
 		},
 		async created() {
@@ -120,6 +129,8 @@
 								<span>
 									Escolher serviço
 								</span>
+								<input @click="textClick" v-if="mostrarServicosDisponiveis" v-model="texto_pesquisa" type="text" class="inputNomeServico" placeholder="Insira o nome do serviço">
+								</input>
 								<img :src="seta_baixo">
 							</button>
 							<ul class="menu-servicos-disponiveis" v-show="mostrarServicosDisponiveis">
@@ -391,6 +402,7 @@
 	}
 
 	.menu-servicos-disponiveis {
+		width: 50%;
 		position: absolute;
 		right: 25%;
 		display: flex;
@@ -427,5 +439,13 @@
 						/*        se tiver bla<espaco>:hover so o span e que passa a mudar de cor, wtf */
 	.menu-servicos-disponiveis-item:hover {
 		background-color: darkgray;
+	}
+
+	.inputNomeServico {
+		border: 0;
+		flex-grow: 1;
+		margin: 0 3.5% 0 3.5%;
+		font-weight: 400;
+		font-size: 1.5vh;
 	}
 </style>
