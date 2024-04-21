@@ -25,7 +25,8 @@
 
 				//valores a enviar para DB
 				notas: "",
-				servicos: []
+				servicos: [],
+				tipo_veiculo: null
 			}
 		},
 		props: ['currentService'],
@@ -53,7 +54,7 @@
 			closeOutsideModal() {
 				if (this.mostrarServicosDisponiveis === true) {
 					// fechar so a tab servicos disponiveis
-					this.toggleServicosDisponiveis(null)
+					this.closeServicosDisponiveis()
 				} else {
 					// fechar tudo
 					this.close()
@@ -109,9 +110,21 @@
 		},
 		async created() {
 			const dbData = serviceState();
-			this.servicos_disp = dbData.serviceDefinitions;
+			var servicos = dbData.serviceDefinitions;
 			var types = dbData.serviceTypes
+			this.tipo_veiculo = this.currentService.veiculo.tipo
 
+			// filtrar servicos que este veiculo pode ter
+			types.forEach((type) => {
+				if (type.id === this.tipo_veiculo) {
+					servicos.forEach((servico) => {
+						if (type.serviços.includes(servico.id)) {
+							this.servicos_disp.push(servico)
+						}
+					})
+				}
+			})
+				
 			this.servicos_disp.forEach((servico) => {
 				servico.selecionado = false
 			})
