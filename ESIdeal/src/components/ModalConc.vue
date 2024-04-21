@@ -50,11 +50,28 @@
 				this.$emit('close');
 				this.closeServicosDisponiveis()
 			},
+			closeOutsideModal() {
+				if (this.mostrarServicosDisponiveis === true) {
+					// fechar so a tab servicos disponiveis
+					this.toggleServicosDisponiveis(null)
+				} else {
+					// fechar tudo
+					this.close()
+				}
+			},
+			closeInsideModal() {
+				if (this.mostrarServicosDisponiveis === true) {
+					this.toggleServicosDisponiveis(null)
+				}
+			},
 			deleteServico(index) {
 				this.servicos[index].selecionado = false
 				this.servicos.splice(index, 1)
 			},
-			toggleServicosDisponiveis() {
+			toggleServicosDisponiveis(event) {
+				if (event != null) {
+					event.stopPropagation()
+				}
 				this.mostrarServicosDisponiveis = !this.mostrarServicosDisponiveis;
 			},
 			addServico(servico) {
@@ -102,14 +119,24 @@
 <template>
 	<transition name="modal-fade">
 		<div class="modal-backdrop">
-			<div class="outside-modal" @click="close">
-
+			<div class="outside-modal" @click="closeOutsideModal">
+				<div class="lista-servicos-container" v-show="mostrarServicosDisponiveis">
+					<input @click="textClick"  v-model="texto_pesquisa" type="text" class="inputNomeServico" placeholder="Insira o nome do serviço">
+					</input>
+					<ul class="menu-servicos-disponiveis">
+						<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis()" @click="addServico(serv)">
+							<span>
+								{{ serv.descr }}
+							</span>
+						</li>
+					</ul>
+				</div>
 			</div>
 			<div class="modal">
 				<button type="button" class="botao-fechar" @click="close">
 					<img :src="fechar" alt="X">
 				</button>
-				<div class="modal-content">
+				<div class="modal-content" @click="closeInsideModal">
 					<header class="modal-header">
 						<!-- <slot name="header">  -->
 							<span class="titulo">
@@ -129,17 +156,8 @@
 								<span>
 									Escolher serviço
 								</span>
-								<input @click="textClick" v-if="mostrarServicosDisponiveis" v-model="texto_pesquisa" type="text" class="inputNomeServico" placeholder="Insira o nome do serviço">
-								</input>
 								<img :src="seta_baixo">
 							</button>
-							<ul class="menu-servicos-disponiveis" v-show="mostrarServicosDisponiveis">
-								<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis()" @click="addServico(serv)">
-									<span>
-										{{ serv.descr }}
-									</span>
-								</li>
-							</ul>
 							<ul class="lista-servicos">
 								<li class="lista-servicos-item" v-for="(serv, index) in servicos">
 									<span>{{ serv.descr }}</span>
@@ -189,16 +207,21 @@
 		align-items: center;
 	}
 
+	/* nao gosto destas percentagens todas hardcoded mas nao consegui fazer sem isso */
 	.outside-modal {
-		width: 100%;
+		width: 67%;
 		height: 100%;
+		/* position: absolute; */
+		/* left: 0%; */
+		display: flex;
+		justify-content: flex-end;
 	}
 
 	.modal {
 		width: 33%;
 		height: 100%;
-		position: fixed;
-		right: 0%;
+		/* position: absolute; */
+		/* right: 0%; */
 		background: #FFFFFF;
 		box-shadow: 2px 2px 20px 1px;
 		display: flex;
@@ -402,9 +425,9 @@
 	}
 
 	.menu-servicos-disponiveis {
-		width: 50%;
-		position: absolute;
-		right: 25%;
+		/* width: 50%; */
+		/* position: absolute; */
+		/* right: 25%; */
 		display: flex;
 		flex-direction: column;
 		list-style-type: none;
@@ -413,7 +436,7 @@
 		z-index: 100;
 		overflow-y: scroll;
 		max-height: 350px;
-		box-shadow: 2px 2px 20px 1px;
+		/* box-shadow: 2px 2px 20px 1px; */
 	}
 
 	.menu-servicos-disponiveis-item {
@@ -443,9 +466,17 @@
 
 	.inputNomeServico {
 		border: 0;
-		flex-grow: 1;
+		/* flex-grow: 1; */
 		margin: 0 3.5% 0 3.5%;
 		font-weight: 400;
 		font-size: 1.5vh;
+	}
+
+	.lista-servicos-container {
+		/* position: absolute; */
+		width: 33%;
+		height: 60%;
+		display: flex;
+		flex-direction: column;
 	}
 </style>
