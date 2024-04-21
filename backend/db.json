@@ -271,16 +271,17 @@
       "id": "s32",
       "vehicleId": "AH-31-BB",
       "service-definitionId": "li",
-      "estado": "programado",
+      "estado": "parado",
       "agendamento": "programado",
       "data": {
-        "dia": 26,
-        "mes": 3,
+        "dia": 22,
+        "mes": 4,
         "ano": 2024,
-        "hora": 14,
-        "minutos": 15
+        "hora": 0,
+        "minutos": 55
       },
-      "descrição": "Atenção ao banco do condutor."
+      "descrição": "Atenção ao banco do condutor.",
+      "razao-suspensao": ""
     },
     {
       "id": "s33",

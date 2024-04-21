@@ -25,7 +25,19 @@ const TipoMotor = {
   4: "Híbrido"
 }
 
+const TipoEstado = {
+  1: "PROGRAMADO",
+  2: "NAFILA",
+  3: "A DECORRER",
+  4: "PARADO",
+  5: "REALIZADO"
+}
+
 export function getTipoVeiculoString(value) {
     return TipoMotor[value]
+};
+
+export function getTipoEstadoServico(value) {
+  return TipoEstado[value]
 };
 

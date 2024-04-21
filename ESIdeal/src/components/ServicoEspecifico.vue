@@ -33,6 +33,7 @@
 				mostrarMenuConcluir: false,
             }
         },
+
 		methods: {
 			showModalConc() {
 				this.mostrarMenuConcluir = true;
@@ -221,10 +222,29 @@
                     return 1;
                 }
             },
+            estado(){
+                try{    
+                    const estado = Consts.getTipoEstadoServico(this.servico.estado);
+                    console.log(estado + " não mounted");
+                    return estado;
+                } catch(e){
+                    console.log(e)
+                    return 1;
+                }
+            },
+            poucoTempo() {
+                const serviceTime = new Date(this.servico.data).getTime();
+                const currentTime = Date.now();
+                const oneHour = 3600000; // 1 hour in milliseconds
+                const isNear = Math.abs(currentTime - serviceTime) <= oneHour;
+                return isNear;
+            },
         },
+
         async created() {
             const dbData = serviceState();
             this.servico = await dbData.getServiceDetails(this.servicoID);
+            console.log(this.servico.data)
                     // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
         },
     };
@@ -245,7 +265,9 @@
         
         <!-- Banner -->
         <div class="banner">
-            <div class="rectangle"></div>
+            <div class="rectangle" :style="{ backgroundColor: poucoTempo ? 'var(--color-red)' : 'var(--color-darker-grey)' }">
+                <img v-if="estado === 'PARADO'" src="/svgs/paused.svg" alt="suspenso" class="suspenso-image">
+            </div>
             <div class="info" :class="{ 'banner-shadow' : servicoADecorrer }">
                 <div class="left">
                     <span class="descricao">{{servico.def_servico.descricao}}</span>
@@ -253,7 +275,7 @@
                     <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
                 </div>
                 <div class="right">
-                    <span class="estado">ESTADO: {{ servico.estado }}</span>
+                    <span class="estado">ESTADO: {{ estado }}</span>
                 </div>
             </div>
         </div>
@@ -324,7 +346,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(service, index) in servico.historico" :key="index">
-                                <td>{{ service.servico }}</td>
+                                <td>{{ service.def_servico.descricao }}</td>
                                 <td>{{ service.estado }}</td>
                                 <td>{{ service.data }}</td>
                             </tr>
@@ -390,9 +412,18 @@
     }
 
     .rectangle {
-        background-color: var(--color-darker-grey);    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*background-color: var(--color-darker-grey);  */  
         width: 45px;
         height: 110px;
+    }
+
+    .rectangle .suspenso-image {
+        width: 80%; 
+        height: auto;
+        display: block;
     }
 
     .left {
