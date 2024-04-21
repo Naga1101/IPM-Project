@@ -80,7 +80,7 @@ export default {
 
               <div class="login-form">
                   <div class="login-text">Introduza informações de login: </div>
-                  <input type="text" id="user" placeholder="ID Funcionário" v-model="user" />
+                  <input type="text" id="user" placeholder="Nome de Utilizador" v-model="user" />
                   <input type="password" id="password" placeholder="Palavra-passe" v-model="password"/>
               </div>
               <div class="btn-container">

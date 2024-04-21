@@ -150,7 +150,7 @@ export const postFinishedService = async (recommendedServices, note, vehicleId, 
 export const postSuspendedService = async (reason, currentServiceId) => {
 
     //atualizar coluna de serviços
-    fetch (baseUrl + `services/${currentServiceId}`, {
+    return fetch (baseUrl + `services/${currentServiceId}`, {
         method : 'PATCH',
         headers : {
         'Content-Type': 'application/json'
@@ -168,4 +168,24 @@ export const postSuspendedService = async (reason, currentServiceId) => {
         }
     })
     .catch (error => console.error('Error posting suspended service:', error));
+}
+
+export const postStartedService = async (serviceId) => {
+
+    return fetch (baseUrl + `services/${serviceId}`, {
+        method: 'PATCH' ,
+        headers: { 'Content-Type' :  'application/json'},
+
+        body: JSON.stringify( {
+            "estado": "adecorrer" 
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return true
+        }
+
+        return false
+    })
+    .catch(error => console.error('Error posting started service: ', error));
 }

@@ -5,6 +5,7 @@
     import ModalSusp from './ModalSusp.vue';
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from "../models/consts.js";
+    import * as DBRequests from '../scripts/DBrequests.js';
 
     export default {
         components: {
@@ -22,33 +23,12 @@
         data() {
             return {
                 servico: null,
-                id: 1,
-                descricao: "Service 1",
-                estado: "POR INICIAR",
-                
-                // historicoServicos: [
-                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
-                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
-                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" },
-                //     { servico: "Troca de óleo", estado: "Concluído", data: "2022-01-20" },
-                //     { servico: "Revisão dos freios", estado: "Concluído", data: "2022-06-15" },
-                //     { servico: "Substituição de pneus", estado: "Suspenso", data: "2022-12-01" }
-                // ],
 
                 sortColumn: null,
                 sortOrder: null,
 
 				mostrarMenuSuspender: false,
 				mostrarMenuConcluir: false,
-
-                bannerShadow: false,
-                pageShadow: false
             }
         },
 		methods: {
@@ -119,34 +99,25 @@
                 return servico.veiculo.tipo === Consts.TiposVeiculo.ELETRICO;
             },
 
-            startService(){
-                this.toggleShadow();
+            async startService(){
                 // da update na db mas nao pega no estado que estava na db
-                this.servico.estado = "a decorrer";
+                const result = await DBRequests.postStartedService(this.servico.id)
+                if (result) {
+                    this.servico.estado = Consts.EstadoServico.ADECORRER
 
-                fetch ('http://localhost:3000/services/' + this.servico.id, {
-                    method: 'PATCH' ,
-                    headers: { 'Content-Type' :  'application/json'},
-                    // so atualizar o estado
-                    body: JSON.stringify( {estado: this.servico.estado })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                    throw new Error('Error');
-                    }
-                    return response.json();
-                })
-                .then(data => console.log('Estado updated:', data))
-                .catch(error => console.error('Erro updating estado', error));
+                    //indicar serviço a decorrer no registo de estado
+                    const dbData = serviceState();
+                    await dbData.addOnGoingService(this.servico.id)
+                    
+                    dbData.updateServiceState(this.servico.id, Consts.EstadoServico.ADECORRER)
+                }
             },
-
-            toggleShadow() {
-                this.bannerShadow = !this.bannerShadow;
-                this.pageShadow = !this.pageShadow;
-            }
 		},
 
         computed:{
+            servicoADecorrer() {
+                return this.servico.estado === Consts.EstadoServico.ADECORRER
+            },
             matricula(){
                 try{    
                     const matricula = this.servico.veiculo.id;
@@ -261,7 +232,7 @@
 <template>
     <Navbar linkBackTo="/atribuidos"/>
     <!-- test if data loaded -->
-    <div v-if="servico" class="page" :class="{ 'page-shadow': pageShadow }"> 
+    <div v-if="servico" class="page" :class="{ 'page-shadow' : servicoADecorrer }"> 
         <div class="header">
             <h1>Detalhes de serviço</h1>
             <Clock class="clock"/>
@@ -270,7 +241,7 @@
         <!-- Banner -->
         <div class="banner">
             <div class="rectangle"></div>
-            <div class="info" :class="{ 'shadow' : bannerShadow }">
+            <div class="info" :class="{ 'banner-shadow' : servicoADecorrer }">
                 <div class="left">
                     <span class="descricao">{{servico.def_servico.descricao}}</span>
                     <span class="id">(#{{ servico.id }})</span>
@@ -324,7 +295,7 @@
 
             <!-- Butoes -->
             <div class="btns">
-                <button class="service-btn" @click="startService">
+                <button class="service-btn" @click="startService" v-show="!servicoADecorrer">
                     INICIAR
                     <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
                 </button>
@@ -680,13 +651,13 @@
         display: flex;
     }
 
-    .shadow {
-        background: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 100%);
+    .banner-shadow {
+        background: linear-gradient(to right, rgba(125,125,125,0.3) 5%, rgba(204,204,204,0.6) 64%, rgba(204,204,204,0.6) 94%, rgba(255,255,255,0.7) 100%);
     }
 
     .page-shadow {
         min-height: calc(100vh - 30px); /* para começar em cima do footer  | */ 
-        background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 70%);
+        background: linear-gradient(to top, rgba(31,24,24,0.6) 0%, transparent 65%);
     }
 </style>
 
