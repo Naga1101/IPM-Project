@@ -14,7 +14,7 @@ export class ServiceBaseInfo {
             descricao: serv_descricao || "",
             duracao: serv_duracao || ""
         };
-        this.tipos_servico = Array.from(tipos_servico).map(type => TiposVeiculo[type.toUpperCase()]) || [];
+        this.tipos_servico = Array.from(tipos_servico) || [];
     }
 }
 

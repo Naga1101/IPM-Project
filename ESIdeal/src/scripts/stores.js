@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 import * as DBRequests from './DBrequests.js';
 import * as ServiceInfo from'../models/ServicesInfo.js';
+import * as Consts from '../models/consts.js';
 import { EstadoServico } from '../models/consts.js';
 export const serviceState = defineStore('dbData', {
     state: () => ({
@@ -63,6 +64,12 @@ export const serviceState = defineStore('dbData', {
             try {
                 this.serviceDefinitions = await DBRequests.fetchServiceDefinitions();
                 this.serviceTypes = await DBRequests.fetchVehicleTypes();
+                console.log("ANTES", this.serviceTypes)
+                this.serviceTypes = this.serviceTypes.map( element => {
+                    const updatedId = Consts.TiposVeiculo[element.id.toUpperCase()];
+                    return {"id": updatedId, "serviços": element.serviços}
+                });
+                console.log("DEPOIS", this.serviceTypes)
                 this.servicesWithBaseData = await DBRequests.fetchServicesWithState(["programado","nafila","parado"]); // isto devia ser uma call separada se calhar?, depende se achamos que vão aparecer serviços durante o decorrer do programa
             
                 this.servicesWithBaseData = this.servicesWithBaseData.map(this.fillServiceData);
