@@ -39,12 +39,14 @@
 				this.closeServicosDisponiveis()
 			},
 			deleteServico(index) {
+				this.servicos[index].selecionado = false
 				this.servicos.splice(index, 1)
 			},
 			toggleServicosDisponiveis() {
 				this.mostrarServicosDisponiveis = !this.mostrarServicosDisponiveis;
 			},
 			addServico(servico) {
+				servico.selecionado = true
 				this.servicos.push(servico)
 				this.toggleServicosDisponiveis()
 			},
@@ -52,11 +54,26 @@
 				if (this.mostrarServicosDisponiveis) {
 					this.mostrarServicosDisponiveis = false
 				}
+			},
+			getServicosDisponiveis() {
+				var res = []
+				this.servicos_disp.forEach((servico) => {
+					if (servico.selecionado === false) {
+						res.push(servico)
+					}
+				})
+				return res
 			}
 		},
 		async created() {
 			const dbData = serviceState();
 			this.servicos_disp = dbData.serviceDefinitions;
+			this.servicos_disp.forEach((servico) => {
+				servico.selecionado = false
+			})
+			this.servicos_disp.sort((a, b) => {
+				return a.descr.localeCompare(b.descr)
+			})
 			// var types = dbData.serviceTypes;
 			// falta logica para filtrar os que nao dao para fazer neste posto
 		}
@@ -96,7 +113,7 @@
 								<img :src="seta_baixo">
 							</button>
 							<ul class="menu-servicos-disponiveis" v-show="mostrarServicosDisponiveis">
-								<li class="menu-servicos-disponiveis-item" v-for="serv in servicos_disp" @click="addServico(serv)">
+								<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis()" @click="addServico(serv)">
 									<span>
 										{{ serv.descr }}
 									</span>
@@ -394,6 +411,7 @@
 
 	.menu-servicos-disponiveis-item span {
 		margin-left: 5%;
+		display: inline-block;
 	}
 
 						/*        se tiver bla<espaco>:hover so o span e que passa a mudar de cor, wtf */
