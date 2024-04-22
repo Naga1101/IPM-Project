@@ -219,7 +219,9 @@
       "cilindrada": 1000,
       "medidasJantes": "40 cm",
       "kms": 200000,
-      "recomendados": []
+      "recomendados": [
+        "le"
+      ]
     },
     {
       "id": "AH-31-BB",

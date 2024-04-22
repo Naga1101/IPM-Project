@@ -23,6 +23,7 @@
 			async suspendService() {
 
 				const result = await DBRequests.postSuspendedService(this.message,this.currentService.id)
+
 				if (result) {
 					this.currentService.estado = Consts.EstadoServico.PARADO
 					//parar serviço a decorrer no registo de estado

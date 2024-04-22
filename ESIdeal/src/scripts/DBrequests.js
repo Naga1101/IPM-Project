@@ -107,7 +107,7 @@ export const fetchUserLogin = async (userValue) => {
 
 export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId) => {
     //obter lista de serviços recomendados de veículo
-    fetch(baseUrl + `vehicles/${vehicleId}`)
+    return fetch(baseUrl + `vehicles/${vehicleId}`)
     //atualizar coluna de serviços
     .then( resposta => resposta.json())
     .then(dados => {
@@ -123,9 +123,8 @@ export const postFinishedService = async (recommendedServices, note, vehicleId, 
             }),
         });
     })
-    .then (result => {
-        const res =
-        fetch (baseUrl + `services/${currentServiceId}`, {
+    .then (vehicleUpdateResponse => {
+        return fetch (baseUrl + `services/${currentServiceId}`, {
             method : 'PATCH',
             headers : {
             'Content-Type': 'application/json'
@@ -134,16 +133,11 @@ export const postFinishedService = async (recommendedServices, note, vehicleId, 
                 "estado": "realizado",
                 "notas-concluido": note,
             })
+        }) .then( serviceUpdateResponse => {
+            return vehicleUpdateResponse.ok && serviceUpdateResponse.ok
         })
-        return result.ok && res.ok
     })
-    .then( response => {
-        if (response) {
-            return true
-        } else {
-            return false
-        }
-    })
+    .then (sucess => {return sucess})
     .catch (error => console.error('Error posting finished service:', error))
 }
 
