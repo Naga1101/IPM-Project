@@ -1,9 +1,14 @@
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component -->
 
-<script>
+<script setup>
 	import {serviceState} from '../scripts/stores.js';
 	import * as DBRequests from '../scripts/DBrequests.js';
 	import * as Consts from "../models/consts.js";
+
+	const fechar = '/images/botao_fechar.svg';
+</script>
+
+<script>
 
 	export default {
 		name: 'ModalSusp',
@@ -31,16 +36,21 @@
 			close() {
 				this.$emit('close');
 			},
+			textClick(event) {
+				event.stopPropagation()
+			},
 		},
 	};
 </script>
 
 <template>
 	<transition name="modal-fade">
-		<div class="modal-backdrop" @click="close">
+		<div class="modal-backdrop" >
+			<div class="outside-modal" @click="close">
+			</div>
 			<div class="modal">
 				<button type="button" class="botao-fechar" @click="close">
-					<span>X</span>
+					<img :src="fechar" alt="X">
 				</button>
 				<header class="modal-header">
 					<!-- <slot name="header">  -->
@@ -59,7 +69,7 @@
 				</section>
 
 				<section>
-					<textarea v-model="message" class="textbox" placeholder="Apontar motivos de suspensão aqui "></textarea>
+					<textarea v-model="message" class="textbox" placeholder="Apontar motivos de suspensão aqui " @click="textClick"></textarea>
 				</section>
 
 				<footer class="modal-footer">
@@ -83,19 +93,24 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		/* background-color: rgba(0, 0, 0, 0.3); */
 		background: rgba(255, 255, 255, 0);
-		background: linear-gradient(76deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.4) 60%); 
+		background: linear-gradient(76deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.4) 60%);
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+	.outside-modal {
+		width: 67%;
+		height: 100%;
+
+		display: flex;
+		justify-content: flex-end;
 	}
 
 	.modal {
 		width: 33%;
 		height: 100%;
-		position: fixed;
-		right: 0%;
+
 		background: #FFFFFF;
 		box-shadow: 2px 2px 20px 1px;
 		display: flex;
@@ -119,7 +134,7 @@
 
 	.modal-footer {
 		flex-direction: column;
-		justify-content: flex-end;
+		align-items: center;
 	}
 
 	.modal-body {
@@ -144,34 +159,46 @@
 		background-color: #DC564E;
 		color: white;
 		border: 0;
-		border-radius: 100%;
+		border-radius: 50%;
 		height: 50px;
 		width: 50px;
-		font-size: 25px;
-		margin:1%;
+		cursor: pointer;
+	}
+
+	.botao-fechar img {
+		height: 100%;
+		width: 100%;
+		
+	}
+	.botao-fechar img {
+		min-height: 100%;
+ 		object-fit: cover;
 	}
 
 	.botao-confirmar {
-    width: fit-content;
-    height: fit-content;
-    background-color: #DC564E;
-    color: white;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 1.2vw;
-    position: absolute;
-    right: 33%;
-    bottom: 5%;
-    border-radius: 2vmin;
-    border: none;
-    cursor: pointer;
-    font-weight: semibold;
-    align-items: center;
-    display: flex; 
+		width: fit-content;
+		height: fit-content;
+		background-color: #DC564E;
+		color: white;
+		padding: 8px 20px;
+		cursor: pointer;
+		font-size: 1.5vw;
+		position: absolute;
+
+		bottom: 5%;
+		border-radius: 2vmin;
+		border: none;
+		font-weight: semibold;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 15px 0 15px 0;
 }
 
 	.botao-confirmar img {
-		margin-left: 10px;
+		margin-left: 0.35em;
+		min-height: 100%;
+ 		object-fit: fill;
 	}
 
 	.botao-fechar img {
@@ -201,13 +228,10 @@
 		height: 600px;
 		background-color: white;
 		border-radius: 20px;
-		
+		font-size: 18px;
+		padding-left: 10px;
+		padding-top: 10px;
 		
 }
 
-	.textbox::placeholder {
-		position: absolute;
-		font-size: 18px;
-		
-	}
 </style>
