@@ -336,7 +336,7 @@
                     INICIAR
                     <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
                 </button>
-                <PopStart v-show="mostrarStartPopup" @close="closeStartPopup"/>
+                <PopStart v-show="mostrarStartPopup" :currService="this.servico" @close="closeStartPopup"/>
             </div>
         </div>
         

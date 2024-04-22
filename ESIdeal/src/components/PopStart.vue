@@ -12,11 +12,7 @@ const aviso = '/images/aviso.png';
     export default {
       name: 'PopStart',
 
-      data() {
-        return {
-          servicoADecorrer: null
-        };
-      },
+      props: ['currService'],
 
       methods: {
         goToPage(pageUrl) {
@@ -24,19 +20,22 @@ const aviso = '/images/aviso.png';
         },
 
         async startService(){
-                console.log(this.servicoADecorrer, "serviço")
-                // da update na db mas nao pega no estado que estava na db
-                const result = await DBRequests.postStartedService(this.servicoADecorrer.id)
-                if (result) {
-                    this.servicoADecorrer.estado = Consts.EstadoServico.ADECORRER
 
-                    //indicar serviço a decorrer no registo de estado
-                    const dbData = serviceState();
-                    await dbData.addOnGoingService(this.servicoADecorrer.id)
-                    
-                    dbData.updateServiceState(this.servicoADecorrer.id, Consts.EstadoServico.ADECORRER)
-                }
-            },
+          // da update na db mas nao pega no estado que estava na db
+          const result = await DBRequests.postStartedService(this.currService.id)
+
+          if (result) {
+            this.currService.estado = Consts.EstadoServico.ADECORRER; // para dar update visual da página
+
+            //indicar serviço a inicar no registo de estado
+            const dbData = serviceState();
+            dbData.updateServiceState(this.currService.id, Consts.EstadoServico.ADECORRER)
+            await dbData.addOnGoingService(this.currService.id)
+            
+          }
+
+          this.close()
+        },
 
         close() {
           this.$emit('close');
@@ -46,14 +45,7 @@ const aviso = '/images/aviso.png';
       updated() {
         const state = serviceState();
         this.servicoADecorrer = state.onGoingService
-        console.log(this.servicoADecorrer, "serviço updated")
       },
-
-      watch: {
-          '$store.state.onGoingService'(newValue) {
-          this.servicoADecorrer = newValue;
-        }
-      }
     }
 </script>
 
