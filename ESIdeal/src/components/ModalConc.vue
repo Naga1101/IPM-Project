@@ -506,4 +506,58 @@
 		justify-content: center;
 		margin-right: 1%;
 	}
+
+	@media (width <= 700px) {
+		.outside-modal {
+			width: 0%;
+			height: 0%;
+		}
+
+		.modal {
+			width: 100%;
+			height: 100%;
+		}
+
+		.lista-servicos-container {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			margin-right: 1%;
+			z-index: 200;
+		}
+
+		.menu-servicos-disponiveis {
+			height: 50%;
+		}
+
+		.menu-servicos-disponiveis-item {
+			font-weight: 400;
+			font-size: 2.5vh;
+		}
+
+		.subtitulo {
+			font-weight: 400;
+			font-size: 2.5vh;
+		}
+
+		.botao-escolher-servico span {
+			font-weight: 400;
+			font-size: 2.5vh;
+		}
+
+		.titulo {
+			font-weight: 400;
+			font-size: 2.5vh;
+		}
+
+		.lista-servicos-item span {
+			font-weight: 400;
+			font-size: 2.5vh;
+		}
+    }
 </style>
