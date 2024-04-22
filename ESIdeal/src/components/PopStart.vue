@@ -2,24 +2,58 @@
 import { ref } from 'vue';
 
 const aviso = '/images/aviso.png';
-const recusar = '/images/recusar.png';
-const confirmar = '/images/confirmar.png';
 </script>
 
 <script>
+    import {serviceState} from '../scripts/stores.js';
+    import * as Consts from '../models/consts.js';
+    import * as DBRequests from '../scripts/DBrequests.js';
+
     export default {
       name: 'PopStart',
+
+      data() {
+        return {
+          servicoADecorrer: null
+        };
+      },
+
       methods: {
         goToPage(pageUrl) {
             this.$router.push(pageUrl);
         },
-        start() {
-          this.goToPage("/");
-        },
+
+        async startService(){
+                console.log(this.servicoADecorrer, "serviço")
+                // da update na db mas nao pega no estado que estava na db
+                const result = await DBRequests.postStartedService(this.servicoADecorrer.id)
+                if (result) {
+                    this.servicoADecorrer.estado = Consts.EstadoServico.ADECORRER
+
+                    //indicar serviço a decorrer no registo de estado
+                    const dbData = serviceState();
+                    await dbData.addOnGoingService(this.servicoADecorrer.id)
+                    
+                    dbData.updateServiceState(this.servicoADecorrer.id, Consts.EstadoServico.ADECORRER)
+                }
+            },
+
         close() {
           this.$emit('close');
         },
       },
+
+      updated() {
+        const state = serviceState();
+        this.servicoADecorrer = state.onGoingService
+        console.log(this.servicoADecorrer, "serviço updated")
+      },
+
+      watch: {
+          '$store.state.onGoingService'(newValue) {
+          this.servicoADecorrer = newValue;
+        }
+      }
     }
 </script>
 
@@ -39,10 +73,10 @@ const confirmar = '/images/confirmar.png';
         <div class="linha"></div>
         <div class="butoes">
           <div class="imgRec" @click="close">
-              <img :src="recusar" alt="rec-but">
+              <img src="/svgs/botao_recusar_popup.svg" alt="recusar"/>
             </div>
-            <div class="imgConf" @click="start">
-              <img :src="confirmar" alt="conf-but">
+            <div class="imgConf" @click="startService">
+              <img src="/svgs/botao_confirmar_popup.svg" alt="confirmar"/>
             </div>
         </div>
       </dialog>
@@ -105,33 +139,32 @@ background-color: #DC564E; /* Black color */
 }
 
 .butoes {
-flex: 1;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.imgRec {
-width: 20%; 
+.butoes img {
+  width: calc(max(90%,40px));
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+
 }
 
-.imgRec img {
-max-width: 68px;
-max-height: 63px;
-padding-left: 5%;
+.imgRec, .imgConf {
+  cursor: pointer
 }
 
-.imgConf {
-width: 20%; 
+.imgRec:hover, .imgConf:hover {
+  opacity: 50%;
 }
 
-.imgConf img {
-max-width: 68px;
-max-height: 63px;
-padding-left: 35%;
+.butoes {
+  padding: 5px 20px;
 }
-
 .dialog-fade-enter, .dialog-fade-leave-to {
   opacity: 0;
 }

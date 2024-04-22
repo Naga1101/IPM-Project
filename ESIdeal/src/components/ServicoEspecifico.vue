@@ -7,6 +7,7 @@
     import {serviceState} from '../scripts/stores.js';
     import * as Consts from '../models/consts.js';
     import * as DBRequests from '../scripts/DBrequests.js';
+    import PopStart from './PopStart.vue'
 
     export default {
         components: {
@@ -14,7 +15,8 @@
             Clock,
 			ModalConc,
             ModalSusp,
-            Help
+            Help,
+            PopStart
         },
         props: {
             servicoID: { // recebido no URL
@@ -29,6 +31,7 @@
                 sortColumn: null,
                 sortOrder: null,
 
+                mostrarStartPopup: false,
 				mostrarMenuSuspender: false,
 				mostrarMenuConcluir: false,
             }
@@ -47,6 +50,12 @@
 			closeModalSusp() {
 				this.mostrarMenuSuspender = false;
 			},
+            showStartPopup() {
+			    this.mostrarStartPopup = true;
+            },
+            closeStartPopup() {
+                this.mostrarStartPopup = false;
+            },
 
             sortTable(coluna) {
                 // ao clicar outra vez trocar entre asc/desc
@@ -322,10 +331,12 @@
 
             <!-- Butoes -->
             <div class="btns">
-                <button class="service-btn" @click="startService" v-show="!servicoADecorrer">
+                <!-- de forma a funcionar como antes usar @click="startService" enves do popup -->
+                <button class="service-btn" @click="showStartPopup" v-show="!servicoADecorrer">
                     INICIAR
                     <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
                 </button>
+                <PopStart v-show="mostrarStartPopup" @close="closeStartPopup"/>
             </div>
         </div>
         
