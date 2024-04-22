@@ -22,7 +22,7 @@
 					this.currentService.estado = Consts.EstadoServico.PARADO
 					//parar serviço a decorrer no registo de estado
 					const dbData = serviceState();
-					dbData.clearOnGoingService();
+					dbData.clearOnGoingService(Consts.EstadoServico.PARADO);
 					dbData.updateServiceState(this.currentService.id, Consts.EstadoServico.PARADO);
 				}
 

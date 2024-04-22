@@ -34,27 +34,26 @@
             TabelaServicos,
             Help
         },
-        setup() { // faz todas estas propriedades reativas conforme se muda estado no pinia !
-            const store = serviceState(); // Access the Pinia store
 
+        setup() {
+            const store = serviceState(); // Access the Pinia store
+            store.reloadServicesToCompleteDBdata()
             const services = store.servicesToComplete; // Access services from the store
 
             const onGoingService = store.onGoingService; // Access onGoingService from the store
 
-            console.log(onGoingService)
-
             const categorias = {
-            comPrazo: [],
-            semPrazo: []
+                comPrazo: [],
+                semPrazo: []
             };
 
             // Compute categorias based on services
             services.forEach(service => {
-            if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
-                categorias.comPrazo.push(service);
-            } else {
-                categorias.semPrazo.push(service);
-            }
+                if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
+                    categorias.comPrazo.push(service);
+                } else {
+                    categorias.semPrazo.push(service);
+                }
             });
 
             return {

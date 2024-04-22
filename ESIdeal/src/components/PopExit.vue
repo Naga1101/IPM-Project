@@ -3,29 +3,29 @@
 <template>
   <transition name="dialog-fade">
     <div class="dialog-backdrop" @click="close">  
-      <dialog class="exit-popup" >
+      <dialog class="exit-popup" @click.stop="">
         <div class="faixa-vermelha"></div>
         <div class="mensagem">
-            <div class="imgAviso">
-              <img src="/svgs/danger_symbol_grey.svg" alt="simbolo aviso"/>
+          <div class="imgAviso">
+            <img src="/svgs/danger_symbol_grey.svg" alt="simbolo aviso"/>
+          </div>
+          <div class="msg">
+            <div class="upper-text">
+              <span>Tem a certeza que pretende sair?</span>
             </div>
-            <div class="msg">
-              <div class="upper-text">
-                <span>Tem a certeza que pretende sair?</span>
-              </div>
-              <div v-if="servicoADecorrer" class="lower-text">
-                <span  class="lower-title">
-                  Ações em progresso seram suspendidas
-                </span>
-                <p class="lower-servico">
-                  <b>Serviço: {{ servicoADecorrer.def_servico.descricao}} (#{{  servicoADecorrer.id }})</b>
-                </p>
-                <p class="lower-veiculo">
-                  <b>Veículo: {{ servicoADecorrer.id_veiculo }}</b> 
-                </p>
-              </div>
+            <div v-if="servicoADecorrer" class="lower-text">
+              <span  class="lower-title">
+                Ações em progresso seram suspendidas
+              </span>
+              <p class="lower-servico">
+                <b>Serviço: {{ servicoADecorrer.def_servico.descricao}} (#{{  servicoADecorrer.id }})</b>
+              </p>
+              <p class="lower-veiculo">
+                <b>Veículo: {{ servicoADecorrer.id_veiculo }}</b> 
+              </p>
             </div>
           </div>
+        </div>
         <div class="linha"></div>
         <div class="butoes">
           <div class="imgRec" @click="close">
@@ -40,34 +40,36 @@
   </transition>
 </template>
 
-<script setup>
+<script>
   import {serviceState} from '../scripts/stores.js';
   import * as Consts from '../models/consts.js';
-</script>
+  import * as DBRequests from '../scripts/DBrequests.js';
 
-<script>
     export default {
       name: 'PopExit',
+
       data() {
         return {
           servicoADecorrer: null
-        }
+        };
       },
-      methods: {
 
+      methods: {
         goToPage(pageUrl) {
             this.$router.push(pageUrl);
         },
 
         async logout() {
           if (this.servicoADecorrer) { // se houver serviço a decorrer
-            const result = await DBRequests.postSuspendedService(this.message,this.currentService.id)
+            const result = await DBRequests.postSuspendedService("Suspensão automática: Logout detetado",this.servicoADecorrer.id)
             if (result) {
               //parar serviço a decorrer no registo de estado
-              dbData.clearOnGoingService();
-              dbData.updateServiceState(this.currentService.id, Consts.EstadoServico.PARADO);
+              const dbData = serviceState();
+
+              dbData.clearOnGoingService(Consts.EstadoServico.PARADO);
+              dbData.updateServiceState(this.servicoADecorrer.id, Consts.EstadoServico.PARADO);
             }
-        }
+          }
           this.goToPage("/login");
         },
 
@@ -76,12 +78,18 @@
         },
       },
 
-      created() {
+      updated() {
         const state = serviceState();
         this.servicoADecorrer = state.onGoingService
         console.log(this.servicoADecorrer)
+      },
+
+      watch: {
+          '$store.state.onGoingService'(newValue) {
+          this.servicoADecorrer = newValue;
+        }
       }
-    }
+  }
 </script>
 
 <style scoped>

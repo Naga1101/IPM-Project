@@ -5,7 +5,7 @@
     import ModalSusp from './ModalSusp.vue';
     import Help from './Help.vue';
     import {serviceState} from '../scripts/stores.js';
-    import * as Consts from "../models/consts.js";
+    import * as Consts from '../models/consts.js';
     import * as DBRequests from '../scripts/DBrequests.js';
 
     export default {
@@ -315,7 +315,7 @@
             <div class="cliente">
                 <div class="cliente-title"> Cliente </div>
                 <span class="client-info"> Nome: {{ nomecliente }}</span>
-                <span class="client-info"> Contanto: {{ contacto }}</span>
+                <span class="client-info"> Contacto: {{ contacto }}</span>
             </div>
 
             <div class="separator"></div>
