@@ -86,6 +86,11 @@
 					this.mostrarServicosDisponiveis = false
 				}
 			},
+			textClick(event) {
+				event.stopPropagation()
+			},
+		},
+		computed: {
 			getServicosDisponiveis() {
 				var res = []
 				var texto_pesquisa_filtered = this.texto_pesquisa.toUpperCase();
@@ -99,13 +104,8 @@
 				})
 				return res
 			},
-			textClick(event) {
-				event.stopPropagation()
-			},
-		},
-		computed: {
 			servDispEmpty() {
-				return this.getServicosDisponiveis().length === 0
+				return this.getServicosDisponiveis.length === 0
 			}
 		},
 		async created() {
@@ -145,7 +145,7 @@
 					<input @click="textClick"  v-model="texto_pesquisa" type="text" class="inputNomeServico" placeholder="Insira o nome do serviço">
 					</input>
 					<ul class="menu-servicos-disponiveis">
-						<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis()" @click="addServico($event, serv)">
+						<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis" @click="addServico($event, serv)">
 							<span>
 								{{ serv.descr }}
 							</span>
@@ -556,6 +556,11 @@
 		}
 
 		.lista-servicos-item span {
+			font-weight: 400;
+			font-size: 2.5vh;
+		}
+
+		.botao-confirmar {
 			font-weight: 400;
 			font-size: 2.5vh;
 		}
