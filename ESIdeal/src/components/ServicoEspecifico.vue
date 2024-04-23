@@ -135,6 +135,11 @@ import PopConfirmar from './PopConfirmar.vue';
             servicoADecorrer() {
                 return this.servico.estado === Consts.EstadoServico.ADECORRER
             },
+
+            servicoParado() {
+                return this.servico.estado === Consts.EstadoServico.PARADO
+            },
+
             matricula(){
                 try{    
                     const matricula = this.servico.veiculo.id;
@@ -332,17 +337,18 @@ import PopConfirmar from './PopConfirmar.vue';
                 <span class="client-info"> Contacto: {{ contacto }}</span>
             </div>
 
-            <div class="separator"></div>
+            <!--<div class="separator"></div>-->
 
-            <!-- Butoes -->
+            <!--
             <div class="btns">
-                <!-- de forma a funcionar como antes usar @click="startService" enves do popup -->
+                de forma a funcionar como antes usar @click="startService" enves do popup
                 <button class="service-btn" @click="showStartPopup" v-show="!servicoADecorrer">
                     INICIAR
                     <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
                 </button>
                 <PopStart v-show="mostrarStartPopup" :currService="this.servico" @close="closeStartPopup"/>
             </div>
+            -->
         </div>
         
         <!-- Tabela de serviços anteriores -->
@@ -371,15 +377,23 @@ import PopConfirmar from './PopConfirmar.vue';
                 </div>
             </div>
         </div>
-		<button v-show="!mostrarMenuConcluir && ! mostrarMenuSuspender" @click="showModalSusp" class="suspend-button">
+        
+        <!-- de forma a funcionar como antes usar @click="startService" enves do popup -->
+        <button  @click="showStartPopup" v-show="!servicoADecorrer" class="floating-button">
+            INICIAR
+            <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
+        </button>
+        <PopStart v-show="mostrarStartPopup" :currService="this.servico" @close="closeStartPopup"/>
+
+		<button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalSusp" class="suspend-button">
             SUSPENDER
-            <img src="/images/left_arrow.png" alt="arrow">
+            <img src="/svgs/paused.svg" alt="arrow">
         </button>
 		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" :currentService="this.servico"/>
 
-		<button v-show="!mostrarMenuConcluir && !mostrarMenuSuspender" @click="showModalConc" class="floating-button">
+		<button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalConc" class="floating-button">
             CONCLUIR
-            <img src="/images/left_arrow.png" alt="arrow">
+            <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
         </button>
 		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc" :currentService="this.servico"/>
         <!-- 
@@ -388,7 +402,8 @@ import PopConfirmar from './PopConfirmar.vue';
             <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
         </button>
         -->
-        <PopConfirmar tipoEstado="suspenso"></PopConfirmar>
+        <!--<PopConfirmar tipoEstado="suspenso"></PopConfirmar>-->
+
         <Footer/>
     </div>
     <LoadingPage v-else/>
@@ -675,7 +690,8 @@ import PopConfirmar from './PopConfirmar.vue';
 
     .suspend-button img {
         margin-right: 10px;
-        width: 24px;
+        margin-left: 10px;
+        width: 30px;
         height: auto;
     }
     
