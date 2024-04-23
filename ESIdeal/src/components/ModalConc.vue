@@ -14,7 +14,7 @@
 <script>
 
 	export default {
-		name: 'Modal',
+		name: 'ModalConc',
 		data() {
 			return {
 				title: "CONCLUIR",
@@ -48,8 +48,8 @@
 			},
 
 			close() {
+				this.closeServicosDisponiveis();
 				this.$emit('close');
-				this.closeServicosDisponiveis()
 			},
 			closeOutsideModal() {
 				if (this.mostrarServicosDisponiveis === true) {

@@ -82,12 +82,6 @@
         const state = serviceState();
         this.servicoADecorrer = state.onGoingService
         console.log(this.servicoADecorrer)
-      },
-
-      watch: {
-          '$store.state.onGoingService'(newValue) {
-          this.servicoADecorrer = newValue;
-        }
       }
   }
 </script>

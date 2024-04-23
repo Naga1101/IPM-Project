@@ -8,6 +8,7 @@
     import * as Consts from '../models/consts.js';
     import * as DBRequests from '../scripts/DBrequests.js';
     import PopStart from './PopStart.vue'
+import PopConfirmar from './PopConfirmar.vue';
 
     export default {
         components: {
@@ -16,7 +17,8 @@
 			ModalConc,
             ModalSusp,
             Help,
-            PopStart
+            PopStart,
+            PopConfirmar
         },
         props: {
             servicoID: { // recebido no URL
@@ -34,6 +36,9 @@
                 mostrarStartPopup: false,
 				mostrarMenuSuspender: false,
 				mostrarMenuConcluir: false,
+
+                //popup confirmar
+				mostrarConfirmacaoPopup: true
             }
         },
 
@@ -383,6 +388,7 @@
             <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
         </button>
         -->
+        <PopConfirmar tipoEstado="suspenso"></PopConfirmar>
         <Footer/>
     </div>
     <LoadingPage v-else/>

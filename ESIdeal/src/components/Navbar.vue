@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar">
-		<button class="botao_back" type="button" :class="{'show_botao_back': linkBackTo}" @click="goToPage(linkBackTo)">
+		<button class="botao_back" type="button" v-show="linkBackTo" @click="goToPage(linkBackTo)">
 			<object class="left_arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
 			<span>VOLTAR ATRÁS</span>
 		</button>
@@ -85,14 +85,6 @@ export default {
     .right_data {
         display: inline-flex;
         align-items: center;
-    }
-
-    .botao_back {
-        visibility: hidden;
-    }
-
-    .show_botao_back{
-        visibility: visible;
     }
 
 	/* TODO meter esta imagem maior */
