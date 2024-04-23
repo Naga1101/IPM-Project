@@ -43,6 +43,14 @@ import PopConfirmar from './PopConfirmar.vue';
         },
 
 		methods: {
+
+            goToService(serviceId) {
+                this.$router.push('/servico/' + serviceId);
+                /*.then(() => {
+                window.location.reload();
+                });*/
+            },
+
 			showModalConc() {
 				this.mostrarMenuConcluir = true;
 			},
@@ -62,8 +70,14 @@ import PopConfirmar from './PopConfirmar.vue';
                 this.mostrarStartPopup = false;
             },
 
+            getEstadoFromType(estadoENUM){
+                const estado = Consts.getTipoEstadoServico(estadoENUM);
+                console.log(estado + " não mounted");
+                return estado;
+            },
+
             sortTable(coluna) {
-                // ao clicar outra vez trocar entre asc/desc
+                // ao clicar outra vez trocar entre asc/desc;
                 if (this.sortColumn === coluna) {
                     if (this.sortOrder === 'asc') {
                         this.sortOrder = 'desc';
@@ -76,15 +90,30 @@ import PopConfirmar from './PopConfirmar.vue';
                 }
                 // sort na lista dos historicos
                 this.servico.historico.sort((a,b) => {
-                    let val1 = a[coluna];
-                    let val2 = b[coluna];
-                    let result;
+                    let val1;
+                    let val2;
+                    if (coluna == 'servico'){
+                        val1 = a.def_servico.descricao;
+                        val2 = b.def_servico.descricao; 
+                    }
+                    else{
+                        val1 = a[coluna];
+                        val2 = b[coluna];
+                    }
 
                     if(coluna === 'data') {
                         val1 = new Date(val1).getTime();
                         val2 = new Date(val2).getTime();
                     }
-                    
+
+                    else if(coluna == 'estado') {
+                        val1 = this.getEstadoFromType(val1);
+                        val2 = this.getEstadoFromType(val2);
+                    }
+
+                    console.log("sort valores -> " + val1 + " " + val2);
+
+                    let result;
                     if (val1 < val2){
                         result = -1;
                     }
@@ -102,6 +131,7 @@ import PopConfirmar from './PopConfirmar.vue';
                         return -result;
                     }
                 });
+                console.log(`Sort ${coluna} em ${this.sortOrder}`);
             },
             isGasolina(servico){
                 return servico.veiculo.tipo === Consts.TiposVeiculo.GASOLINA;
@@ -132,6 +162,7 @@ import PopConfirmar from './PopConfirmar.vue';
 		},
 
         computed:{
+
             servicoADecorrer() {
                 return this.servico.estado === Consts.EstadoServico.ADECORRER
             },
@@ -392,9 +423,9 @@ import PopConfirmar from './PopConfirmar.vue';
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(service, index) in servico.historico" :key="index">
+                            <tr v-for="(service, index) in servico.historico" :key="index" @click="goToService(service.id)" style="cursor: pointer;">
                                 <td>{{ service.def_servico.descricao }}</td>
-                                <td>{{ service.estado }}</td>
+                                <td>{{ getEstadoFromType(service.estado) }}</td>
                                 <td>{{ service.data }}</td>
                             </tr>
                         </tbody>
@@ -772,7 +803,6 @@ import PopConfirmar from './PopConfirmar.vue';
         background-color: rgb(194, 181, 181);
         margin: 40px 60px;
     }
-
 
 </style>
 
