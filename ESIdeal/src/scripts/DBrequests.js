@@ -107,6 +107,7 @@ export const fetchUserLogin = async (userValue) => {
 
 export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId) => {
     //obter lista de serviços recomendados de veículo
+    const dataConclusao = new Date().toISOString();
     return fetch(baseUrl + `vehicles/${vehicleId}`)
     //atualizar coluna de serviços
     .then( resposta => resposta.json())
@@ -132,6 +133,7 @@ export const postFinishedService = async (recommendedServices, note, vehicleId, 
             body: JSON.stringify( {
                 "estado": "realizado",
                 "notas-concluido": note,
+                "data-conclusao": dataConclusao,
             })
         }) .then( serviceUpdateResponse => {
             return vehicleUpdateResponse.ok && serviceUpdateResponse.ok

@@ -140,6 +140,10 @@ import PopConfirmar from './PopConfirmar.vue';
                 return this.servico.estado === Consts.EstadoServico.PARADO
             },
 
+            servicoConcluido() {
+                return this.servico.estado === Consts.EstadoServico.REALIZADO
+            },
+
             matricula(){
                 try{    
                     const matricula = this.servico.veiculo.id;
@@ -350,7 +354,28 @@ import PopConfirmar from './PopConfirmar.vue';
             </div>
             -->
         </div>
-        
+
+        <!-- razao suspensao -->
+        <div v-if="estado === 'PARADO'">
+            <hr>
+            <div class="status-message">
+                <h2>Motivo Suspensão</h2>
+                <p>razao suspensão aqui</p>
+            </div>
+            <hr>
+        </div>
+
+        <!-- serviço concluido -->
+        <div v-if="estado === 'REALIZADO'">
+            <hr>
+            <div class="status-message">
+                <h2>Conclusão</h2>
+                <p> data conclusao</p>
+            </div>
+            <hr>
+        </div>
+
+
         <!-- Tabela de serviços anteriores -->
         <div class="table">
             <div class="table-container">
@@ -379,7 +404,7 @@ import PopConfirmar from './PopConfirmar.vue';
         </div>
         
         <!-- de forma a funcionar como antes usar @click="startService" enves do popup -->
-        <button  @click="showStartPopup" v-show="!servicoADecorrer" class="floating-button">
+        <button  @click="showStartPopup" v-show="(!servicoADecorrer && !servicoConcluido)" class="floating-button">
             INICIAR
             <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
         </button>
@@ -616,7 +641,7 @@ import PopConfirmar from './PopConfirmar.vue';
         background-color: #D9D9D9;
     }
 
-    /* scroll bar = atribuidos */
+    /* scroll bar */
     .table-services::-webkit-scrollbar {
         width: 12px;
     }
@@ -735,6 +760,20 @@ import PopConfirmar from './PopConfirmar.vue';
         min-height: calc(100vh - 30px); /* para começar em cima do footer  | */ 
         background: linear-gradient(to top, rgba(31,24,24,0.6) 0%, transparent 65%);
     }
+
+    .status-message {
+        font-size: 20px;
+        margin-left: 70px;
+    }
+
+    hr {
+        border: none;
+        height: 1px;
+        background-color: rgb(194, 181, 181);
+        margin: 40px 60px;
+    }
+
+
 </style>
 
 
