@@ -91,7 +91,8 @@
     }
 
     .banner:hover, .banner:focus {
-        opacity: 0.1;
+        /* opacity: 0.85;  eu gosto assim mas o pedro quer que se note mais ajustem para o valor que quiserem*/
+        opacity: 0.0;
     }
 
     .banner {

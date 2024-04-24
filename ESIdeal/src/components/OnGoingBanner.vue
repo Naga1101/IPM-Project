@@ -74,7 +74,7 @@
     }
 
     .banner:hover, .banner:focus {
-        opacity: 0.05;
+        opacity: 0.0;
     }
 
     .headers {
@@ -96,7 +96,7 @@
         background-color: var(--color-light-grey);
         display: flex;
         flex-direction: row;
-        width: 95vw;
+        width: 100%;
         background-color: var(--color-light-grey);
         flex-direction: row;
         overflow: hidden;
