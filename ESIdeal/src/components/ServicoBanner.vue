@@ -1,23 +1,25 @@
 <template>
-    <div class="banner" @click="goToPage(servico.id)">
-        <div class="rectangle" :class="{'red-rectangle': poucoTempo === true}">
-            <object v-if="servico.estado === Consts.EstadoServico.PARADO" class="pause" type="image/svg+xml" data="/svgs/paused.svg" alt="p"></object>
-        </div>
-        <div class="info">
-            <div class="left">
-                <span class="nome">{{ servico.def_servico.descricao.toUpperCase() }} (#{{ servico.id }})</span>
-                <span class="prazo" v-if="servico.agendamento === Consts.AgendamentoServico.PROGRAMADO" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
-                <span class="prazo" v-else>SEM PRAZO LIMITE</span>
+    <div class="opacity">
+        <div class="banner" @click="goToPage(servico.id)">
+            <div class="rectangle" :class="{'red-rectangle': poucoTempo === true}">
+                <object v-if="servico.estado === Consts.EstadoServico.PARADO" class="pause" type="image/svg+xml" data="/svgs/paused.svg" alt="p"></object>
             </div>
-            <div class="middle">
-                <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
-                <span class="estado" v-if="servico.estado === Consts.EstadoServico.PARADO" >Estado: Suspenso</span>
-            </div>
-            <div class="right">
-                <object v-if="(servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)) && servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" 
-                    class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_universal.svg" alt="universal"></object>
-                <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_combustao.svg" alt="combustao"></object>
-                <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_eletrico.svg" alt="eletrico"></object>
+            <div class="info">
+                <div class="left">
+                    <span class="nome">{{ servico.def_servico.descricao.toUpperCase() }} (#{{ servico.id }})</span>
+                    <span class="prazo" v-if="servico.agendamento === Consts.AgendamentoServico.PROGRAMADO" :class="{'red-text': poucoTempo}">POR TERMINAR ÀS {{ horaFim }}</span>
+                    <span class="prazo" v-else>SEM PRAZO LIMITE</span>
+                </div>
+                <div class="middle">
+                    <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
+                    <span class="estado" v-if="servico.estado === Consts.EstadoServico.PARADO" >Estado: Suspenso</span>
+                </div>
+                <div class="right">
+                    <object v-if="(servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)) && servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" 
+                        class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_universal.svg" alt="universal"></object>
+                    <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLINA) || servico.tipos_servico.includes(Consts.TiposVeiculo.GASOLEO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_combustao.svg" alt="combustao"></object>
+                    <object v-else-if="servico.tipos_servico.includes(Consts.TiposVeiculo.ELETRICO)" class="photo" type="image/svg+xml" data="/svgs/tipos_carro/serv_eletrico.svg" alt="eletrico"></object>
+                </div>
             </div>
         </div>
     </div>
@@ -84,6 +86,14 @@
 
 <style scoped>
 
+    .opacity{
+        opacity: 1;
+    }
+
+    .banner:hover, .banner:focus {
+        opacity: 0.1;
+    }
+
     .banner {
         display: flex;
         height: var(--banner-height);
@@ -95,10 +105,6 @@
         overflow: hidden;
         cursor: pointer;
 
-    }
-
-    .banner:hover, .banner:focus {
-        background-color: rgba(255,255,255,0.3);
     }
 
     object{
