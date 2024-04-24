@@ -8,7 +8,7 @@
     import * as Consts from '../models/consts.js';
     import * as DBRequests from '../scripts/DBrequests.js';
     import PopStart from './PopStart.vue'
-import PopConfirmar from './PopConfirmar.vue';
+    import PopConfirmar from './PopConfirmar.vue';
 
     export default {
         components: {
@@ -28,6 +28,7 @@ import PopConfirmar from './PopConfirmar.vue';
         },
         data() {
             return {
+                
                 servico: null,
 
                 sortColumn: null,
@@ -45,10 +46,10 @@ import PopConfirmar from './PopConfirmar.vue';
 		methods: {
 
             goToService(serviceId) {
-                this.$router.push('/servico/' + serviceId);
-                /*.then(() => {
-                window.location.reload();
-                });*/
+                this.$router.push('/servico/' + serviceId)
+                    .then(() => {
+                        window.location.reload();
+                    });
             },
 
 			showModalConc() {
@@ -162,6 +163,14 @@ import PopConfirmar from './PopConfirmar.vue';
 		},
 
         computed:{
+
+            anyOngoingService(){
+                const store = serviceState();
+                store.reloadServicesToCompleteDBdata()
+                const onGoingService = store.onGoingService;
+
+                return (onGoingService == null)
+            },
 
             servicoADecorrer() {
                 return this.servico.estado === Consts.EstadoServico.ADECORRER
@@ -426,7 +435,7 @@ import PopConfirmar from './PopConfirmar.vue';
                             <tr v-for="(service, index) in servico.historico" :key="index" @click="goToService(service.id)" style="cursor: pointer;">
                                 <td>{{ service.def_servico.descricao }}</td>
                                 <td>{{ getEstadoFromType(service.estado) }}</td>
-                                <td>{{ service.data }}</td>
+                                <td>{{ service.estado === 5 ? service.data.toLocaleDateString() : '-' }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -435,7 +444,7 @@ import PopConfirmar from './PopConfirmar.vue';
         </div>
         
         <!-- de forma a funcionar como antes usar @click="startService" enves do popup -->
-        <button  @click="showStartPopup" v-show="(!servicoADecorrer && !servicoConcluido)" class="floating-button">
+        <button  @click="showStartPopup" v-show="(!servicoADecorrer && !servicoConcluido && anyOngoingService)" class="floating-button">
             INICIAR
             <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
         </button>
