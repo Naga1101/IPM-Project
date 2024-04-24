@@ -380,19 +380,6 @@
                 <span class="client-info"> Nome: {{ nomecliente }}</span>
                 <span class="client-info"> Contacto: {{ contacto }}</span>
             </div>
-
-            <!--<div class="separator"></div>-->
-
-            <!--
-            <div class="btns">
-                de forma a funcionar como antes usar @click="startService" enves do popup
-                <button class="service-btn" @click="showStartPopup" v-show="!servicoADecorrer">
-                    INICIAR
-                    <object class="right-arrow" type="image/svg+xml" data="/svgs/forward_arrow.svg"></object>
-                </button>
-                <PopStart v-show="mostrarStartPopup" :currService="this.servico" @close="closeStartPopup"/>
-            </div>
-            -->
         </div>
 
         <!-- razao suspensao -->
@@ -812,6 +799,32 @@
         background-color: rgb(194, 181, 181);
         margin: 40px 60px;
     }
+
+    @media (max-width: 1080px) {
+    .header {
+        padding: 0 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rectangle {
+        width: 50px;
+        height: auto;
+    }
+
+    .details {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 10px; 
+    }
+
+    .motor {
+        align-items: flex-start;
+        padding: 20px 0px 40px 0px; 
+    }
+}
+
+
 
 </style>
 
