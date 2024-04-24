@@ -74,7 +74,7 @@
     }
 
     .banner:hover, .banner:focus {
-        opacity: 0.0;
+        opacity: 0.75;
     }
 
     .headers {

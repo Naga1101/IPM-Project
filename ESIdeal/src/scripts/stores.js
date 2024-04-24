@@ -25,13 +25,34 @@ export const serviceState = defineStore('dbData', {
             this.onGoingService = await this.getServiceBaseInfo(serviceId)
         },
         
-        clearOnGoingService(newState) {
-            var service = this.servicesWithBaseData[this.onGoingService.id];
-            if(service) service.estado = newState
+        updateServiceState(idService, state) {
+            var service = this.servicesWithBaseData[idService];
+            if(service) service.estado = state
             
-            service = this.servicesWithFullData[this.onGoingService.id];
-            if(service) service.estado = newState
+            service = this.servicesWithFullData[idService];
+            if(service) service.estado = state
 
+        },
+
+        suspendService(serviceReason, idService) {
+            this.updateServiceState(idService,Consts.EstadoServico.PARADO);
+            var detalhes = {
+                notas_concluido: "",
+                razao_suspensao: serviceReason,
+                data_conclusao: ""
+            };
+            this.servicesWithFullData[idService].detalhes = detalhes;
+            this.onGoingService = null
+        },
+
+        finishService(notes, dateConclusion, idService) {
+            this.updateServiceState(idService, Consts.EstadoServico.REALIZADO);
+            var detalhes = { 
+                notas_concluido: notes, 
+                razao_suspensao: "",
+                data_conclusao: dateConclusion
+            }
+            this.servicesWithFullData[idService].detalhes = detalhes;
             this.onGoingService = null
         },
 
@@ -47,7 +68,7 @@ export const serviceState = defineStore('dbData', {
 
             const baseService = new ServiceInfo.ServiceBaseInfo(service.id,service.estado, service.agendamento, service["descrição"],service.vehicleId, 
                 date, service["service-definitionId"], serviceDefinition?.descr, serviceDefinition?.duração,
-                serviceTypes);
+                serviceTypes, service["notas-concluido"], service["razao-suspensao"], service["data-conclusao"])
             
             this.servicesWithBaseData[baseService.id] = baseService
 
@@ -79,6 +100,11 @@ export const serviceState = defineStore('dbData', {
             
                 servicesWithRawData.map(this.fillServiceData);
 
+                // não deve acontecer haver serviço a decorrer no início do programa, mas por segurança testo
+                const OnGoingService = Object.values(this.servicesWithBaseData).find(service => service.estado === Consts.EstadoServico.ADECORRER);
+                
+                this.onGoingService = OnGoingService !== undefined ? OnGoingService : null;
+
             } catch (error) {
                 console.error("Error loading base DB data:", error)
             }
@@ -106,11 +132,10 @@ export const serviceState = defineStore('dbData', {
                     service = new ServiceInfo.ServiceFullInfo(service.id,service.estado, service.agendamento, service.descricao_especifica, service.data,
                         service.def_servico?.id, service.def_servico?.descricao, service.def_servico?.duracao, service.tipos_servico, service.id_veiculo,
                         vehicle?.marca, vehicle?.modelo, vehicle?.medidasJantes, vehicle?.["vehicle-typeId"], vehicle?.potencia, vehicle?.kms, vehicle?.cilindrada,
-                        client?.id, client?.nome, client?.email, client?.telefone, historyServices)
+                        client?.id, client?.nome, client?.email, client?.telefone, historyServices, service.notas_concluido, service.razao_suspensao, service.data_conclusao)
                         
                     this.servicesWithFullData[service.id] = service
                 }
-
                 return service
 
             } catch (error) {
@@ -133,11 +158,5 @@ export const serviceState = defineStore('dbData', {
                 console.error("Error loading DB data for specific service:", error)
             }
         },
-
-        updateServiceState(idService, state) {
-            var service = this.servicesWithBaseData[idService]
-            service.estado = state
-
-        }
-    },
+    }
 });

@@ -105,9 +105,8 @@ export const fetchUserLogin = async (userValue) => {
     .catch(error => console.log(error))
 }
 
-export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId) => {
+export const postFinishedService = async (recommendedServices, note, vehicleId, currentServiceId, dataConclusao) => {
     //obter lista de serviços recomendados de veículo
-    const dataConclusao = new Date().toISOString();
     return fetch(baseUrl + `vehicles/${vehicleId}`)
     //atualizar coluna de serviços
     .then( resposta => resposta.json())

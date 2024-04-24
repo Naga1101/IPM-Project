@@ -26,6 +26,7 @@
                 required: true
             }
         },
+
         data() {
             return {
                 
@@ -73,7 +74,6 @@
 
             getEstadoFromType(estadoENUM){
                 const estado = Consts.getTipoEstadoServico(estadoENUM);
-                console.log(estado + " não mounted");
                 return estado;
             },
 
@@ -187,7 +187,6 @@
             matricula(){
                 try{    
                     const matricula = this.servico.veiculo.id;
-                    console.log(matricula + " não mounted");
                     return matricula;
                 } catch(e){
                     console.log(e)
@@ -198,7 +197,6 @@
             marca(){
                 try{    
                     const marca = this.servico.veiculo.marca;
-                    console.log(marca + " não mounted");
                     return marca;
                 } catch(e){
                     console.log(e)
@@ -208,7 +206,6 @@
             modelo(){
                 try{    
                     const modelo = this.servico.veiculo.modelo;
-                    console.log(modelo + " não mounted");
                     return modelo;
                 } catch(e){
                     console.log(e)
@@ -218,7 +215,6 @@
             cilindrada(){
                 try{    
                     const cilindrada = this.servico.veiculo.cilindrada;
-                    console.log(cilindrada + " não mounted");
                     return cilindrada;
                 } catch(e){
                     console.log(e)
@@ -228,7 +224,6 @@
             motor(){
                 try{    
                     const motor = this.servico.veiculo.motor;
-                    console.log(motor + " não mounted");
                     return motor;
                 } catch(e){
                     console.log(e)
@@ -238,7 +233,6 @@
             potencia(){
                 try{    
                     const potencia = this.servico.veiculo.potencia;
-                    console.log(potencia + " não mounted");
                     return potencia;
                 } catch(e){
                     console.log(e)
@@ -248,7 +242,6 @@
             medidasJantes(){
                 try{    
                     const medidasJantes = this.servico.veiculo.medidasJantes;
-                    console.log(medidasJantes + " não mounted");
                     return medidasJantes;
                 } catch(e){
                     console.log(e)
@@ -258,7 +251,6 @@
             tipoMotor(){
                 try{    
                     const tipoMotor = Consts.getTipoVeiculoString(this.servico.veiculo.tipo);
-                    console.log(tipoMotor + " não mounted");
                     return tipoMotor;
                 } catch(e){
                     console.log(e)
@@ -268,7 +260,6 @@
             nomecliente(){
                 try{    
                     const nomecliente = this.servico.cliente.nome;
-                    console.log(nomecliente + " não mounted");
                     return nomecliente;
                 } catch(e){
                     console.log(e)
@@ -278,7 +269,6 @@
             contacto(){
                 try{    
                     const contacto = this.servico.cliente.telefone;
-                    console.log(contacto + " não mounted");
                     return contacto;
                 } catch(e){
                     console.log(e)
@@ -288,7 +278,6 @@
             estado(){
                 try{    
                     const estado = Consts.getTipoEstadoServico(this.servico.estado);
-                    console.log(estado + " não mounted");
                     return estado;
                 } catch(e){
                     console.log(e)
@@ -307,8 +296,6 @@
         async created() {
             const dbData = serviceState();
             this.servico = await dbData.getServiceDetails(this.servicoID);
-            console.log(this.servico.data)
-                    // NOTA: se quiserem obter os pormenores para cada servico que apareco no historico, têm de passar o servico inteiro à funcao buildServiceDetails
         },
     };
 
@@ -387,7 +374,7 @@
             <hr>
             <div class="status-message">
                 <h2>Motivo Suspensão</h2>
-                <p>razao suspensão aqui</p>
+                <p> {{ servico.detalhes.razao_suspensao }}</p>
             </div>
             <hr>
         </div>
@@ -397,11 +384,11 @@
             <hr>
             <div class="status-message">
                 <h2>Conclusão</h2>
-                <p> data conclusao</p>
+                <p> {{ servico.detalhes.notas_concluido }}</p>
+                <p> {{ servico.detalhes.data_conclusao }}</p>
             </div>
             <hr>
         </div>
-
 
         <!-- Tabela de serviços anteriores -->
         <div class="table">

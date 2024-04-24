@@ -33,15 +33,16 @@
 
 		methods: {
 			async finishService() {
+				const dataConclusao = new Date().toISOString();
 				const recommendedServicesId = this.servicos.map(service => service.id)
-				const result = await DBRequests.postFinishedService(recommendedServicesId,this.notas,this.currentService.veiculo.id,this.currentService.id)
+				const result = await DBRequests.postFinishedService(recommendedServicesId,this.notas,this.currentService.veiculo.id,this.currentService.id, dataConclusao)
 
 				if (result) {
 					this.currentService.estado = Consts.EstadoServico.REALIZADO
+
 					//parar serviço a decorrer no registo de estado
 					const dbData = serviceState();
-					dbData.clearOnGoingService(Consts.EstadoServico.REALIZADO);
-					dbData.updateServiceState(this.currentService.id, Consts.EstadoServico.REALIZADO);
+					dbData.finishService(this.notas, dataConclusao, this.currentService.id);
 				}
 
 				this.close()

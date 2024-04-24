@@ -65,9 +65,8 @@
             if (result) {
               //parar serviço a decorrer no registo de estado
               const dbData = serviceState();
+              dbData.suspendService("Suspensão automática: Logout detetado", this.servicoADecorrer.id);
 
-              dbData.clearOnGoingService(Consts.EstadoServico.PARADO);
-              dbData.updateServiceState(this.servicoADecorrer.id, Consts.EstadoServico.PARADO);
             }
           }
           this.goToPage("/login");

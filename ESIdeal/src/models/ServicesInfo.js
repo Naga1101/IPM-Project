@@ -2,7 +2,8 @@ import {TiposVeiculo, AgendamentoServico, EstadoServico} from "./consts.js";
 
 export class ServiceBaseInfo {
     constructor(service_id, estado, agendamento, descricao, id_veiculo, data, serv_id, 
-            serv_descricao, serv_duracao, tipos_servico) {
+            serv_descricao, serv_duracao, tipos_servico,
+            notas_concluido, razao_suspensao, data_conclusao) {
         this.id = service_id || "";
         this.estado = EstadoServico[estado.toUpperCase()] || null;
         this.agendamento = AgendamentoServico[agendamento.toUpperCase()] || null;
@@ -15,6 +16,9 @@ export class ServiceBaseInfo {
             duracao: serv_duracao || ""
         };
         this.tipos_servico = Array.from(tipos_servico) || [];
+        this.notas_concluido = notas_concluido || "",
+        this.razao_suspensao = razao_suspensao || "",
+        this.data_conclusao = data_conclusao || ""
     }
 }
 
@@ -22,7 +26,8 @@ export class ServiceBaseInfo {
 export class ServiceFullInfo {
     constructor(service_id, estado, agendamento, descricao, data, serv_id, serv_descricao, 
             serv_duracao, tipos_servico, veiculo_id, veiculo_marca, veiculo_modelo, veiculo_jantes, 
-            veiculo_tipo, veiculo_potencia, veiculo_kms, veiculo_cilindrada, cliente_id, cliente_nome, cliente_email, cliente_telefone, servicos_historico) {
+            veiculo_tipo, veiculo_potencia, veiculo_kms, veiculo_cilindrada, cliente_id, cliente_nome, 
+            cliente_email, cliente_telefone, servicos_historico, notas_concluido, razao_suspensao, data_conclusao) {
         this.id = service_id || "";
         this.estado = estado || null;
         this.agendamento = agendamento || null;
@@ -51,5 +56,11 @@ export class ServiceFullInfo {
             telefone: cliente_telefone || ""
         }
         this.historico = servicos_historico || [] // assumo que já vem no formato correto
+        this.detalhes = {
+            notas_concluido: notas_concluido || "",
+            razao_suspensao: razao_suspensao || "",
+            data_conclusao: data_conclusao || ""
+        }
+            
     }
 }
