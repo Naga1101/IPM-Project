@@ -267,13 +267,13 @@
       "agendamento": "filaDeEspera",
       "descrição": "Colocar XPTO 225R15",
       "notas-concluido": "",
-      "razao-suspensao": ""
+      "razao-suspensao": "nada a dizer bro"
     },
     {
       "id": "s32",
       "vehicleId": "AH-31-BB",
       "service-definitionId": "li",
-      "estado": "adecorrer",
+      "estado": "parado",
       "agendamento": "programado",
       "data": {
         "dia": 24,
@@ -283,15 +283,16 @@
         "minutos": 55
       },
       "descrição": "Atenção ao banco do condutor.",
-      "razao-suspensao": ""
+      "razao-suspensao": "Suspensão automática: Logout detetado"
     },
     {
       "id": "s33",
       "vehicleId": "AH-32-44",
       "service-definitionId": "le",
-      "estado": "programado",
+      "estado": "parado",
       "agendamento": "filaDeEspera",
-      "descrição": "Ver jantes."
+      "descrição": "Ver jantes.",
+      "razao-suspensao": "Suspensão automática: Logout detetado"
     },
     {
       "id": "s34",
@@ -300,7 +301,7 @@
       "estado": "parado",
       "agendamento": "filaDeEspera",
       "descrição": "Falta o filtro.",
-      "razao-suspensao": ""
+      "razao-suspensao": "parei porque sim"
     },
     {
       "id": "s12",
@@ -308,7 +309,8 @@
       "service-definitionId": "sp",
       "estado": "realizado",
       "agendamento": "filaDeEspera",
-      "descrição": "Colocar XPTO 225R15"
+      "descrição": "Colocar XPTO 225R15",
+      "notas-concluido": "Sem problemas "
     },
     {
       "id": "s24",
@@ -323,7 +325,8 @@
         "hora": 14,
         "minutos": 15
       },
-      "descrição": "shampoo XPTO"
+      "descrição": "shampoo XPTO",
+      "notas-concluido": "Sem comentários"
     }
   ],
   "logins": [

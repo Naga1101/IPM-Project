@@ -1,30 +1,16 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router';
 import { createPinia } from 'pinia';
 
 import './style.css'
 
 import App from './App.vue';
+import router from './router/index.js';
 
 //components
-import loginPage from  './components/Login.vue';
-import servicoPage from './components/ServicoEspecifico.vue';
-import servicosAtribuidosPage from './components/ServicosAtribuidos.vue';
-import NotFoundPage from './components/NotFound.vue';
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
 import LoadingPage from './components/LoadingPage.vue';
 
-const router = createRouter({
-    history: createWebHistory(), // usar a history API do browser
-    routes: [
-      { path: '/', redirect: '/login'}, // redireciona de base para login
-      { path: '/login', component: loginPage },
-      { path: '/servico/:servicoID', component: servicoPage, props: true }, // considerar também fazer isto com nested routing?
-      { path: '/atribuidos', component: servicosAtribuidosPage},
-      { path: '/:notFound(.*)', component: NotFoundPage} // rota para páginas não encontradas
-    ],
-});
 
 const pinia = createPinia();
 const app = createApp(App)
@@ -34,7 +20,7 @@ app.component('Navbar', Navbar);
 app.component('Footer', Footer);
 app.component('LoadingPage', LoadingPage);
 
-app.use(pinia)
 app.use(router)
+app.use(pinia)
 
 app.mount('#app')
