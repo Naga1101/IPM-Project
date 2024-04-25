@@ -38,7 +38,6 @@
         setup() {
             const store = serviceState(); // Access the Pinia store
 
-            console.log(store.servicesWithBaseData)
             const services = store.servicesToComplete; // Access services from the store
 
             const onGoingService = store.onGoingService; // Access onGoingService from the store

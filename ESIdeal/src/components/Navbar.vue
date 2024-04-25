@@ -44,7 +44,12 @@ export default {
 
     methods: {
         goToPage(pageUrl) {
-            this.$router.push(pageUrl);
+            var previousUrl = document.referrer;
+            if (previousUrl) { // se veio da mesma página, com outros argumentos
+                this.$router.go(-1);
+            } else { // senão ir para url default passado como argumento, aka outra página
+                this.$router.push(pageUrl);
+            }
         },
         showExitPopup() {
 			this.mostrarExitPopup = true;
