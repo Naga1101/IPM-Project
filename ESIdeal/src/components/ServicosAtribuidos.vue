@@ -25,6 +25,7 @@
     import Help from './Help.vue';
     import Clock from './Clock.vue';
     import {serviceState} from '../scripts/stores.js';
+    import { userState } from '../scripts/stores.js';
     import * as Consts from '../models/consts.js';
 
     export default {
@@ -37,10 +38,24 @@
 
         data() {
             return {
-                store: serviceState() // Access the Pinia store
+                store: serviceState(), // Access the Pinia store
+                user: userState(),
             }
         },
         
+        mounted() {
+            this.checkUser();
+        },
+
+        methods: {
+            checkUser() {
+                console.log(this.user.userId)
+                if (!this.user.userId) {
+                    this.$router.push('/login');
+                }
+            }
+        },
+
         computed: {
             onGoingService() {
                 return this.store.onGoingService

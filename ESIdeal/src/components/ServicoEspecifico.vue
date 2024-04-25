@@ -5,6 +5,7 @@
     import ModalSusp from './ModalSusp.vue';
     import Help from './Help.vue';
     import {serviceState} from '../scripts/stores.js';
+    import { userState } from '../scripts/stores.js';
     import * as Consts from '../models/consts.js';
     import * as DBRequests from '../scripts/DBrequests.js';
     import PopStart from './PopStart.vue'
@@ -29,6 +30,8 @@
 
         data() {
             return {
+
+                user: userState(),
                 
                 servico: null,
 
@@ -46,7 +49,17 @@
             }
         },
 
+        mounted() {
+            this.checkUser();
+        },
+
 		methods: {
+            checkUser() {
+                console.log(this.user.userId)
+                if (!this.user.userId) {
+                    this.$router.push('/login');
+                }
+            },
 
             goToService(serviceId) {
                 this.$router.push('/servico/' + serviceId)
