@@ -334,8 +334,8 @@
             </div>
             <div class="info" :class="{ 'banner-shadow' : servicoADecorrer }">
                 <div class="left">
-                    <span class="descricao">{{servico.def_servico.descricao}}</span>
-                    <span class="id">(#{{ servico.id }})</span>
+                    <span class="id">{{servico.def_servico.descricao}} (#{{ servico.id }})</span>
+                    <span class="descricao">Tarefa: {{servico.descricao_especifica}}</span>
                     <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
                 </div>
                 <div class="right">
@@ -513,12 +513,12 @@
         padding: 10px 0px 0px 15px
     }
 
-    .descricao {
+    .id {
         font-size: 30px;
         font-weight: 550;
     }
 
-    .id {
+    .descricao {
         font-size: 20px;
         font-weight: 500;
     }

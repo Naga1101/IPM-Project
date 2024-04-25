@@ -9,8 +9,7 @@
                 <div class="rectangle" :class="{'red-rectangle': poucoTempo === true}"></div>
                 <div class="info">
                     <div class="left">
-                        <span class="descricao">{{servico.def_servico.descricao}}</span>
-                        <span class="id">(#{{ servico.id }})</span>
+                        <span class="descricao">{{servico.def_servico.descricao}} (#{{ servico.id }})</span>
                         <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
                     </div>
                     <div class="mid">
@@ -131,11 +130,6 @@
     .descricao {
         font-size: 30px;
         font-weight: 550;
-    }
-
-    .id {
-        font-size: 20px;
-        font-weight: 500;
     }
 
     .reminder{
