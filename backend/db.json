@@ -263,7 +263,7 @@
       "id": "s31",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "parado",
+      "estado": "programado",
       "agendamento": "filaDeEspera",
       "descrição": "Colocar XPTO 225R15",
       "notas-concluido": "",

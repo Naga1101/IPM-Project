@@ -35,32 +35,36 @@
             Help
         },
 
-        setup() {
-            const store = serviceState(); // Access the Pinia store
-
-            const services = store.servicesToComplete; // Access services from the store
-
-            const onGoingService = store.onGoingService; // Access onGoingService from the store
-
-            const categorias = {
-                comPrazo: [],
-                semPrazo: []
-            };
-
-            // Compute categorias based on services
-            services.forEach(service => {
-                if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
-                    categorias.comPrazo.push(service);
-                } else {
-                    categorias.semPrazo.push(service);
-                }
-            });
-
+        data() {
             return {
-                services,
-                onGoingService,
-                categorias
-            };
+                store: serviceState() // Access the Pinia store
+            }
+        },
+        
+        computed: {
+            onGoingService() {
+                return this.store.onGoingService
+            },
+            services() {
+                return this.store.servicesToComplete
+            },
+            categorias() {
+                const categorias = {
+                    comPrazo: [],
+                    semPrazo: []
+                };
+
+                // Compute categorias based on services
+                this.services.forEach(service => {
+                    if (service.agendamento === Consts.AgendamentoServico.PROGRAMADO) {
+                        categorias.comPrazo.push(service);
+                    } else {
+                        categorias.semPrazo.push(service);
+                    }
+                });
+                
+                return categorias
+            }
         }
     };
 
