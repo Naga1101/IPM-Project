@@ -21,7 +21,6 @@
 				servicos_disp: [],
 				mostrarServicosDisponiveis: false,
 				texto_pesquisa: "",
-				text_click: false,
 
 				//valores a enviar para DB
 				notas: "",
@@ -216,8 +215,6 @@
 </template>
 
 <style scoped>
-    /* TODO fazer com que isto apenas ocupe a parent div inteira e nao todo o viewport */
-	/* TODO melhorar o que acontece quando se da resize */
 	.modal-backdrop {
 		position: fixed;
 		top: 0;
@@ -329,8 +326,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-		margin: 15px 0 15px 0;
-
+		margin: 5% 0 5% 0;
 	}
 
 	.botao-confirmar img {
