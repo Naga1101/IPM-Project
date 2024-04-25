@@ -32,7 +32,7 @@
 					dbData.suspendService(this.message, this.currentService.id);
 				}
 
-				this.close()
+				this.$emit('suspend',result);
 			},
 			close() {
 				this.$emit('close');

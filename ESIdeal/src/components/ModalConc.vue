@@ -45,7 +45,7 @@
 					dbData.finishService(this.notas, dataConclusao, this.currentService.id);
 				}
 
-				this.close()
+				this.$emit('finish',result);
 			},
 
 			close() {

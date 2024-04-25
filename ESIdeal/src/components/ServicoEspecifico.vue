@@ -40,7 +40,9 @@
 				mostrarMenuConcluir: false,
 
                 //popup confirmar
-				mostrarConfirmacaoPopup: true
+				mostrarConfirmacaoPopup: false,
+                estadoConfirmacaoPopup: "", // se é para suspender ou concluir
+                sucessoConfirmacao: false, // se correu bem ou mal
             }
         },
 
@@ -59,12 +61,24 @@
 			closeModalConc() {
 				this.mostrarMenuConcluir = false;
 			},
+            popupConc(sucesso) {
+                this.closeModalConc();
+                this.mostrarConfirmacaoPopup = true;
+                this.estadoConfirmacaoPopup = Consts.EstadoServico.REALIZADO
+                this.sucessoConfirmacao = sucesso
+            },
             showModalSusp() {
 				this.mostrarMenuSuspender = true;
 			},
 			closeModalSusp() {
 				this.mostrarMenuSuspender = false;
 			},
+            popupSusp(sucesso) {
+                this.closeModalSusp();
+                this.mostrarConfirmacaoPopup = true;
+                this.estadoConfirmacaoPopup = Consts.EstadoServico.PARADO
+                this.sucessoConfirmacao = sucesso;
+            },
             showStartPopup() {
 			    this.mostrarStartPopup = true;
             },
@@ -428,20 +442,15 @@
             SUSPENDER
             <img src="/svgs/paused.svg" alt="arrow">
         </button>
-		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" :currentService="this.servico"/>
+		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" @suspend="popupSusp" :currentService="this.servico"/>
 
 		<button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalConc" class="floating-button">
             CONCLUIR
             <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
         </button>
-		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc" :currentService="this.servico"/>
-        <!-- 
-        <button class="floating-button">
-            INICIAR
-            <object class="right-arrow" type="image/svg+xml" data="/svgs/Vector.svg"></object>
-        </button>
-        -->
-        <!--<PopConfirmar tipoEstado="suspenso"></PopConfirmar>-->
+		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc" @finish="popupConc" :currentService="this.servico"/>
+
+        <PopConfirmar v-if="mostrarConfirmacaoPopup" :tipoEstado="estadoConfirmacaoPopup" :sucesso="sucessoConfirmacao"></PopConfirmar>
 
         <Footer/>
     </div>

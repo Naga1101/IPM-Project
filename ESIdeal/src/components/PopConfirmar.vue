@@ -2,23 +2,23 @@
 
 <template>
   <transition name="dialog-fade">
-    <div class="dialog-backdrop" @click="close">  
+    <div class="dialog-backdrop" @click="goToPage">  
       <dialog class="confirmar-popup" @click.stop="">
         <div class="faixa-vermelha"></div>
         <div class="mensagem">
           <div class="msg">
             <div class="upper-text">
-              <span>Serviço concluído com sucesso</span>
+              <span>{{ upperText}}</span>
             </div>
             <div class="lower-text">
-                Vai ser redirecionado para a página inicial em... {{ tempoRestante }} seg
+                {{ lowerText }}
             </div>
           </div>
           <div class="botao-div">
             <div class="img-div">
-              <img class="confirmar-icone" src="/svgs/botao_confirmar_popup_cinz.svg" alt="confirmado"/>
+              <img class="confirmar-icone" :src="image" alt="icone"/>
             </div>
-            <button class="botao-voltar" @click="close">
+            <button class="botao-voltar" @click="goToPage">
               <span>VOLTAR</span>
               <img src="/svgs/forward_arrow.svg" alt="voltar"/>
             </button>
@@ -30,28 +30,67 @@
 </template>
 
 <script>
-  import {serviceState} from '../scripts/stores.js';
   import * as Consts from '../models/consts.js';
-  import * as DBRequests from '../scripts/DBrequests.js';
 
   export default {
-    name: 'PopExit',
+    name: 'PopConfimar',
 
     data() {
       return {
-        tempoRestante: 5
+        upperText: "",
+        lowerText: "",
+        image: "",
+        pageUrl: ""
       };
     },
 
-    props: ['tipoEstado'],
+    props: {
+      tipoEstado: { // recebido no URL
+        type: Number,
+        required: true
+      },
+      sucesso: {
+        type: Boolean,
+        required: true
+      }
+    },
 
     methods: {
-      goToPage(pageUrl) {
-          this.$router.push(pageUrl);
+      loadText() { // texto no topo do popup
+        if (this.sucesso === true) { // se serviço correu bem
+          if (this.tipoEstado == Consts.EstadoServico.PARADO) {
+            this.upperText = "Servico concluído com sucesso"
+            this.lowerText = "Voltar à pagina de serviços atribuídos"
+          } else {
+            this.upperText = "Serviço suspenso com sucesso"
+            this.lowerText = "Voltar à pagina de serviços atribuídos"
+          }
+          this.image = "/svgs/botao_confirmar_popup_cinz.svg"
+
+        } else { // Se serviço não correu bem
+          if (this.tipoEstado == Consts.EstadoServico.PARADO) {
+            this.upperText = "Erro ao suspender serviço"
+            this.lowerText = "Voltar à pagina do serviço"
+          } else {
+            this.upperText = "Erro ao concluir serviço"
+            this.lowerText = "Voltar à página do serviço"
+          }
+
+          this.image = "/svgs/botao_negar_popup_cinz.svg"
+        }
       },
-      startTimeout(){
-        //TODO: meter timeout
+      goToPage() {
+          if (this.sucesso === true) { // se serviço correu bem
+            this.$router.push("/atribuidos");
+        }
+          else {
+            this.$router.go() // refresh current page
+          }
       }
+    },
+    
+    created() {
+      this.loadText()
     }
   }
 </script>

@@ -40,7 +40,7 @@
                 type: Object,
                 required: true
             },
-            ServicesInfo: { // Declare consts as a prop
+            ServicesInfo: { // Declare store as a prop
                 type: Object,
                 required: true
             }

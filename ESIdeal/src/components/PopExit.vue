@@ -80,7 +80,6 @@
       updated() {
         const state = serviceState();
         this.servicoADecorrer = state.onGoingService
-        console.log(this.servicoADecorrer)
       }
   }
 </script>
