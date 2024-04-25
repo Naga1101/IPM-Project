@@ -58,20 +58,6 @@
 	<transition name="modal-fade">
 		<div class="modal-backdrop">
 			<div class="outside-modal" @click="closeOutsideModal">
-				<div class="lista-servicos-container" v-show="mostrarServicosDisponiveis">
-					<input @click="textClick"  v-model="texto_pesquisa" type="text" class="inputNomeServico" placeholder="Insira o nome do serviço">
-					</input>
-					<ul class="menu-servicos-disponiveis">
-						<li class="menu-servicos-disponiveis-item" v-for="serv in getServicosDisponiveis" @click="addServico($event, serv)">
-							<span>
-								{{ serv.descr }}
-							</span>
-						</li>
-						<li v-if="servDispEmpty" class="menu-servicos-disponiveis-item" @click="textClick">
-							<span>Nenhum serviço encontrado</span>
-						</li>
-					</ul>
-				</div>
 			</div>
 			<div class="modal">
 				<button type="button" class="botao-fechar" @click="close">
