@@ -94,11 +94,11 @@ export const fetchVehicleById = async (vehicleId) => {
     .catch(error => console.log(error))
 }
 
-export const fetchUserLogin = async (userValue) => {
+export const fetchLoginByUsername = async (userValue) => {
     return fetch(baseUrl + `logins?user=${userValue}`)
     .then (response => {
         if (!response.ok) {
-            throw new Error('Error fetching vehicle');
+            throw new Error('Error fetching user info');
         }
         return response.json()
     })

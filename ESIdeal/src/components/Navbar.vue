@@ -9,10 +9,10 @@
         </div>
         <div class="right_data">
 			<div class="mecanico">
-				<img class="mecanico_foto" src="/images/profile_car_photo.png">
+				<img class="mecanico_foto" :src="userFotoPath">
 				<div class="mecanico_info">
-					<span class="nome">João Antunes</span>
-					<span class="id">ID: 29473</span>
+					<span class="nome">{{ userStore.userNome}}</span>
+					<span class="id">ID: {{userStore.userId}}</span>
 				</div>
 			</div>
 			<button class="botao_sair" type="button" @click="showExitPopup">SAIR</button>
@@ -23,6 +23,7 @@
 
 <script>
 import PopExit from './PopExit.vue';
+import {userState} from '../scripts/stores.js';
 
 export default {
     props: {
@@ -38,11 +39,19 @@ export default {
 
     data(){
         return{
-            mostrarExitPopup: false
+            mostrarExitPopup: false,
+            userStore: userState()
+        }
+    },
+
+    computed: {
+        userFotoPath() {
+            return "/images/" + this.userStore.userFotoPath
         }
     },
 
     methods: {
+
         goToPage(pageUrl) {
             var previousUrl = document.referrer;
             if (previousUrl) { // se veio da mesma página, com outros argumentos

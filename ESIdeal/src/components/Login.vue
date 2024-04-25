@@ -1,5 +1,6 @@
 <script>
 import * as DBRequests from '../scripts/DBrequests.js';
+import {userState} from '../scripts/stores.js';
 
 export default {
   data() {
@@ -31,11 +32,14 @@ export default {
         let valid = false;
         
         // verificar login
-        const userLoginData = await DBRequests.fetchUserLogin(this.user)
+        const userLoginData = await DBRequests.fetchLoginByUsername(this.user)
         const result = userLoginData.length === 1 && userLoginData[0].password === this.password
-        
+        const userData = userLoginData[0]
+
         if (result) {
           valid = true;
+          const state = userState()
+          state.setInfo(userData.id, userData.nome, userData["foto-path"])
         }
         //se login falhar, mostrar ajuda
         if (!valid) {

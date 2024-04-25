@@ -4,6 +4,7 @@ import * as DBRequests from './DBrequests.js';
 import * as ServiceInfo from'../models/ServicesInfo.js';
 import * as Consts from '../models/consts.js';
 import { EstadoServico } from '../models/consts.js';
+
 export const serviceState = defineStore('dbData', {
     state: () => ({
         onGoingService: null, // guarda serviço a decorrer se houver
@@ -158,5 +159,29 @@ export const serviceState = defineStore('dbData', {
                 console.error("Error loading DB data for specific service:", error)
             }
         },
+    }
+});
+
+export const userState = defineStore('userData', {
+    state: () => ({
+        // dados do utilizador que deu login
+        userId: "",
+        userNomeCompleto: "",
+        userFotoPath: ""
+    }),
+    getters: {
+        userNome() {  // primeiro e último nomes só
+            const nomes = this.userNomeCompleto.split(' ')
+            const result = nomes ? `${nomes[0]} ${nomes[nomes.length - 1]}` : ""
+            return result;
+        }
+    },
+
+    actions: {
+        setInfo(id,nome,foto) {
+            this.userId = id;
+            this.userNomeCompleto = nome
+            this.userFotoPath = foto
+        }
     }
 });
