@@ -59,10 +59,10 @@
       loadText() { // texto no topo do popup
         if (this.sucesso === true) { // se serviço correu bem
           if (this.tipoEstado == Consts.EstadoServico.PARADO) {
-            this.upperText = "Servico concluído com sucesso"
+            this.upperText = "Servico suspenso com sucesso"
             this.lowerText = "Voltar à pagina de serviços atribuídos"
           } else {
-            this.upperText = "Serviço suspenso com sucesso"
+            this.upperText = "Serviço concluído com sucesso"
             this.lowerText = "Voltar à pagina de serviços atribuídos"
           }
           this.image = "/svgs/botao_confirmar_popup_cinz.svg"

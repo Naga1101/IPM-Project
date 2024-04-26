@@ -42,7 +42,6 @@
 
 <script>
   import {serviceState} from '../scripts/stores.js';
-  import * as Consts from '../models/consts.js';
   import * as DBRequests from '../scripts/DBrequests.js';
 
     export default {

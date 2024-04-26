@@ -1,5 +1,5 @@
 <template>
-  <router-view></router-view>
+  <router-view :key="$route.fullPath"></router-view> <!-- forçar componentes a ser destruídos e recriados, para poder mudar de serviço no histórico de um serviço -->
 </template>
 
 <script>

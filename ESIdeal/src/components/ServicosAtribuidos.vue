@@ -49,7 +49,6 @@
 
         methods: {
             checkUser() {
-                console.log(this.user.userId)
                 if (!this.user.userId) {
                     this.$router.push('/login');
                 }
@@ -89,6 +88,7 @@
 
     .page {
         padding: 10px 50px 0px 50px;
+        box-sizing: border-box;
     }
 
     .headers {

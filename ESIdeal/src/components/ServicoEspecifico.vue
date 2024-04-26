@@ -55,7 +55,6 @@
 
 		methods: {
             checkUser() {
-                console.log(this.user.userId)
                 if (!this.user.userId) {
                     this.$router.push('/login');
                 }
@@ -63,9 +62,6 @@
 
             goToService(serviceId) {
                 this.$router.push('/servico/' + serviceId)
-                    .then(() => {
-                        window.location.reload();
-                    });
             },
 
 			showModalConc() {

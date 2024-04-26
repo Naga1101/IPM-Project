@@ -37,7 +37,7 @@ export const serviceState = defineStore('dbData', {
 
         suspendService(serviceReason, idService) {
             this.updateServiceState(idService,Consts.EstadoServico.PARADO);
-            var detalhes = {
+            const detalhes = {
                 notas_concluido: "",
                 razao_suspensao: serviceReason,
                 data_conclusao: ""
@@ -48,7 +48,7 @@ export const serviceState = defineStore('dbData', {
 
         finishService(notes, dateConclusion, idService) {
             this.updateServiceState(idService, Consts.EstadoServico.REALIZADO);
-            var detalhes = { 
+            const detalhes = { 
                 notas_concluido: notes, 
                 razao_suspensao: "",
                 data_conclusao: dateConclusion
