@@ -365,6 +365,8 @@
                 <span class="car-info"> Medidas Jantes: {{ medidasJantes }}</span>
             </div>
 
+            <div class="separator-phone"></div>
+
             <!-- Motor info -->
             <div class="motor">
                 <span class="tipo-motor"> Tipo de Motor: {{ tipoMotor }}</span>
@@ -382,7 +384,10 @@
                     </span>
                 </div>
             </div>
+
             <div class="separator"></div>
+
+            <div class="separator-phone"></div>
 
             <!-- Client Info-->
             <div class="cliente">
@@ -449,7 +454,7 @@
 
 		<button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalSusp" class="suspend-button">
             SUSPENDER
-            <img src="/svgs/paused.svg" alt="arrow">
+            <object class="right-arrow" type="image/svg+xml" data="/svgs/paused.svg"></object>
         </button>
 		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" @suspend="popupSusp" :currentService="this.servico"/>
 
@@ -549,7 +554,7 @@
         font-weight: 500;
         padding-top: 15px;
     }
-    
+
     .details {
         display: flex;
         flex-direction: row;
@@ -746,9 +751,8 @@
 
 
     .suspend-button img {
-        margin-right: 10px;
         margin-left: 10px;
-        width: 30px;
+        width: 24px;
         height: auto;
     }
     
@@ -805,11 +809,31 @@
         margin: 40px 60px;
     }
 
-    @media (max-width: 1080px) {
+    .separator-phone {
+        display: none;
+        height: 1px;
+        width: 100%;
+        background-color: black; 
+        margin: 20px 0;
+    }
+
+    @media (max-width: 700px) {
     .header {
         padding: 0 20px;
+    }
+
+    .info {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: self-start;
+    }
+
+    .right {
+        margin-bottom: 10px;
+    }
+
+    .estado {
+        padding: 10px 0px 0px 15px;
     }
 
     .rectangle {
@@ -820,16 +844,42 @@
     .details {
         flex-direction: column;
         align-items: flex-start;
-        padding: 20px 10px; 
+        padding: 20px 20px; 
+    }
+
+    .car-details{
+        margin: 0px;
+    }
+
+    .client {
+
     }
 
     .motor {
-        align-items: flex-start;
-        padding: 20px 0px 40px 0px; 
+        text-align: center;
+        flex-direction: row;
+        align-items: center;
+        padding: 30px 0px; 
     }
+
+    .motor-imgs {
+        margin-left: 50px ;
+    }
+
+    .suspend-button, .floating-button{
+        padding: 12px 20px;
+        width: 200px;
+    }
+    
+    .separator-phone {
+        display: block;
+    }
+    
+    .car-details .car-info:last-child {
+            padding-bottom: 0;
+        }
+    
 }
-
-
 
 </style>
 

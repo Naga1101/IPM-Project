@@ -163,4 +163,20 @@ export default {
         justify-content: center;
         display: flex;
     }
+
+    @media (max-width: 700px) {
+        
+        .left_arrow {
+            height: 15px;
+            width: auto;
+        }
+
+        .nome {
+            font-size: 2vw;
+        }
+
+        .id {
+            font-size: 1.5vw;
+        }
+    }
 </style>
