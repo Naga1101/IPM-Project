@@ -398,7 +398,7 @@
         </div>
 
         <!-- razao suspensao -->
-        <div v-if="estado === 'PARADO'">
+        <div v-if="estado === 'PARADO'" class="status">
             <hr>
             <div class="status-message">
                 <h2>Motivo Suspensão</h2>
@@ -408,7 +408,7 @@
         </div>
 
         <!-- serviço concluido -->
-        <div v-if="estado === 'REALIZADO'">
+        <div v-if="estado === 'REALIZADO'" class="status">
             <hr>
             <div class="status-message">
                 <h2>Conclusão</h2>
@@ -416,6 +416,7 @@
                 <p> {{ servico.detalhes.data_conclusao }}</p>
             </div>
             <hr>
+            
         </div>
 
         <!-- Tabela de serviços anteriores -->
@@ -851,10 +852,6 @@
         margin: 0px;
     }
 
-    .client {
-
-    }
-
     .motor {
         text-align: center;
         flex-direction: row;
@@ -863,7 +860,7 @@
     }
 
     .motor-imgs {
-        margin-left: 50px ;
+        margin-left: 20px;
     }
 
     .suspend-button, .floating-button{
@@ -877,8 +874,23 @@
     
     .car-details .car-info:last-child {
             padding-bottom: 0;
-        }
-    
+    }
+
+    hr {
+        margin: 0;
+    }
+
+    .status {
+        padding: 20px;
+    }
+
+    .status-message{
+        margin: 0px;
+    }
+
+    .table-header{
+        font-size: 4.5vw;
+    }
 }
 
 </style>
