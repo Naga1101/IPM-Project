@@ -74,14 +74,15 @@ export default {
           </div>
           <div class="login-square">
 
-              <div class="login-header"> ENTRAR EM POSTO</div>             
-              <div class="linha"></div>
+              <div class="login-header"> ENTRAR EM POSTO</div>    
+
+              <hr class="separator"></hr>
+
               <div class="helpbox" v-show="showHelp">
                 <object class="error-symbol" type="image/svg+xml" data="/svgs/danger_symbol.svg"></object>
                 <p>ERRO: Credenciais inválidas</p>
               </div>
-              <div class="separator"></div>
-
+              
               <div class="login-form">
                   <div class="login-text">Introduza informações de login: </div>
                   <input type="text" id="user" placeholder="Nome de Utilizador" v-model="user" />
@@ -133,18 +134,19 @@ export default {
   overflow: hidden;
 }
 
+
 .header-login {
   position: fixed;
   top: 0;
   width: 100%;
   background-color: #D9D9D9;
-  padding: 15px;
   color: black;
   padding: 3vh;
   font-size: 3vh;
   z-index: 1;
   font-weight: bold;
 }
+
 
 .content {
   grid-row: 2;
@@ -155,6 +157,7 @@ export default {
   position: relative;
   padding-top: 30px;
 }
+
 
 .posto {
   grid-row: 2;
@@ -170,20 +173,19 @@ export default {
 
 .posto-name {
   color: white;
-  font-size: 15vh;
+  font-size: 5em;
   font-weight: 300;
   margin-top: 50px;
 }
 
 .red-line {
   height: 2px; 
-  width: 53vh;
+  width: 80%;
   background-color: red;
   margin: 40px;
 }
 
 .separator{
-  height: 1px;
   width: 100%;
   margin: 20px;
   background-color: black;
@@ -193,11 +195,11 @@ export default {
   display: flex;
   align-items: center;
   gap: 5vh;
-  font-size: 4vh;
+  font-size: 1.2em;
   padding: 1.5vh;
   /* Vai ter de ser param */
   color: #999999;
-  width: 50vh;
+  width: 50vmin;
 }
 
 .especialidade img{
@@ -223,16 +225,17 @@ export default {
 
 
 .login-square {
-  position: relative; /* Ensure the parent container is positioned */
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   width: 600px;
   height: 500px;
   background-color: white;
   border-radius: 20px;
 }
+
 
 .login-header {
   margin-top: 20px;
@@ -244,9 +247,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  margin-top: 80px;
+  width: 90%;
+  margin-top: 20px;
 }
 
 .btn-container {
@@ -265,7 +267,7 @@ export default {
   margin: 43px;
   border-radius: 5px;
   cursor: pointer;
-
+  
   font-size: 20px;
 }
 
@@ -276,26 +278,22 @@ export default {
 }
 
 .login-text {
-  width: 515px;
+  width: 100%;
   margin: 10px;
-  font-size: 20px;
+  font-size: 1.1em;
   font-weight: bold;
+  padding-right: 14px;
 }
 
 .login-form input{
   margin: 10px;
-  width: 500px;
+  width: 100%;
   height: 40px;
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 1.1em;
   background-color: #DDE2E6;
   border: none;
   padding-left: 15px;
-}
-
-.linha {
-  height: 2px;
-  background-color: #000000; 
 }
 
 .helpbox {
@@ -303,21 +301,50 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute; /* Make it absolute */
-  top: 19%; /* Adjust as needed */
-  left: 7%; /* Adjust as needed */
-  width: 86%; /* Take full width of parent */
+
+  width: 86%; 
 }
 
 .error-symbol {
-  width: 50px; /* Adjust width as needed */
-  height: 50px; /* Adjust height as needed */
+  width: 50px;
+  height: 50px; 
+  padding-left: 15px; 
 }
 
 .error-symbol + p {
-  color: #DC564E; /* Text color */
-  font-size: 20px; /* Font size */
-  font-weight: 600; /* Semibold */
-  margin-left: 10px; /* Adjust spacing between SVG and text */
+  color: #DC564E; 
+  font-size: 1.2em; 
+  font-weight: 600; 
+  margin-left: 10px;
 }
+
+@media (max-width: 975px) {
+  .page {
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vmin;
+    font-family: "Lato", sans-serif;
+    font-style: normal;
+    background-color: #999999;
+    padding-top: 20px;
+  }
+
+  .header-login {
+    padding: 5px;
+  }
+
+  .login-square{
+    width: 90%;
+    height: 90%;
+  }
+
+  .content{
+    z-index: 0;
+  }
+
+  .posto{
+    margin-top: 30px;
+  }
+}
+
 </style>
