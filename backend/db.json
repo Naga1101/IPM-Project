@@ -194,67 +194,67 @@
       "id": "123",
       "nome": "João Silva",
       "email": "js@imail.com",
-      "telefone": "912345678"
+      "telefone": "935 712 458"
     },
     {
       "id": "124",
       "nome": "Maria Santos",
       "email": "jms@imail.com",
-      "telefone": "912345679"
+      "telefone": "912 696 869"
     },
     {
       "id": "125",
       "nome": "José Pereira",
       "email": "jp@imail.com",
-      "telefone": "912345680"
+      "telefone": "917 904 555"
     }
   ],
   "vehicles": [
     {
       "id": "08-25-AA",
       "clientId": "123",
-      "marca": "Citroen",
-      "modelo": "C4(alakba)",
+      "marca": "Fiat",
+      "modelo": "Punto",
       "vehicle-typeId": "gasolina",
-      "cilindrada": 1000,
-      "medidasJantes": "40 cm",
+      "cilindrada": 875,
+      "medidasJantes": "15.0''",
       "kms": 200000,
       "recomendados": [
         "le"
       ]
     },
     {
-      "id": "AH-31-BB",
+      "id": "JJ-88-AB",
       "clientId": "124",
-      "marca": "Toyata",
-      "modelo": "Prio",
+      "marca": "Ford",
+      "modelo": "Fiesta",
       "vehicle-typeId": "gasoleo",
-      "cilindrada": 2000,
-      "medidasJantes": "43 cm",
+      "cilindrada": 1500,
+      "medidasJantes": "14.0''",
       "kms": 120000,
       "recomendados": []
     },
     {
       "id": "AH-32-44",
       "clientId": "123",
-      "marca": "Tezla",
-      "modelo": "Musk",
+      "marca": "Citroen",
+      "modelo": "AMI",
       "vehicle-typeId": "eletrico",
-      "potencia": 200,
-      "medidasJantes": "38 cm",
+      "potencia": 220,
+      "medidasJantes": "13.0''",
       "kms": 20000,
       "recomendados": []
     },
     {
       "id": "AH-21-25",
       "clientId": "125",
-      "marca": "Hyaundai",
-      "modelo": "Kawai",
+      "marca": "McLaren",
+      "modelo": "P1",
       "vehicle-typeId": "hibrido",
-      "cilindrada": 1000,
-      "potencia": 200,
-      "medidasJantes": "45 cm",
-      "kms": 80000,
+      "cilindrada": 3800,
+      "potencia": 180,
+      "medidasJantes": "19.0''",
+      "kms": 1000,
       "recomendados": []
     }
   ],
@@ -267,17 +267,16 @@
       "agendamento": "filaDeEspera",
       "descrição": "Colocar XPTO 225R15",
       "notas-concluido": "",
-      "razao-suspensao": "nada a dizer bro",
       "data-conclusao": "2024-04-27T17:25:21.473Z"
     },
     {
       "id": "s32",
-      "vehicleId": "AH-31-BB",
-      "service-definitionId": "li",
-      "estado": "parado",
+      "vehicleId": "JJ-88-AB",
+      "service-definitionId": "ad",
+      "estado": "programado",
       "agendamento": "programado",
       "data": {
-        "dia": 24,
+        "dia": 29,
         "mes": 4,
         "ano": 2024,
         "hora": 23,
@@ -293,16 +292,95 @@
       "estado": "parado",
       "agendamento": "filaDeEspera",
       "descrição": "Ver jantes.",
-      "razao-suspensao": "Suspensão automática: Logout detetado"
+      "razao-suspensao": "Aguardar encomenda das jantes."
     },
     {
       "id": "s34",
       "vehicleId": "AH-21-25",
       "service-definitionId": "sfc",
       "estado": "parado",
-      "agendamento": "filaDeEspera",
+      "agendamento": "programado",
+      "data": {
+        "dia": 17,
+        "mes": 5,
+        "ano": 2024,
+        "hora": 23,
+        "minutos": 55
+      },
       "descrição": "Falta o filtro.",
-      "razao-suspensao": ""
+      "razao-suspensao": "Filtro por chegar."
+    },
+    {
+      "id": "s35",
+      "vehicleId": "AH-21-25",
+      "service-definitionId": "ad",
+      "estado": "programado",
+      "agendamento": "programado",
+      "data": {
+        "dia": 8,
+        "mes": 5,
+        "ano": 2024,
+        "hora": 23,
+        "minutos": 55
+      },
+      "descrição": "Atenção à roda dianteira da direita."
+    },
+    {
+      "id": "s36",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "mom",
+      "estado": "programado",
+      "agendamento": "filaDeEspera",
+      "descrição": "Precisa de óleo"
+    },
+    {
+      "id": "s37",
+      "vehicleId": "AH-21-25",
+      "service-definitionId": "sfam",
+      "estado": "programado",
+      "agendamento": "programado",
+      "data": {
+        "dia": 5,
+        "mes": 5,
+        "ano": 2024,
+        "hora": 23,
+        "minutos": 55
+      },
+      "descrição": "Precisa de um filtro novo.",
+      "notas-concluido": ""
+    },
+    {
+      "id": "s38",
+      "vehicleId": "AH-32-44",
+      "service-definitionId": "cr",
+      "estado": "programado",
+      "agendamento": "filaDeEspera",
+      "descrição": "Atenção rodas traseiras."
+    },
+    {
+      "id": "s39",
+      "vehicleId": "JJ-88-AB",
+      "service-definitionId": "scc",
+      "estado": "parado",
+      "agendamento": "filaDeEspera",
+      "descrição": "Atenção ao paralítico.",
+      "razao-suspensao": "Suspensão automática: Logout detetado"
+    },
+    {
+      "id": "s40",
+      "vehicleId": "AH-32-44",
+      "service-definitionId": "sb",
+      "estado": "programado",
+      "agendamento": "filaDeEspera",
+      "descrição": "Bateria instável."
+    },
+    {
+      "id": "s41",
+      "vehicleId": "08-25-AA",
+      "service-definitionId": "sva",
+      "estado": "programado",
+      "agendamento": "filaDeEspera",
+      "descrição": "Válvula instável."
     },
     {
       "id": "s12",
