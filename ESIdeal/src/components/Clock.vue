@@ -55,4 +55,14 @@
         height: 3.2em;
         object-fit: contain;
     }
+
+    @media (max-width: 1080px) {
+        .text {
+            font-size: 1em;
+        }
+
+        .clock-image {
+            height: 2.5em;
+        }
+    }
 </style>

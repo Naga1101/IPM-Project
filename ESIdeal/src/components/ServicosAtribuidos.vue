@@ -148,14 +148,40 @@
             flex-wrap: row-wrap;
         }
 
+        h1 {
+            font-size: 1.6em;
+        }
+        
         .table_entry1, .table_entry2 {
             padding-left:0px;
-            height: calc(var(--banner-height) * 3.4);
+            max-height: calc(var(--banner-height) * 3.4);
             padding-bottom: 20px;
         }
 
         .separator {
             display: none;
+        }
+    }
+
+    
+   @media (max-width: 700px) {
+        .page {
+            font-size: 0.8em;
+            padding: 15px;
+            min-height: 200px;
+        }
+
+        .headers {
+            align-items: center;
+            margin-bottom: 10px;
+            justify-content: space-between
+        }
+        .clock {
+            display: none;
+        }
+
+        h1 {
+            margin: 0
         }
     }
 

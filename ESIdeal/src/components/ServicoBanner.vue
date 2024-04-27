@@ -99,12 +99,13 @@
         display: flex;
         height: var(--banner-height);
         min-width: var(--banner-width-min);
-        /* width: var(--banner-width-normal); */
         width: 100%;
         background-color: var(--color-light-grey);
         flex-direction: row;
         overflow: hidden;
         cursor: pointer;
+        box-sizing: border-box;
+        flex-wrap: nowrap;
 
     }
 
@@ -116,7 +117,6 @@
         display: flex;
         background-color: var(--color-darker-grey);
         width: 30px;
-        height: var(--banner-height);
         align-items: center;
         justify-content: center;
     }
@@ -198,6 +198,27 @@
 
    .red-text{
         color: var(--color-red);
+   }
+
+    @media (max-width: 700px) {
+        .banner {
+            min-height: 90px;
+            height: fit-content;
+            box-sizing: border-box;
+            min-width: auto;
+        }
+
+        .info {
+            padding: 10px;
+        }
+        .clock {
+            display: none;
+        }
+
+        .right {
+            display: none;
+        }
+
    }
 
 </style>

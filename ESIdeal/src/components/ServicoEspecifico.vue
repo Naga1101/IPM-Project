@@ -819,79 +819,83 @@
     }
 
     @media (max-width: 700px) {
-    .header {
-        padding: 0 20px;
-    }
+        .header {
+            padding: 0 20px;
+        }
 
-    .info {
-        display: flex;
-        flex-direction: column;
-        align-items: self-start;
-    }
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: self-start;
+        }
 
-    .right {
-        margin-bottom: 10px;
-    }
+        .right {
+            margin-bottom: 10px;
+        }
 
-    .estado {
-        padding: 10px 0px 0px 15px;
-    }
+        .estado {
+            padding: 10px 0px 0px 15px;
+        }
 
-    .rectangle {
-        width: 50px;
-        height: auto;
-    }
+        .rectangle {
+            width: 50px;
+            height: auto;
+        }
 
-    .details {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px 20px; 
-    }
+        .details {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px 20px; 
+        }
 
-    .car-details{
-        margin: 0px;
-    }
+        .car-details{
+            margin: 0px;
+        }
 
-    .motor {
-        text-align: center;
-        flex-direction: row;
-        align-items: center;
-        padding: 30px 0px; 
-    }
+        .motor {
+            text-align: center;
+            flex-direction: row;
+            align-items: center;
+            padding: 30px 0px; 
+        }
 
-    .motor-imgs {
-        margin-left: 20px;
-    }
+        .motor-imgs {
+            margin-left: 20px;
+        }
 
-    .suspend-button, .floating-button{
-        padding: 12px 20px;
-        width: 200px;
-    }
-    
-    .separator-phone {
-        display: block;
-    }
-    
-    .car-details .car-info:last-child {
-            padding-bottom: 0;
-    }
+        .suspend-button, .floating-button{
+            padding: 12px 20px;
+            width: 200px;
+        }
+        
+        .separator-phone {
+            display: block;
+        }
+        
+        .car-details .car-info:last-child {
+                padding-bottom: 0;
+        }
 
-    hr {
-        margin: 0;
-    }
+        hr {
+            margin: 0;
+        }
 
-    .status {
-        padding: 20px;
-    }
+        .status {
+            padding: 20px;
+        }
 
-    .status-message{
-        margin: 0px;
-    }
+        .status-message{
+            margin: 0px;
+        }
 
-    .table-header{
-        font-size: 4.5vw;
+        .table-header{
+            font-size: 4.5vw;
+        }
+
+        .clock {
+            display: none
+        }
     }
-}
 
 </style>
 

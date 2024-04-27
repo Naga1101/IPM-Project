@@ -55,6 +55,13 @@
   .image-container:hover .hover-image {
     opacity: 1;
   }
+
+  @media (max-width: 700px) {
+    .default-image {
+      width: 2.2em;
+    }
+  }
+
 </style>
   
   

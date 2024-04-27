@@ -7,7 +7,7 @@
         <!-- filtrar dropdown -->
         <div class="filtrar-dropdown">
           <button class="dropdown-button" @click="toggleFiltrarDropdown">FILTRAR
-            <object class="dropdown-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
+            <img class="dropdown-arrow" src="/svgs/filtrar_arrow.svg"></img>
           </button>
           <div class="dropdown-content" v-show="dropdownFiltroVisible">
             <button v-for="(option,index) in dropdownFiltrarOptions" :class="{ 
@@ -21,7 +21,7 @@
         <!-- ordenar dropdown -->
         <div class="ordenar-dropdown">
           <button class="dropdown-button" @click="toggleOrdenarDropdown">ORDENAR
-            <object class="dropdown-arrow" type="image/svg+xml" data="/svgs/filtrar_arrow.svg"></object>
+            <img class="dropdown-arrow" src="/svgs/filtrar_arrow.svg"></img>
           </button>
           <div class="dropdown-content" v-show="dropdownOrdenarVisible" >
             <template v-for="(option,index) in dropdownOrdenarOptions">
@@ -183,13 +183,26 @@ export default {
     background-color: var(--color-table-black);
     color: white;
     min-width: calc(var(--banner-width-min) - 30px);
-    width: calc(100% - 31px); /* porque é só está direito quando é especificamente 41.5???*/
+    width: calc(100% - 31px);
     min-height: 30px;
+    height: fit-content;
     font-family: var(--font-family);
     padding: 0px 5px 0px 15px;
     margin-bottom: 10px;
     font-size: 0.9em;
     font-weight: 400;
+  }
+  
+  .header-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdowns {
+    display: flex;
+    justify-content: right;
+    flex-direction: row;
+    align-self: right;
   }
   
   .ordenar-dropdown, .filtrar-dropdown {
@@ -236,7 +249,7 @@ export default {
     text-align: left;
     padding: 4px 10px;
     background-color: var(--color-very-light-grey);
-    font-size: 18px;
+    font-size: 1.3em;
     font-weight: 300;
     min-height: 30px;
     height: fit-content;
@@ -296,6 +309,49 @@ export default {
 
   .dropdown-elem-red {
     background-color: var(--color-red);
+  }
+
+  @media (max-width: 700px) {
+
+    .table-main {
+      padding: 0;
+      margin: 0;
+    }
+
+    .table-header {
+      display: flex;
+      align-items: flex-start;
+      min-width: auto;
+      width: calc(100% - 32px);
+      min-height: fit-content;
+      padding: 5px 10px;
+
+    }
+
+    .table-content {
+      padding-right: 10px
+    }
+
+    .dropdown-content {
+      width: fit-content;
+      min-width: 40vw;
+    }
+
+    .dropdown-button {
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dropdown-button img {
+      padding-right: 10px;
+    }
+
+    .dropdown-elem {
+      padding: 5px 10px;
+      min-height: fit-content;
+    }
   }
 
 </style>
