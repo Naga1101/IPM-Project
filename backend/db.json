@@ -263,11 +263,12 @@
       "id": "s31",
       "vehicleId": "08-25-AA",
       "service-definitionId": "sp",
-      "estado": "programado",
+      "estado": "realizado",
       "agendamento": "filaDeEspera",
       "descrição": "Colocar XPTO 225R15",
       "notas-concluido": "",
-      "razao-suspensao": "nada a dizer bro"
+      "razao-suspensao": "nada a dizer bro",
+      "data-conclusao": "2024-04-27T17:25:21.473Z"
     },
     {
       "id": "s32",
@@ -283,7 +284,7 @@
         "minutos": 55
       },
       "descrição": "Atenção ao banco do condutor.",
-      "razao-suspensao": "Suspensão automática: Logout detetado"
+      "razao-suspensao": ""
     },
     {
       "id": "s33",
@@ -301,7 +302,7 @@
       "estado": "parado",
       "agendamento": "filaDeEspera",
       "descrição": "Falta o filtro.",
-      "razao-suspensao": "parei porque sim"
+      "razao-suspensao": ""
     },
     {
       "id": "s12",
