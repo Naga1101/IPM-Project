@@ -9,16 +9,14 @@
                 <div class="rectangle" :class="{'red-rectangle': poucoTempo === true}"></div>
                 <div class="info">
                     <div class="left">
-                        <span class="descricao">{{servico.def_servico.descricao}} (#{{ servico.id }})</span>
+                        <span class="descricao">{{servico.def_servico.descricao.toUpperCase()}} (#{{ servico.id }})</span>
                         <span class="duracao">Duração: {{ servico.def_servico.duracao }} min</span>
                     </div>
                     <div class="mid">
-                        <span class="prazo" v-if="servico.agendamento === 2" :class="{'red-text': poucoTempo === true}">PRAZO LIMITE</span>
-                        <span class="prazo" v-if="servico.agendamento === 2" :class="{'red-text': poucoTempo}">{{ horaFim }}</span>
+                        <span class="prazo" v-if="servico.agendamento === 2" :class="{'red-text': poucoTempo}">PRAZO LIMITE {{ horaFim }} </span>
                     </div>
                     <div class="right">
-                        <span class="reminder">CLIQUE AQUI PARA</span>
-                        <span class="reminder">VOLTAR</span>
+                        <span class="reminder">CLIQUE AQUI PARA VOLTAR</span>
                     </div>
                 </div>
             </div>
@@ -100,12 +98,12 @@
         flex-direction: row;
         overflow: hidden;
         cursor: pointer;
+        min-height: 110px;
     }
 
     .rectangle {
         background-color: var(--color-darker-grey);    
         width: 45px;
-        height: 110px;
     }
 
     .red-rectangle{
@@ -118,48 +116,58 @@
         flex-direction: row;
         font-family: var(--font-family);
         width: 100%;
+        padding: 15px 20px;
+        line-height: 1.5em;
     }
 
     .left {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        padding: 10px 0px 0px 15px
+        justify-content: center;
+        flex: 1.6;
+        padding-right: 10px;
     }
 
     .descricao {
-        font-size: 30px;
+        font-size: 1.2em;
         font-weight: 550;
     }
 
-    .reminder{
-        color: var(--text-darker-grey);
-        font-size: 1.875em;
-    }
-
-    .right {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: right;
-        padding: 20px 50px 0px 0px
-    }
-
     .duracao {
-        font-size: 18px;
+        font-size: 1.2em;
         font-weight: 500;
-        padding-top: 15px;
+        margin-top: auto;
+    }
+
+    .mid {
+        display: flex;
+        text-align: center;
+        flex: 0.5
     }
 
     .prazo {
         display: flex;
         flex:1;
-        font-size: 1.56em;
+        font-size: 1.2em;
         font-weight: 400;
         color: var(--text-darker-grey);
-        margin-top: auto;
         align-items: center;
+        justify-content: center;
    }
+
+    .right {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex: 0.6;
+        padding-left: 20px;
+        justify-content: right;
+    }
+
+    .reminder{
+        color: var(--text-darker-grey);
+        font-size: 1.3em;
+    }
 
    .red-text{
     color: var(--color-red);
@@ -174,4 +182,58 @@
         align-items: center;
    }
     
+   @media (max-width: 1080px) { /* tamanho de duas tabelas */
+
+        h1 {
+            font-size: 1.6em;
+        }
+    }
+
+   @media (max-width: 700px) {
+        .page {
+            font-size: 0.8em;
+            padding: 15px;
+            min-height: 200px;
+        }
+
+        .headers {
+            align-items: center;
+            margin: 10px 0px;
+            justify-content: space-between
+        }
+        .clock {
+            display: none;
+        }
+
+        h1 {
+            margin: 0
+        }
+
+        .banner {
+            min-height: 90px;
+            height: fit-content;
+            box-sizing: border-box;
+            min-width: auto;
+        }
+
+        .rectangle {
+            width: 40px;
+        }
+        .clock {
+            display: none;
+        }
+
+        .mid {
+            flex: 0.4
+        }
+
+        .right {
+            flex: 0.8
+        }
+
+        .descricao, .duracao, .prazo, .reminder {
+            font-size: 1.2em;
+        }
+    }
+
 </style>
