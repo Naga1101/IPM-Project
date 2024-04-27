@@ -474,6 +474,10 @@
 
 <style scoped>
 
+    .page{
+        font-size: 1em;
+    }
+
     .header{
         display: flex;
         flex-direction: row;
@@ -529,12 +533,12 @@
     }
 
     .id {
-        font-size: 30px;
+        font-size: 1.875em;
         font-weight: 550;
     }
 
     .descricao {
-        font-size: 20px;
+        font-size: 1.25em;
         font-weight: 500;
     }
 
@@ -546,12 +550,12 @@
     }
 
     .estado {
-        font-size: 25px;
+        font-size: 1.56em;
         font-weight: 550;
     }
 
     .duracao {
-        font-size: 18px;
+        font-size: 1.12em;
         font-weight: 500;
         padding-top: 15px;
     }
@@ -569,13 +573,13 @@
     }
 
     .veiculo, .cliente-title {
-        font-size: 45px;
+        font-size: 2.8em;
         padding-bottom: 30px;
     }
 
     .car-info, .client-info  {
         padding-bottom: 25px;
-        font-size: 30px;
+        font-size: 1.87em;
     }
 
     .motor {
@@ -586,7 +590,7 @@
     }
 
     .tipo-motor {
-        font-size: 30px;
+        font-size: 1.87em;
         padding-bottom: 10px;
     }
 
@@ -621,7 +625,7 @@
         font-family: var(--font-family);
         margin-top: 40px;
         padding: 10px 0px 0px 10px;
-        font-size: 25px;
+        font-size: 1.56em;
         margin-right: 12px;
     }
 
@@ -643,7 +647,7 @@
         color: black;
         padding: 10px;
         text-align: left;
-        font-size: 25px;
+        font-size: 1.56em;
         cursor: pointer;
         transition: background-color 0.5s;
     }
@@ -656,7 +660,7 @@
         padding: 10px;
         text-align: left;
         border: 1px solid #ccc;
-        font-size: 25px;
+        font-size: 1.56em;
     }
 
     .table-services th:nth-child(1) {
@@ -708,7 +712,8 @@
         cursor: pointer;
         font-size: 1.2vw;
         padding: 12px 20px;
-        width: 300px;
+                /*width: 300px*/
+        width: 35vmin;
         height: auto;
         border-radius: 1vmin;
         border: none;
@@ -739,7 +744,8 @@
         cursor: pointer;
         font-size: 1.2vw;
         padding: 12px 20px;
-        width: 300px;
+                /*width: 300px*/
+        width: 35vmin;
         height: auto;
         border-radius: 1vmin;
         border: none;
@@ -799,7 +805,7 @@
     }
 
     .status-message {
-        font-size: 20px;
+        font-size: 1.25em;
         margin-left: 70px;
     }
 
@@ -819,6 +825,11 @@
     }
 
     @media (max-width: 700px) {
+
+        .page{
+            font-size: 0.8em;
+        }
+
         .header {
             padding: 0 20px;
         }
@@ -863,9 +874,14 @@
             margin-left: 20px;
         }
 
+        .motor img{
+            width: 70px;
+            height: auto;
+        }
+
         .suspend-button, .floating-button{
             padding: 12px 20px;
-            width: 200px;
+            font-size: 1em;
         }
         
         .separator-phone {
@@ -873,7 +889,7 @@
         }
         
         .car-details .car-info:last-child {
-                padding-bottom: 0;
+            padding-bottom: 0;
         }
 
         hr {
@@ -896,6 +912,8 @@
             display: none
         }
     }
+
+    
 
 </style>
 
