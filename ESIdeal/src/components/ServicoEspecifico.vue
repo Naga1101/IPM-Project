@@ -449,20 +449,23 @@
         <!-- de forma a funcionar como antes usar @click="startService" enves do popup -->
         <button  @click="showStartPopup" v-show="(!servicoADecorrer && !servicoConcluido && anyOngoingService)" class="floating-button">
             INICIAR
-            <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
+            <img class="right-arrow" src="/svgs/back_arrow.svg"></img>
         </button>
         <PopStart v-show="mostrarStartPopup" :currService="this.servico" @close="closeStartPopup"/>
 
-		<button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalSusp" class="suspend-button">
-            SUSPENDER
-            <object class="right-arrow" type="image/svg+xml" data="/svgs/paused.svg"></object>
-        </button>
-		<ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" @suspend="popupSusp" :currentService="this.servico"/>
+        <div class="buttons">
+            <button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalSusp" class="suspend-button">
+                SUSPENDER
+                <img class="right-arrow" src="/svgs/paused.svg"></img>
+            </button>
+            <ModalSusp v-show="mostrarMenuSuspender" @close="closeModalSusp" @suspend="popupSusp" :currentService="this.servico"/>
+            
+            <button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalConc" class="floating-button">
+                CONCLUIR
+                <img class="right-arrow" src="/svgs/back_arrow.svg"></img>
+            </button>
+        </div>
 
-		<button v-show="(!mostrarMenuConcluir && !mostrarMenuSuspender) && servicoADecorrer" @click="showModalConc" class="floating-button">
-            CONCLUIR
-            <object class="right-arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
-        </button>
 		<ModalConc v-show="mostrarMenuConcluir" @close="closeModalConc" @finish="popupConc" :currentService="this.servico"/>
 
         <PopConfirmar v-if="mostrarConfirmacaoPopup" :tipoEstado="estadoConfirmacaoPopup" :sucesso="sucessoConfirmacao"></PopConfirmar>
@@ -516,9 +519,11 @@
         justify-content: center;
         /*background-color: var(--color-darker-grey);  */  
         width: 45px;
-        height: 110px;
     }
 
+    .info {
+        padding: 5px;
+    }
     .rectangle .suspenso-image {
         width: 80%; 
         height: auto;
@@ -529,7 +534,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        padding: 10px 0px 0px 15px
+        padding: 5px 0px 0px 15px
     }
 
     .id {
@@ -546,18 +551,22 @@
         display: flex;
         flex-direction: column;
         justify-content: right;
-        padding: 20px 50px 0px 0px
+        padding: 15px 50px 0px 0px
     }
 
     .estado {
         font-size: 1.56em;
         font-weight: 550;
+        text-align: right;
     }
 
+    .descricao {
+        padding-top: 5px;
+    }
     .duracao {
         font-size: 1.12em;
         font-weight: 500;
-        padding-top: 15px;
+        padding-top: 10px;
     }
 
     .details {
@@ -698,56 +707,36 @@
     }
 
 
-	.floating-button {
+	.floating-button, .suspend-button {
         position: fixed;
-        right: 65px;
-        bottom: 40px;
         z-index: 10;
+    }
+
+    .suspend-button {
+        left: 65px;
+        bottom: 40px;
     }
 
     .floating-button {
-        background-color: #DC564E;
-        color: white;
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 1.2vw;
-        padding: 12px 20px;
-                /*width: 300px*/
-        width: 35vmin;
-        height: auto;
-        border-radius: 1vmin;
-        border: none;
-        cursor: pointer;
-        /*font-weight: bold;*/
-        align-items: center;
-        justify-content: center;
-        display: flex;
-    }
-
-    .floating-button img {
-        margin-left: 10px;
-        width: 24px;
-        height: auto;
-    }
-
-    .suspend-button {
-        position: fixed;
-        left: 65px;
+        right: 65px;
         bottom: 40px;
-        z-index: 10;
     }
 
-    .suspend-button {
+    .suspend-button img, .floating-button img {
+        margin-left: 10px;
+        width: 24px;
+        height: auto;
+    }
+
+    .suspend-button, .floating-button {
         background-color: #DC564E;
         color: white;
-        padding: 8px 12px;
         cursor: pointer;
-        font-size: 1.2vw;
+        font-size: 1.1em;
         padding: 12px 20px;
-                /*width: 300px*/
-        width: 35vmin;
+        width: 15em;
         height: auto;
-        border-radius: 1vmin;
+        border-radius: 10px;
         border: none;
         cursor: pointer;
         /*font-weight: bold;*/
@@ -756,13 +745,6 @@
         display: flex;
     }
 
-
-    .suspend-button img {
-        margin-left: 10px;
-        width: 24px;
-        height: auto;
-    }
-    
     .right-arrow {
         width: 18px;
         margin-left: 10px;
@@ -846,6 +828,7 @@
 
         .estado {
             padding: 10px 0px 0px 15px;
+            text-align: left;
         }
 
         .rectangle {
@@ -880,10 +863,21 @@
         }
 
         .suspend-button, .floating-button{
-            padding: 12px 20px;
+            width: fit-content;
             font-size: 1em;
+            padding: 10px 15px;
         }
-        
+
+        .suspend-button {
+            left: 20px;
+            bottom: 20px;
+        }
+
+        .floating-button {
+            right: 20px;
+            bottom: 20px;
+        }
+
         .separator-phone {
             display: block;
         }

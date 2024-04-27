@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
 		<button class="botao_back" type="button" v-show="linkBackTo" @click="goToPage(linkBackTo)">
-			<object class="left_arrow" type="image/svg+xml" data="/svgs/back_arrow.svg"></object>
+			<img src="/svgs/back_arrow.svg"></img>
 			<span>VOLTAR ATRÁS</span>
 		</button>
         <div class="posto_number">
@@ -15,7 +15,10 @@
 					<span class="id">ID: {{userStore.userId}}</span>
 				</div>
 			</div>
-			<button class="botao_sair" type="button" @click="showExitPopup">SAIR</button>
+			<button class="botao_sair" type="button" @click="showExitPopup">
+                <span>SAIR</span>
+                <img src="/svgs/exit_door.svg"></img>
+            </button>
             <PopExit v-show="mostrarExitPopup" @close="closeExitPopup"/>
         </div>
     </nav>
@@ -68,6 +71,7 @@ export default {
 		}
     }
 }
+
 </script>
 
 <style scoped>
@@ -85,13 +89,7 @@ export default {
     }
 
     .posto_number {
-		/* nao sei fazer isto sem ser ignorar o resto do flex */
-		/* as coisas tem tamanhos diferentes logo nunca vai ficar perfeitamente centrado, so fazendo isto */
-		/* position: absolute;
-		left: 50%;
-		transform: translateX(-50%); */
-		/* por agora vou tirar senao fica ainda pior com nomes grandes */
-		font-size: 2vw;
+		font-size: 1.4em;
         font-weight: 400;
         margin: 0 20px;
     }
@@ -102,12 +100,20 @@ export default {
     }
 
 	/* TODO meter esta imagem maior */
-    .botao_back, .botao_sair img {
-		min-height: 100%;
- 		object-fit: cover;
+    .botao_back img, .botao_sair img {
+		height: 25px;
+ 		object-fit:contain;
+        fill: white;
+    }
+
+    .botao_back span {
+        padding-left: 10px;
+    }
+
+    .botao_sair span {
+        padding-right: 10px;
     }
 	
-
 	.mecanico {
 		display: flex;
 		align-items: center;
@@ -115,23 +121,23 @@ export default {
 	
     .mecanico_foto {
         object-fit: cover;
-        width: auto;
-        height: 3 em;
+        height: fit-content;
     }
+
     .mecanico_info {
 		margin-left: 20px;
         display: inline-flex;
         flex-direction: column;
-        padding-right: 5em; /* VOU ME PASSAR NAO CONSIGO METER ISTO EM PERCENTAGEM PORQUE?????????? */
+        padding-right: 3em;
     }
 
     .nome {
-        font-size: 1.5vw;
+        font-size: 1em;
         font-weight: 200px;
     }
     .id {
         padding-top: 3px;
-        font-size: 1vw;
+        font-size: 1em;
         color:#444444;
     }
 
@@ -149,13 +155,13 @@ export default {
         color: white;
         padding: 8px 12px;
         cursor: pointer;
-        font-size: 1.5vw;
+        font-size: 1.1em;
         padding: 12px 20px;
         /* width: 20vw;
         height: 50px; */
 		width: auto;
-		height: auto;
-        border-radius: 2vmin;
+		height: 2.5em;
+        border-radius: 10px;
         border: none;
         cursor: pointer;
         font-weight: semibold;
@@ -164,19 +170,56 @@ export default {
         display: flex;
     }
 
+    @media (max-width: 1080px) {
+        .posto_number {
+            font-size: 1.2em;
+        }
+
+        .mecanico_foto {
+            width: 4em;
+            height: auto;
+        }
+
+        .navbar {
+            padding: 5px 20px;
+        }
+    }
     @media (max-width: 700px) {
         
+        .posto_number {
+            font-size: 1.2em;
+        }
         .left_arrow {
             height: 15px;
             width: auto;
         }
 
+        .botao_back {
+            padding: 5px 15px;
+            margin-right: 15px;
+        }
+
+        .botao_back, .botao_sair {
+            font-size: 1em;
+        }
         .nome {
-            font-size: 2vw;
+            font-size: 1em;
         }
 
         .id {
-            font-size: 1.5vw;
+            font-size: 1em;
+        }
+
+        .mecanico_foto, .posto_number {
+            display: none;
+        }
+
+    }
+
+    @media (max-width: 500px) {
+        .mecanico_info{
+            display: none;
         }
     }
+
 </style>
