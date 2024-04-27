@@ -211,4 +211,12 @@
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 700px) {
+    .exit-popup {
+        width: 80%;
+        height: auto;
+
+    }
+}
 </style>
