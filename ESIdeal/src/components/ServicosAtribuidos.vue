@@ -98,7 +98,6 @@
         align-items: center;
         padding-right: 20px;
         padding-bottom: 5px;
-
     }
 
     .title{
@@ -173,7 +172,7 @@
 
         .headers {
             align-items: center;
-            margin-bottom: 10px;
+            margin: 10px 0px;
             justify-content: space-between
         }
         .clock {

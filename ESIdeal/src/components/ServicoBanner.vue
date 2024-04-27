@@ -104,8 +104,6 @@
         flex-direction: row;
         overflow: hidden;
         cursor: pointer;
-        box-sizing: border-box;
-        flex-wrap: nowrap;
 
     }
 
@@ -204,7 +202,6 @@
         .banner {
             min-height: 90px;
             height: fit-content;
-            box-sizing: border-box;
             min-width: auto;
         }
 
