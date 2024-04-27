@@ -472,6 +472,7 @@
 
     </div>
     <LoadingPage v-else/>
+    <Footer/>
 </template>
 
 <style scoped>
