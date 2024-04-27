@@ -118,7 +118,7 @@ flex: 1;
 
 .mensagem .msg p:nth-child(1) {
 color: #000000;
-font-size: 30px;
+font-size: 1.87em;
 margin-top: 18px;
 margin-bottom: 5px;
 text-align: center;
@@ -186,6 +186,11 @@ background-color: #DC564E; /* Black color */
         height: auto;
 
     }
+
+    .mensagem {
+      font-size: 1em;
+    }
+    
 }
 
 </style>

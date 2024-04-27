@@ -345,6 +345,19 @@ export default {
   .posto{
     margin-top: 30px;
   }
+
+  .especialidade {
+    font-size: 1.2em;
+    gap: 20px;
+    padding: 1.5vh;
+    width: 70%;
+  }
+
+  .especialidade img{
+    width: 10vmin;
+  }
+
+
 }
 
 </style>
