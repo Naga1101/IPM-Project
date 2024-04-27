@@ -1,6 +1,6 @@
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component -->
 
-<template>
+<template class="template">
   <transition name="dialog-fade">
     <div class="dialog-backdrop" @click="goToPage">  
       <dialog class="confirmar-popup" @click.stop="">
@@ -96,8 +96,8 @@
 </script>
 
 <style scoped>
+
 .confirmar-popup {
-  position: fixed;
   width: 60vmin;
   height: fit-content;
   border-radius: 15px;
@@ -107,12 +107,14 @@
   flex-direction: column;
   padding: 0;
   top: 25%;
+  overflow: hidden;
 }
 
 .faixa-vermelha {
   height: 50px;
   background-color: #DC564E;
   border-radius: 10px 10px 0 0;
+  z-index: 1;
 }
 
 .mensagem {
@@ -120,7 +122,6 @@
   height: 100%;
   flex-direction: row;
   padding: 20px 40px;
-  overflow: hidden;
 }
 
 .msg {
@@ -129,7 +130,8 @@
   flex-direction: column;
   margin-right: 30px;
   justify-content: space-evenly;
-  flex-grow:1;
+  flex-grow: 1;
+  z-index: 1;
 }
 
 .upper-text {
@@ -158,9 +160,8 @@
 .img-div {
   position: absolute;
   width: fit-content;
-  z-index: -1;
+  z-index: 0;
   right:0;
-
 }
 
 .confirmar-icone {
@@ -168,6 +169,7 @@
   width: 100%;
   height: auto;
   transform: translate(-10%, 0%);
+  z-index: 0;
 }
 
 .botao-voltar {
@@ -178,10 +180,10 @@
   color: white;
   font-size: 1.2em;
   padding: 12px 20px;
-  border-radius: 2vmin;
+  border-radius: 10px;
   border: none;
   width: fit-content;
-  max-width: 200px;
+  z-index: 1;
 }
 
 .botao-voltar img {
@@ -192,9 +194,10 @@
 }
 
 .botao-voltar span {
-  margin-right: 20px;
-  font-size: 1em;
+  padding-right: 10px;
+  font-size: 1.2em;
 }
+
 .botao-voltar:hover{
   opacity: 50%;
 }
@@ -213,13 +216,56 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 5000;
+  z-index: 5;
   /* background-color: rgba(0, 0, 0, 0.3); */
   background: rgba(255, 255, 255, 0);
   background: linear-gradient(76deg, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.4) 60%); 
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 700px) {
+  .mensagem {
+    padding: 20px;
+  }
+
+  .upper-text {
+    padding: 0px 15px 5px 0px;
+    margin: 0;
+  }
+
+  .lower-text {
+    padding-right: 10px;
+  }
+  .msg {
+    margin: 0;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .mensagem {
+    flex-direction: column;
+  }
+
+  .upper-text {
+    padding-bottom: 10px;
+  }
+
+  .lower-text {
+    display: none;
+  }
+
+  .confirmar-icone {
+    width: 0;
+    height: 0;
+  }
+
+  .template {
+    width: fit-content;
+  }
+
 }
 
 </style>

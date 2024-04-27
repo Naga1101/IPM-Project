@@ -186,9 +186,13 @@ export default {
     }
     @media (max-width: 700px) {
         
+        .navbar {
+            justify-content: right;
+        }
         .posto_number {
             font-size: 1.2em;
         }
+
         .left_arrow {
             height: 15px;
             width: auto;
@@ -196,7 +200,7 @@ export default {
 
         .botao_back {
             padding: 5px 15px;
-            margin-right: 15px;
+            margin-right: auto;
         }
 
         .botao_back, .botao_sair {

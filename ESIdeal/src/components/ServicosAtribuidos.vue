@@ -170,11 +170,15 @@
             min-height: 200px;
         }
 
+        .table_entry1 {
+            padding-right: 0px;
+        }
         .headers {
             align-items: center;
             margin: 10px 0px;
             justify-content: space-between
         }
+
         .clock {
             display: none;
         }

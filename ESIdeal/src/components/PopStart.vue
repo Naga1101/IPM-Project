@@ -55,13 +55,13 @@ const aviso = '/images/aviso.png';
       <dialog class="exit-popup">
         <div class="faixa-vermelha"></div>
         <div class="mensagem">
-            <div class="imgAviso">
-              <img :src="aviso" alt="triangle">
-            </div>
-            <div class="msg">
-              <p>Tem a certeza que pretende iniciar o serviço?</p>
-            </div>
+          <div class="imgAviso">
+            <img :src="aviso" alt="triangle">
           </div>
+          <div class="msg">
+            <span>Tem a certeza que pretende iniciar o serviço?</span>
+          </div>
+        </div>
         <div class="linha"></div>
         <div class="butoes">
           <div class="imgRec" @click="close">
@@ -96,11 +96,11 @@ border-radius: 10px 10px 0 0;
 }
 
 .mensagem {
-height: 138px;
-display: flex;
-flex-direction: row;
-align-items: center;
-padding-right: 0%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 0%;
+  padding: 10px;
 }
 
 .imgAviso {
@@ -112,22 +112,25 @@ max-width: 100%;
 padding-left: 10%;
 }
 
-.mensagem .msg {
-flex: 1;
+.msg {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.mensagem .msg p:nth-child(1) {
-color: #000000;
-font-size: 1.87em;
-margin-top: 18px;
-margin-bottom: 5px;
-text-align: center;
-font-family: 'Lato', sans-serif;
+.msg span {
+  color: #000000;
+  font-size: 1.87em;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
 }
 
 .linha {
-height: 2px;
-background-color: #DC564E; /* Black color */
+  display: flex;
+  height: 2px;
+  margin: 5px;
+  background-color: #DC564E; /* Black color */
 }
 
 .butoes {
@@ -184,13 +187,30 @@ background-color: #DC564E; /* Black color */
     .exit-popup {
         width: 80%;
         height: auto;
-
-    }
-
-    .mensagem {
-      font-size: 1em;
     }
     
+    .butoes img {
+      height: 60px;
+    }
+}
+
+@media (max-width: 500px) {
+    .exit-popup {
+        width: 80%;
+        height: auto;
+    }
+    
+    .mensagem {
+      font-size: 1em;
+      flex-direction: column;
+      padding: 10px 10px 5px 10px;
+    }
+}
+
+@media (max-width: 300px) {
+  .imgAviso {
+    display: none;
+  }
 }
 
 </style>

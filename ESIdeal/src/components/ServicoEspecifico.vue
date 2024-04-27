@@ -572,7 +572,7 @@
     .details {
         display: flex;
         flex-direction: row;
-        padding: 40px 0px 0px 70px;
+        padding: 20px 30px;
         align-items: stretch;
     }
 
@@ -601,17 +601,19 @@
     .tipo-motor {
         font-size: 1.87em;
         padding-bottom: 10px;
+        text-align: center;
     }
 
     .motor-imgs {
         display: flex;
-        padding-left: 60px;
-        gap: 25px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
-
     .motor-imgs img{
         width: 80px;
         height: auto;
+        padding: 5px 10px;
     }
 
     .separator {
@@ -803,7 +805,7 @@
         height: 1px;
         width: 100%;
         background-color: black; 
-        margin: 20px 0;
+        margin: 1em 0;
     }
 
     @media (max-width: 700px) {
@@ -839,22 +841,32 @@
         .details {
             flex-direction: column;
             align-items: flex-start;
-            padding: 20px 20px; 
+            padding: 20px 20px 0px 20px;
+            
+        }
+
+        .veiculo, .cliente-title {
+            padding: 0px 0px 15px 0px;
+            font-size: 2.5em;
+        }
+
+        .car-info, .client-info {
+            padding: 0px 0px 10px 0px;
+            font-size: 1.7em;
         }
 
         .car-details{
             margin: 0px;
         }
 
-        .motor {
-            text-align: center;
-            flex-direction: row;
-            align-items: center;
-            padding: 30px 0px; 
+        .tipo-motor {
+            padding: 0px;
         }
-
-        .motor-imgs {
-            margin-left: 20px;
+        
+        .motor {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0;
         }
 
         .motor img{
@@ -869,13 +881,13 @@
         }
 
         .suspend-button {
-            left: 20px;
-            bottom: 20px;
+            left: 25px;
+            bottom: 40px;
         }
 
         .floating-button {
-            right: 20px;
-            bottom: 20px;
+            right: 25px;
+            bottom: 40px;
         }
 
         .separator-phone {
@@ -899,7 +911,7 @@
         }
 
         .table-header{
-            font-size: 4.5vw;
+            font-size: 4vw;
         }
 
         .clock {
