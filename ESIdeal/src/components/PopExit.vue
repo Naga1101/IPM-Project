@@ -1,43 +1,45 @@
 <!-- https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component -->
 
 <template>
-  <transition name="dialog-fade">
-    <div class="dialog-backdrop" @click="close">  
-      <dialog class="exit-popup" @click.stop="">
-        <div class="faixa-vermelha"></div>
-        <div class="mensagem">
-          <div class="imgAviso">
-            <img src="/svgs/danger_symbol_grey.svg" alt="simbolo aviso"/>
-          </div>
-          <div class="msg">
-            <div class="upper-text">
-              <span>Tem a certeza que pretende sair?</span>
+  <div class="page">
+    <transition name="dialog-fade">
+      <div class="dialog-backdrop" @click="close">  
+        <dialog class="exit-popup" @click.stop="">
+          <div class="faixa-vermelha"></div>
+          <div class="mensagem">
+            <div class="imgAviso">
+              <img src="/svgs/danger_symbol_grey.svg" alt="simbolo aviso"/>
             </div>
-            <div v-if="servicoADecorrer" class="lower-text">
-              <span  class="lower-title">
-                Ações em progresso seram suspendidas
-              </span>
-              <p class="lower-servico">
-                <b>Serviço: {{ servicoADecorrer.def_servico.descricao}} (#{{  servicoADecorrer.id }})</b>
-              </p>
-              <p class="lower-veiculo">
-                <b>Veículo: {{ servicoADecorrer.id_veiculo }}</b> 
-              </p>
+            <div class="msg">
+              <div class="upper-text">
+                <span>Tem a certeza que pretende sair?</span>
+              </div>
+              <div v-if="servicoADecorrer" class="lower-text">
+                <span  class="lower-title">
+                  Ações em progresso seram suspendidas
+                </span>
+                <p class="lower-servico">
+                  <b>Serviço: {{ servicoADecorrer.def_servico.descricao}} (#{{  servicoADecorrer.id }})</b>
+                </p>
+                <p class="lower-veiculo">
+                  <b>Veículo: {{ servicoADecorrer.id_veiculo }}</b> 
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="linha"></div>
-        <div class="butoes">
-          <div class="imgRec" @click="close">
+          <div class="linha"></div>
+          <div class="butoes">
+            <div class="imgRec" @click="close">
               <img src="/svgs/botao_recusar_popup.svg" alt="recusar"/>
             </div>
             <div class="imgConf" @click="logout">
               <img src="/svgs/botao_confirmar_popup.svg" alt="confirmar"/>
             </div>
-        </div>
-      </dialog>
-    </div>
-  </transition>
+          </div>
+        </dialog>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -86,7 +88,7 @@
 <style scoped>
 .exit-popup {
   position: fixed;
-  width: 50vw;
+  width: fit-content;
   height: fit-content;
   border-radius: 15px;
   background-color: #FFFFFF;
@@ -214,9 +216,39 @@
 
 @media (max-width: 700px) {
     .exit-popup {
-        width: 80%;
+        max-width: 80%;
+        width: fit-content;
         height: auto;
+    }
 
+    .page {
+      font-size: 0.9em;
+    }
+    
+    .mensagem {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 30px 15px 30px;
+    }
+
+    .msg {
+      margin: 0px;
+      text-align: center;
+    }
+
+    .lower-title, .lower-servico, .lower-veiculo {
+      text-align: center;
+    }
+    
+    .imgAviso {
+      width: 8em;
+      height: auto;
+    }
+}
+
+@media (max-width: 350px) {
+  .imgAviso {
+      display: none;
     }
 }
 </style>

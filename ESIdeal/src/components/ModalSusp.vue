@@ -255,7 +255,7 @@
 	}
 
 	.subtitulo {
-		font-size: 1.5vw;
+		font-size: 1em;
         font-weight: 400;
 		text-align: left;
 		color: white;	
@@ -271,7 +271,7 @@
 
 	.motivo {
 		box-sizing: border-box;
-		padding: 0.25em;
+		padding: 1em;
 		resize: none;
 		overflow-y: scroll;
 		border: 0;
