@@ -360,7 +360,7 @@
                 <span class="car-info"> Matricula: {{ servico.veiculo.id }} </span>
                 <span class="car-info"> Marca: {{ servico.veiculo.marca }} </span>
                 <span class="car-info"> Modelo: {{ servico.veiculo.modelo }} </span>
-                <span class="car-info" v-if="tipoMotor === 'Gasolina' || tipoMotor === 'Gasóleo'"> Cilindrada: {{ cilindrada }} </span>
+                <span class="car-info" v-if="tipoMotor === 'Gasolina' || tipoMotor === 'Gasóleo'"> Cilindrada: {{ cilindrada }} V</span>
                 <span class="car-info" v-if="tipoMotor === 'Elétrico' || tipoMotor === 'Híbrido'"> Potência do carregador: {{ potencia }}</span>
                 <span class="car-info"> Medidas Jantes: {{ medidasJantes }}</span>
             </div>
@@ -470,7 +470,6 @@
 
         <PopConfirmar v-if="mostrarConfirmacaoPopup" :tipoEstado="estadoConfirmacaoPopup" :sucesso="sucessoConfirmacao"></PopConfirmar>
 
-        <Footer/>
     </div>
     <LoadingPage v-else/>
 </template>
@@ -912,10 +911,18 @@
 
         .table-header{
             font-size: 4vw;
+            margin-top: 20px;
         }
 
         .clock {
             display: none
+        }
+
+        .table-container {
+            margin: 15px
+        }
+        .table-services {
+            padding-right: 5px;
         }
     }
 

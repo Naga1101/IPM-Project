@@ -169,6 +169,7 @@ export default {
   text-align: center;
   background-color: #5C5C5C;
   color: white;
+  box-sizing: border-box;
 }
 
 .posto-name {
@@ -191,11 +192,15 @@ export default {
   background-color: black;
 }
 
+.especialidade-container {
+  padding-left: 20px;
+}
+
 .especialidade {
   display: flex;
   align-items: center;
   gap: 5vh;
-  font-size: 1.2em;
+  font-size: 1.5em;
   padding: 1.5vh;
   /* Vai ter de ser param */
   color: #999999;
@@ -356,7 +361,6 @@ export default {
   .especialidade img{
     width: 10vmin;
   }
-
 
 }
 

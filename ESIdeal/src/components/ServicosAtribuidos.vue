@@ -16,7 +16,6 @@
         </div>
     </div>
     <LoadingPage v-else/>
-    <Footer/>
   </template>
   
   <script>
