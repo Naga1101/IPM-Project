@@ -1,1 +1,22 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/kNz-vMp3)
+# Como utilizar:
+
+Num terminal iniciar o Json-Server: 
+
+    cd backend
+    json-server --watch db.json
+
+Noutro terminal iniciar o frontend:
+
+    cd ESIdeal
+    npm i
+    npm run
+
+# Login para o site:
+    
+    username: user
+    password: 123
+
+# Powerpoint com descrição do projeto/ Mockups:
+[Powerpoint](docs/Apresentação%20IPM.pptx)
+
+[Figma do projeto](https://www.figma.com/design/GmqrjPl8rs7rdYdfkNIih1/IPM-grupo-34?m=auto&t=5zKcNIynYzN69SgB-1)
